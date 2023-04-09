@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DailyTODO</string>
+    <string name="app_name">Daily TODO</string>
     <string name="hint_username">اسم المستخدم</string>
     <string name="hint_password">كلمة المرور</string>
     <string name="hint_confirm_password">تأكيد كلمة المرور</string>
