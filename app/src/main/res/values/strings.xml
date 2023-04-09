@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">DailyTODO</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="have_account">Don’t have account?</string>
+    <string name="create_new_task">Create New Task</string>
+    <string name="view_all">View all</string>
+    <string name="personal_task">Personal Tasks</string>
+    <string name="team_task">Team TaskS</string>
+    <string name="pending_tasks">Pending Task</string>
+    <string name="personal">Personal</string>
+    <string name="team">Team</string>
+    <string name="completed_task">Completed Task</string>
+    <string name="task_title">Title</string>
+    <string name="hint_task">Task title</string>
+    <string name="task_type">Type</string>
+    <string name="description">Description</string>
+    <string name="hint_descriptions">Task description</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
+    <string name="done">Done</string>
+    <string name="in_progress">In Progress</string>
+    <string name="all">TODO</string>
+    <string name="details">Details</string>
+    <string name="search">Search</string>
+    <string name="not_result">No results found!</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="check_your_wifi">Check your Wi-Fi</string>
+    <string name="try_again">Try again</string>
 </resources>
