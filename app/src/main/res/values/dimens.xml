@@ -15,4 +15,8 @@
     <dimen name="_16sp">16sp</dimen>
 
 
+
+    <dimen name="_56dp">56dp</dimen>
+    <dimen name="_0dp">0dp</dimen>
+
 </resources>
