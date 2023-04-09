@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="background">#121212</color>
+    <color name="card_background">#202020</color>
+
+    <color name="primary_text">#DEFFFFFF</color>
+    <color name="secondary_text">#99FFFFFF</color>
+    <color name="accent_text">#61FFFFFF</color>
+
+</resources>
