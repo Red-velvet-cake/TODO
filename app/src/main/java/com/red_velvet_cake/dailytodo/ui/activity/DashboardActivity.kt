@@ -1,6 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.activity
 
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.widget.Toast
 import com.red_velvet_cake.dailytodo.databinding.ActivityDashboardBinding
@@ -12,17 +13,31 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityDashboardBinding
         get() = ActivityDashboardBinding::inflate
 
-    override fun setUp() {}
+    override fun setUp() {
+//        lunchAuthActivity()
+    }
 
     override fun addCallbacks() {}
 
     override fun isInternetAvailable(connectionStatus: ConnectionStatus) {
         when (connectionStatus) {
-            ConnectionStatus.Available -> Toast.makeText(this, ConnectionStatus.Available.name, Toast.LENGTH_SHORT)
-                .show()
-            ConnectionStatus.Unavailable -> Toast.makeText(this, ConnectionStatus.Unavailable.name, Toast.LENGTH_SHORT)
-                .show()
+            ConnectionStatus.Available -> Toast.makeText(
+                this,
+                ConnectionStatus.Available.name,
+                Toast.LENGTH_SHORT
+            ).show()
+
+            ConnectionStatus.Unavailable -> Toast.makeText(
+                this,
+                ConnectionStatus.Unavailable.name,
+                Toast.LENGTH_SHORT
+            ).show()
         }
+    }
+
+    private fun lunchAuthActivity() {
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
     }
 
 }
