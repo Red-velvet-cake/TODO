@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.data.enum
+package com.red_velvet_cake.dailytodo.data.remote.enum
 
 enum class HttpMethodType {
     GET,
