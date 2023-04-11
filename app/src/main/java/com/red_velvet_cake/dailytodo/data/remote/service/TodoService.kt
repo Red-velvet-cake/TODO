@@ -8,6 +8,7 @@ interface TodoService {
     fun register(
         userName: String,
         password: String,
+        teamId: String,
         callback: (ApiResponse<RegisterDto>) -> Unit
     )
 }
