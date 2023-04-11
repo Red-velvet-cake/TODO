@@ -1,12 +1,12 @@
-package com.red_velvet_cake.dailytodo.data
+package com.red_velvet_cake.dailytodo.data.remote
 
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class ApiInterceptor : Interceptor {
+class ApiInterceptor(private val token: String?) : Interceptor {
     companion object {
-        private const val CONTENT_TYPE_HEADER = "Content-Type"
         private const val AUTHORIZATION_HEADER = "Authorization"
+        private const val CONTENT_TYPE_HEADER = "Content-Type"
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -15,7 +15,7 @@ class ApiInterceptor : Interceptor {
         request = request
             .newBuilder()
             .addHeader(CONTENT_TYPE_HEADER, "application/json")
-            .addHeader(AUTHORIZATION_HEADER, "bearer TOKEN")
+            .addHeader(AUTHORIZATION_HEADER, token ?: "")
             .build()
 
         return chain.proceed(request)
