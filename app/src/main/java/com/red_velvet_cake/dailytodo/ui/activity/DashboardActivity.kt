@@ -3,6 +3,7 @@ package com.red_velvet_cake.dailytodo.ui.activity
 
 import android.view.LayoutInflater
 import android.widget.Toast
+import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.databinding.ActivityDashboardBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseActivity
 import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
@@ -12,7 +13,10 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityDashboardBinding
         get() = ActivityDashboardBinding::inflate
 
-    override fun setUp() {}
+    override fun setUp() {
+        val createTodo= TodoServiceImpl()
+        createTodo.creatTeamTodo("UXUI Studio Meeting", "This is my description amet consectetur","Hawraa")
+    }
 
     override fun addCallbacks() {}
 
