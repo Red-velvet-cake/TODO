@@ -1,7 +1,7 @@
 package com.red_velvet_cake.dailytodo.data
 
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.domain.UpdatePersonalStatusResponse
+import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
 import okhttp3.*
 import java.io.IOException
 
@@ -9,12 +9,14 @@ class TodoServiceImpl() : TodoService {
 
     private val client = OkHttpClient()
     override fun updatePersonalTodoStatus(
+        userId: String,
+        updatedPersonalTodoStatus: Int,
         onSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
-        onFailure: (e: IOException) -> Unit
+        onFailure: (exception: IOException) -> Unit
     ) {
 
-        val requestBody = FormBody.Builder().add(PARAM_STATUS, "1")
-            .add(PARAM_ID, "7c5a262e-260d-4a42-aed5-e969942f7970")
+        val requestBody = FormBody.Builder().add(PARAM_STATUS, userId)
+            .add(PARAM_ID, updatedPersonalTodoStatus.toString())
             .build()
         val url = HttpUrl.Builder()
             .scheme(SCHEME_HTTPS)

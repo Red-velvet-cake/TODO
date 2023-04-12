@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.red_velvet_cake.dailytodo.presenter.MainPresenter
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoBinding
 import com.red_velvet_cake.dailytodo.presenter.IMainView
-import com.red_velvet_cake.dailytodo.domain.UpdatePersonalStatusResponse
+import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 import java.io.IOException
 
@@ -19,7 +19,7 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), IMainV
 
     override fun setUp() {
         mainPresenter = MainPresenter(this)
-        mainPresenter.updatePersonalTodoStatus()
+        mainPresenter.updatePersonalTodoStatus("1", 1)
     }
 
     override fun addCallBacks() {

@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.domain
+package com.red_velvet_cake.dailytodo.model
 
 data class UpdatePersonalStatusResponse(
     val value: String,
