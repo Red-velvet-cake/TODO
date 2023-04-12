@@ -1,17 +1,18 @@
 package com.red_velvet_cake.dailytodo.data
 
+import android.util.Log
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.data.model.allTeamTodos
+import com.red_velvet_cake.dailytodo.data.model.AllTeamTodos
 import okhttp3.*
 import okio.IOException
 
 class TodoServiceImpl : TodoService {
     private val client = OkHttpClient()
     private val token =
-        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6IjY3NzVlYWJhLTEwMzktNGViMi05ODA5LTI5MjUzNWRmMDM1MCIsInRlYW1JZCI6IjAxYThhOTg4LTQ0NjItNDNhNi1hOThhLTE2MjY4NzNmYTc4NyIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxMzAyMzM4fQ.9N6NeI1h854Ga3tVjphbU1n-fvQayyv64hRk2QUlmBQ"
+        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6IjY3NzVlYWJhLTEwMzktNGViMi05ODA5LTI5MjUzNWRmMDM1MCIsInRlYW1JZCI6IjAxYThhOTg4LTQ0NjItNDNhNi1hOThhLTE2MjY4NzNmYTc4NyIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxNDAzNjIxfQ.um2TPSGBBzZBieplYjVZvsTXjPnLOYUracapBnMA-KA"
 
     override fun getAllTeamTodos(
-        onGetAllTeamTodosSuccess: (allTeamTodos) -> Unit,
+        onGetAllTeamTodosSuccess: (AllTeamTodos) -> Unit,
         onGetAllTeamTodosFailure: (IOException) -> Unit,
     ) {
         val url = HttpUrl
@@ -27,13 +28,14 @@ class TodoServiceImpl : TodoService {
             .addHeader(AUTH, token)
             .build()
         client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, exception: IOException) {
-                onGetAllTeamTodosFailure(exception)
+            override fun onFailure(call: Call, e: IOException) {
+                onGetAllTeamTodosFailure(e)
             }
 
             override fun onResponse(call: Call, response: Response) {
                 val result =
-                    Gson().fromJson(response.body?.string().toString(), allTeamTodos::class.java)
+                    Gson().fromJson(response.body?.string().toString(), AllTeamTodos::class.java)
+                Log.i("iii", result.value[0].creationTime)
                 onGetAllTeamTodosSuccess(result)
             }
         })

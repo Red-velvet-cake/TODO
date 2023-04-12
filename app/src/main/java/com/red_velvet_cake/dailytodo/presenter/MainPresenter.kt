@@ -1,31 +1,24 @@
 package com.red_velvet_cake.dailytodo.presenter
 
 import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
-import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
-import java.io.IOException
+import com.red_velvet_cake.dailytodo.data.model.AllTeamTodos
+import okio.IOException
 
-
-class MainPresenter(private val view: IMainView) {
-
+class MainPresenter{
     private val todoServiceImpl = TodoServiceImpl()
-
-    fun updatePersonalTodoStatus(
-        userId: String, newTodoStatus: Int
-    ) {
-        todoServiceImpl.updatePersonalTodoStatus(
-            userId,
-            newTodoStatus,
-            ::onUpdatePersonalTodoStatusSuccess,
-            ::onUpdatePersonalTodoStatusFailure
+    lateinit var iMainView: IMainView
+    fun responseTeamTodo() {
+        todoServiceImpl.getAllTeamTodos(
+            ::onGetAllTeamTodosSuccess,
+            ::onGetAllTeamTodosFailure
         )
     }
-
-    private fun onUpdatePersonalTodoStatusSuccess(updatePersonalStatusResponse: UpdatePersonalStatusResponse) {
-        view.onUpdatePersonalTodoStatusSuccess(updatePersonalStatusResponse)
+    private fun onGetAllTeamTodosSuccess(allTeamTodos: AllTeamTodos)
+    {
+        iMainView.showTeamToDoDesc(allTeamTodos)
     }
-
-    private fun onUpdatePersonalTodoStatusFailure(exception: IOException) {
-        view.onUpdatePersonalTodoStatusFailure(exception)
+    private fun onGetAllTeamTodosFailure(exception: IOException)
+    {
+        iMainView.showException(exception)
     }
 }
-
