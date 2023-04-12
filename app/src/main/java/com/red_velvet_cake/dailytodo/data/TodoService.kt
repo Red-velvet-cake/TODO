@@ -1,7 +1,7 @@
 package com.red_velvet_cake.dailytodo.data
 
 import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoResponse
+import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoStatusResponse
 import java.io.IOException
 
 interface TodoService {
@@ -15,7 +15,7 @@ interface TodoService {
     fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdateTeamTodoStatusSuccess: (updateTeamStatusResponse: UpdateTeamTodoResponse) -> Unit,
+        onUpdateTeamTodoStatusSuccess: (updateTeamStatusResponse: UpdateTeamTodoStatusResponse) -> Unit,
         onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
     )
 }
