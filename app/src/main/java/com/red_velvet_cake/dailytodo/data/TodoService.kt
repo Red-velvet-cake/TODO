@@ -1,10 +1,15 @@
 package com.red_velvet_cake.dailytodo.data
-
 import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoStatusResponse
 import java.io.IOException
+import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
+
 
 interface TodoService {
+    fun getAllPersonalTodos(
+        onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
+        onGetAllPersonalTodoFailure: (e: IOException) -> Unit
+    )
     fun updatePersonalTodoStatus(
         userId: String,
         newTodoStatus: Int,
