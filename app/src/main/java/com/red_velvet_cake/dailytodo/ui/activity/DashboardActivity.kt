@@ -14,8 +14,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
         get() = ActivityDashboardBinding::inflate
 
     override fun setUp() {
-        val todo=TodoServiceImpl()
-        todo.getTeamToDo()
     }
 
     override fun addCallbacks() {}

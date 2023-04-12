@@ -8,7 +8,7 @@ import java.io.IOException
 
 class TodoServiceImpl: TodoService {
     private val client= OkHttpClient()
-    override fun getTeamToDo() {
+    override fun getTeamToDo(presentTeamTodo:(TeamTodos)->Unit) {
          val token="Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6IjY3NzVlYWJhLTEwMzktNGViMi05ODA5LTI5MjUzNWRmMDM1MCIsInRlYW1JZCI6IjAxYThhOTg4LTQ0NjItNDNhNi1hOThhLTE2MjY4NzNmYTc4NyIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxMzAyMzM4fQ.9N6NeI1h854Ga3tVjphbU1n-fvQayyv64hRk2QUlmBQ"
          val pathSegments= listOf("todo","team")
         val scheme="https"
@@ -25,7 +25,7 @@ class TodoServiceImpl: TodoService {
                 override fun onResponse(call: Call, response: Response) {
 
                  val result=Gson().fromJson(response.body?.string().toString(),TeamTodos::class.java)
-                    Log.i("token",result.value[0].description)
+                   presentTeamTodo(result)
                 }
             })
 
