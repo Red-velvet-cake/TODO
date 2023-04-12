@@ -8,11 +8,11 @@ interface TodoService {
     fun getAllPersonalTodos(
         onSuccess: (updatePersonalStatusResponse: GetAllPersonalTodosResponse) -> Unit,
         onFailure: (e: IOException) -> Unit
-
-
-interface TodoService {
+    )
     fun updatePersonalTodoStatus(
         userId: String,
         newTodoStatus: Int,
         onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
         onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
+    )
+}

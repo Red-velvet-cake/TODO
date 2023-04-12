@@ -5,7 +5,9 @@ import com.google.gson.Gson
 import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
 import okhttp3.*
 import java.io.IOException
-class TodoServiceImpl: TodoService {
+
+class TodoServiceImpl : TodoService {
+    private val client = OkHttpClient()
     override fun getAllPersonalTodos(
         onSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
         onFailure: (e: IOException) -> Unit
@@ -21,7 +23,6 @@ class TodoServiceImpl: TodoService {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onFailure(e)
-
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -33,14 +34,12 @@ class TodoServiceImpl: TodoService {
         })
     }
 
-    private val client = OkHttpClient()
     override fun updatePersonalTodoStatus(
         userId: String,
         newTodoStatus: Int,
         onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
         onUpdatePersonalTodoStatusFailure: (exception: IOException) -> Unit
     ) {
-
         val requestBody = FormBody.Builder().add(PARAM_STATUS, userId)
             .add(PARAM_ID, newTodoStatus.toString())
             .build()
@@ -72,7 +71,6 @@ class TodoServiceImpl: TodoService {
             }
         })
     }
-
 
     companion object {
         private const val PARAM_ID = "id"
