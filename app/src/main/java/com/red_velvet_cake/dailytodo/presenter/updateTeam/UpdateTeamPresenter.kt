@@ -1,21 +1,30 @@
 package com.red_velvet_cake.dailytodo.presenter.updateTeam
 
 import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
-import com.red_velvet_cake.dailytodo.domain.model.UpdateTeamTodoResponse
+import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoResponse
+import java.io.IOException
 
-class UpdateTeamPresenter(private val iMainView: IMainView) {
+class UpdateTeamPresenter(private val view: IMainView) {
 
     private val todoServiceImpl = TodoServiceImpl()
 
-    fun updateTodoTeamStatus() {
-        todoServiceImpl.updateTeamTodoStatus {
-            iMainView.updateTodoTeam(it)
-        }
+    fun updateTeamTodoStatus(
+        todoId: String, newTodoStatus: Int
+    ) {
+        todoServiceImpl.updateTeamTodoStatus(
+            todoId,
+            newTodoStatus,
+            ::onUpdateTeamTodoStatusSuccess,
+            ::onUpdateTeamTodoStatusFailure
+        )
     }
 
+    private fun onUpdateTeamTodoStatusSuccess(updateTeamStatusResponse: UpdateTeamTodoResponse) {
+        view.onUpdateTeamTodoStatusSuccess(updateTeamStatusResponse)
+    }
 
+    private fun onUpdateTeamTodoStatusFailure(exception: IOException) {
+        view.onUpdateTeamTodoStatusFailure(exception)
+    }
 }
 
-interface IMainView {
-    fun updateTodoTeam(updateTeamTodoResponse: UpdateTeamTodoResponse)
-}
