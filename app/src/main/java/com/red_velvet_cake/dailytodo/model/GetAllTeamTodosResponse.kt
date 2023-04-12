@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.data.model
+package com.red_velvet_cake.dailytodo.model
 
 data class GetAllTeamTodosResponse(
     val value: List<TeamTodo>,

@@ -2,8 +2,8 @@ package com.red_velvet_cake.dailytodo.data
 
 import android.util.Log
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoStatusResponse
 import okhttp3.Call
@@ -136,11 +136,13 @@ class TodoServiceImpl : TodoService {
             .addPathSegment(TO_DO_PATH_SEGMENT)
             .addPathSegment(TEAM_PATH_SEGMENT)
             .build()
+
         val request = Request
             .Builder()
             .url(url)
             .addHeader(HEADER_AUTHORIZATION, AUTH_TOKEN)
             .build()
+
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onGetAllTeamTodosFailure(e)

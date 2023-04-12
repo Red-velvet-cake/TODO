@@ -1,7 +1,7 @@
 package com.red_velvet_cake.dailytodo.data
 
-import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoStatusResponse
 import okio.IOException
