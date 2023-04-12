@@ -2,7 +2,7 @@ package com.red_velvet_cake.dailytodo.data
 
 import com.google.gson.Gson
 import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.model.UpdateTameTodoResponse
+import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoResponse
 import okhttp3.*
 import java.io.IOException
 
@@ -12,7 +12,7 @@ class TodoServiceImpl : TodoService {
     override fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdateTeamTodoStatusSuccess: (updateTeamStatusResponse: UpdateTameTodoResponse) -> Unit,
+        onUpdateTeamTodoStatusSuccess: (updateTeamStatusResponse: UpdateTeamTodoResponse) -> Unit,
         onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
     ) {
 
@@ -42,7 +42,7 @@ class TodoServiceImpl : TodoService {
 
             override fun onResponse(call: Call, response: Response) {
                 val body = response.body?.string().toString()
-                val result = Gson().fromJson(body, UpdateTameTodoResponse::class.java)
+                val result = Gson().fromJson(body, UpdateTeamTodoResponse::class.java)
                 onUpdateTeamTodoStatusSuccess(result)
             }
 
