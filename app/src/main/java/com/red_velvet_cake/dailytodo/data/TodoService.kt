@@ -6,8 +6,8 @@ import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
 
 interface TodoService {
     fun getAllPersonalTodos(
-        onSuccess: (updatePersonalStatusResponse: GetAllPersonalTodosResponse) -> Unit,
-        onFailure: (e: IOException) -> Unit
+        onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
+        onGetAllPersonalTodoFailure: (e: IOException) -> Unit
     )
     fun updatePersonalTodoStatus(
         userId: String,

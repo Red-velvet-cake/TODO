@@ -4,7 +4,7 @@ import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
 import java.io.IOException
 
 
-interface IGetAllPersonalTodosView {
+interface IPersonalTodosView {
     fun onGetAllPersonalTodosSuccess(
         getAllPersonalTodosResponse: GetAllPersonalTodosResponse
     )

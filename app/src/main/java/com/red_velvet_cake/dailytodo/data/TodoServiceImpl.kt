@@ -9,8 +9,8 @@ import java.io.IOException
 class TodoServiceImpl : TodoService {
     private val client = OkHttpClient()
     override fun getAllPersonalTodos(
-        onSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
-        onFailure: (e: IOException) -> Unit
+        onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
+        onGetAllPersonalTodoFailure: (e: IOException) -> Unit
     ) {
         val url = HttpUrl.Builder()
             .scheme(SCHEME_HTTPS)
@@ -22,18 +22,16 @@ class TodoServiceImpl : TodoService {
             Request.Builder().url(url).header(HEADER_AUTHORIZATION, "Bearer $AUTH_TOKEN").build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onFailure(e)
+                onGetAllPersonalTodoFailure(e)
             }
-
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string().let {
                     val result = Gson().fromJson(it, GetAllPersonalTodosResponse::class.java)
-                    onSuccess(result)
+                    onGetAllPersonalTodosSuccess(result)
                 }
             }
         })
     }
-
     override fun updatePersonalTodoStatus(
         userId: String,
         newTodoStatus: Int,
@@ -61,17 +59,14 @@ class TodoServiceImpl : TodoService {
             override fun onFailure(call: Call, e: IOException) {
                 onUpdatePersonalTodoStatusFailure(e)
             }
-
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string().let {
                     val result = Gson().fromJson(it, UpdatePersonalStatusResponse::class.java)
                     onUpdatePersonalTodoStatusSuccess(result)
                 }
-
             }
         })
     }
-
     companion object {
         private const val PARAM_ID = "id"
         private const val PARAM_STATUS = "status"
