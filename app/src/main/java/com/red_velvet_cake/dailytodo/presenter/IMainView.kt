@@ -1,16 +1,9 @@
 package com.red_velvet_cake.dailytodo.presenter
 
-import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
-import java.io.IOException
+import com.red_velvet_cake.dailytodo.model.GetAllTeamTodosResponse
+import okio.IOException
 
 interface IMainView {
-
-    fun onUpdatePersonalTodoStatusSuccess(
-        updatePersonalStatusResponse: UpdatePersonalStatusResponse
-    )
-
-    fun onUpdatePersonalTodoStatusFailure(
-        e: IOException
-    )
-
+    fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse)
+    fun onGetAllTeamTodosFailure(exception: IOException)
 }
