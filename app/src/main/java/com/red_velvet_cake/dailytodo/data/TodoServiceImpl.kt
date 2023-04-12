@@ -1,7 +1,7 @@
 package com.red_velvet_cake.dailytodo.data
 
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.domain.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
 import okhttp3.*
 import java.io.IOException
 

@@ -1,6 +1,6 @@
 package com.red_velvet_cake.dailytodo.data
 
-import com.red_velvet_cake.dailytodo.domain.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
 import java.io.IOException
 
 interface TodoService {
