@@ -1,10 +1,10 @@
 package com.red_velvet_cake.dailytodo.presenter
 
 import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
-import com.red_velvet_cake.dailytodo.data.model.AllTeamTodos
+import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import okio.IOException
 
-class MainPresenter{
+class MainPresenter {
     private val todoServiceImpl = TodoServiceImpl()
     lateinit var iMainView: IMainView
     fun responseTeamTodo() {
@@ -13,12 +13,12 @@ class MainPresenter{
             ::onGetAllTeamTodosFailure
         )
     }
-    private fun onGetAllTeamTodosSuccess(allTeamTodos: AllTeamTodos)
-    {
-        iMainView.showTeamToDoDesc(allTeamTodos)
+
+    private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
+        iMainView.onGetAllTeamTodosSuccess(getAllTeamTodosResponse)
     }
-    private fun onGetAllTeamTodosFailure(exception: IOException)
-    {
-        iMainView.showException(exception)
+
+    private fun onGetAllTeamTodosFailure(exception: IOException) {
+        iMainView.onGetAllTeamTodosFailure(exception)
     }
 }

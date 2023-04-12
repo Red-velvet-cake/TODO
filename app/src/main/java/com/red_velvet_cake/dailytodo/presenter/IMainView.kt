@@ -1,9 +1,9 @@
 package com.red_velvet_cake.dailytodo.presenter
 
-import com.red_velvet_cake.dailytodo.data.model.AllTeamTodos
+import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import okio.IOException
 
 interface IMainView {
-    fun showTeamToDoDesc(allTeamTodos: AllTeamTodos)
-    fun showException(exception:IOException)
+    fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse)
+    fun onGetAllTeamTodosFailure(exception: IOException)
 }
