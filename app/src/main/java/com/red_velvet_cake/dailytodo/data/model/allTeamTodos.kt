@@ -1,6 +1,6 @@
-package com.red_velvet_cake.dailytodo.data
+package com.red_velvet_cake.dailytodo.data.model
 
-data class TeamTodos(
+data class allTeamTodos(
     val value:List<TeamTodo>,
     val message:String?,
     val isSuccess:Boolean

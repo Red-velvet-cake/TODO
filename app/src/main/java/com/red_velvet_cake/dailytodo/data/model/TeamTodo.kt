@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.data
+package com.red_velvet_cake.dailytodo.data.model
 
 data class TeamTodo(
     val id:String,
