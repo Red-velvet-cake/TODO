@@ -9,7 +9,7 @@ import okio.IOException
 
 interface TodoService {
     fun updatePersonalTodoStatus(
-        userId: String,
+        todoId: String,
         newTodoStatus: Int,
         onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
         onUpdatePersonalTodoStatusFailure: (e: java.io.IOException) -> Unit
