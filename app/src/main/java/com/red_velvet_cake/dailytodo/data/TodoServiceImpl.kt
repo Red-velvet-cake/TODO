@@ -5,19 +5,20 @@ import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
 import okhttp3.*
 import java.io.IOException
 
-class TodoServiceImpl() : TodoService {
+class TodoServiceImpl : TodoService {
 
     private val client = OkHttpClient()
     override fun updatePersonalTodoStatus(
         userId: String,
-        updatedPersonalTodoStatus: Int,
-        onSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
-        onFailure: (exception: IOException) -> Unit
+        newTodoStatus: Int,
+        onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
+        onUpdatePersonalTodoStatusFailure: (exception: IOException) -> Unit
     ) {
 
         val requestBody = FormBody.Builder().add(PARAM_STATUS, userId)
-            .add(PARAM_ID, updatedPersonalTodoStatus.toString())
+            .add(PARAM_ID, newTodoStatus.toString())
             .build()
+
         val url = HttpUrl.Builder()
             .scheme(SCHEME_HTTPS)
             .host(HOST)
@@ -29,17 +30,17 @@ class TodoServiceImpl() : TodoService {
             .url(url).put(requestBody).addHeader(
                 HEADER_AUTHORIZATION,
                 "bearer $AUTH_TOKEN"
-            )
-            .build()
+            ).build()
+
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onFailure(e)
+                onUpdatePersonalTodoStatusFailure(e)
             }
 
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string().let {
                     val result = Gson().fromJson(it, UpdatePersonalStatusResponse::class.java)
-                    onSuccess(result)
+                    onUpdatePersonalTodoStatusSuccess(result)
                 }
 
             }
