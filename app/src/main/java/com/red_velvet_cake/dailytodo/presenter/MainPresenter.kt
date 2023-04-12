@@ -10,10 +10,10 @@ class MainPresenter(private val view: IMainView) {
     private val todoServiceImpl = TodoServiceImpl()
 
     fun updatePersonalTodoStatus(
-        userId: String, newTodoStatus: Int
+        todoId: String, newTodoStatus: Int
     ) {
         todoServiceImpl.updatePersonalTodoStatus(
-            userId,
+            todoId,
             newTodoStatus,
             ::onUpdatePersonalTodoStatusSuccess,
             ::onUpdatePersonalTodoStatusFailure

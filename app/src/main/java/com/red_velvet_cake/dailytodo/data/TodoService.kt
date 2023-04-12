@@ -5,7 +5,7 @@ import java.io.IOException
 
 interface TodoService {
     fun updatePersonalTodoStatus(
-        userId: String,
+        todoId: String,
         newTodoStatus: Int,
         onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
         onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit

@@ -9,13 +9,13 @@ class TodoServiceImpl : TodoService {
 
     private val client = OkHttpClient()
     override fun updatePersonalTodoStatus(
-        userId: String,
+        todoId: String,
         newTodoStatus: Int,
         onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
         onUpdatePersonalTodoStatusFailure: (exception: IOException) -> Unit
     ) {
 
-        val requestBody = FormBody.Builder().add(PARAM_STATUS, userId)
+        val requestBody = FormBody.Builder().add(PARAM_STATUS, todoId)
             .add(PARAM_ID, newTodoStatus.toString())
             .build()
 
