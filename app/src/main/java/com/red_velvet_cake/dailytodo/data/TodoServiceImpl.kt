@@ -11,21 +11,21 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okio.IOException
+import org.jetbrains.annotations.NotNull
 
 class TodoServiceImpl : TodoService {
 
     private val client = OkHttpClient()
-
+    
     override fun createPersonalTodo(
-        title: String,
-        description: String,
+        todo: TODO,
         onCreatePersonalTodoSuccess: (Boolean) -> Unit,
         onCreatePersonalTodoFailure: (e: IOException) -> Unit
     ) {
 
         val requestBody = FormBody.Builder()
-            .add(TITLE, title)
-            .add(DESCRIPTION, description)
+            .add(TITLE, todo.title)
+            .add(DESCRIPTION, todo.description)
             .build()
 
         val url = HttpUrl.Builder()
@@ -45,6 +45,7 @@ class TodoServiceImpl : TodoService {
             override fun onFailure(call: Call, e: IOException) {
                 onCreatePersonalTodoFailure(e)
             }
+
             override fun onResponse(call: Call, response: Response) {
                 onCreatePersonalTodoSuccess(response.isSuccessful)
             }
@@ -53,16 +54,14 @@ class TodoServiceImpl : TodoService {
     }
 
     override fun createTeamTodo(
-        title: String,
-        description: String,
-        assignee: String,
+        todo: TODO,
         onCreateTeamTodoSuccess: (Boolean) -> Unit,
         onCreateTeamTodoFailure: (e: IOException) -> Unit
     ) {
         val requestBody = FormBody.Builder()
-            .add(TITLE, title)
-            .add(DESCRIPTION, description)
-            .add(ASSIGNEE, assignee)
+            .add(TITLE, todo.title)
+            .add(DESCRIPTION, todo.description)
+            .add(ASSIGNEE, todo.assignee.toString())
             .build()
 
         val url = HttpUrl.Builder()
@@ -82,6 +81,7 @@ class TodoServiceImpl : TodoService {
             override fun onFailure(call: Call, e: IOException) {
                 onCreateTeamTodoFailure(e)
             }
+
             override fun onResponse(call: Call, response: Response) {
                 onCreateTeamTodoSuccess(response.isSuccessful)
             }

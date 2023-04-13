@@ -7,15 +7,13 @@ import okio.IOException
 interface TodoService {
 
     fun createPersonalTodo(
-        title: String,
-        description: String,
+        todo: TODO,
         onCreatePersonalTodoSuccess: (Boolean) -> Unit,
         onCreatePersonalTodoFailure: (e: IOException) -> Unit
     )
+
     fun createTeamTodo(
-        title: String,
-        description: String,
-        assignee: String,
+        todo: TODO,
         onCreateTeamTodoSuccess: (Boolean) -> Unit,
         onCreateTeamTodoFailure: (e: IOException) -> Unit
     )
