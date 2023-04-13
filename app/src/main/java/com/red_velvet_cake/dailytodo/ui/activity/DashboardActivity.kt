@@ -13,7 +13,9 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityDashboardBinding
         get() = ActivityDashboardBinding::inflate
 
-    override fun setUp() {}
+    override fun setUp() {
+        lunchAuthActivity()
+    }
 
     override fun addCallbacks() {}
 
@@ -23,14 +25,13 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                 this,
                 ConnectionStatus.Available.name,
                 Toast.LENGTH_SHORT
-            )
-                .show()
+            ).show()
+
             ConnectionStatus.Unavailable -> Toast.makeText(
                 this,
                 ConnectionStatus.Unavailable.name,
                 Toast.LENGTH_SHORT
-            )
-                .show()
+            ).show()
         }
     }
 
