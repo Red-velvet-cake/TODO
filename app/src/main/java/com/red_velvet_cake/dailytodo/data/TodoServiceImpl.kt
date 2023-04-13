@@ -52,6 +52,43 @@ class TodoServiceImpl : TodoService {
         })
     }
 
+    override fun createTeamTodo(
+        title: String,
+        description: String,
+        assignee: String,
+        onCreateTeamTodoSuccess: (Boolean) -> Unit,
+        onCreateTeamTodoFailure: (e: IOException) -> Unit
+    ) {
+        val requestBody = FormBody.Builder()
+            .add(TITLE, title)
+            .add(DESCRIPTION, description)
+            .add(ASSIGNEE, assignee)
+            .build()
+
+        val url = HttpUrl.Builder()
+            .scheme(SCHEME_HTTPS)
+            .host(HOST)
+            .addPathSegment(TO_DO_PATH_SEGMENT)
+            .addPathSegment(PATH_PERSONAL)
+            .build()
+
+        val request = Request
+            .Builder()
+            .url(url)
+            .addHeader(HEADER_AUTHORIZATION, "Bearer $AUTH_TOKEN")
+            .put(requestBody)
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                onCreateTeamTodoFailure(e)
+            }
+            override fun onResponse(call: Call, response: Response) {
+                onCreateTeamTodoSuccess(response.isSuccessful)
+            }
+
+        })
+    }
+
     override fun getAllPersonalTodos(
         onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
         onGetAllPersonalTodoFailure: (e: IOException) -> Unit
@@ -208,5 +245,6 @@ class TodoServiceImpl : TodoService {
 
         private const val TITLE = "title"
         private const val DESCRIPTION = "description"
+        private const val ASSIGNEE = "assignee"
     }
 }

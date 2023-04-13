@@ -6,4 +6,7 @@ interface ICreateTodoView {
 
     fun onCreatePersonalTodoSuccess(isSuccess: Boolean)
     fun onCreatePersonalTodoFailure(e: IOException)
+
+    fun onCreateTeamTodoSuccess(isSuccess: Boolean)
+    fun onCreateTeamTodoFailure(e: IOException)
 }
