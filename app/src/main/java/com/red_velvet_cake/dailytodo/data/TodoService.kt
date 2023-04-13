@@ -5,10 +5,22 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.model.login.LoginRequest
+import com.red_velvet_cake.dailytodo.model.login.LoginResponse
+import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
+import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoStatusResponse
 import okio.IOException
 
-
 interface TodoService {
+
+    fun loginUser(
+        loginRequest: LoginRequest,
+        onLoginUserSuccess: (loginResponse: LoginResponse) -> Unit,
+        onLoginUserFailure: (exception: IOException) -> Unit
+    )
+
     fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
