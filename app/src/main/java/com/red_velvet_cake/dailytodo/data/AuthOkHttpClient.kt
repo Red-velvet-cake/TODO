@@ -27,5 +27,4 @@ class AuthOkHttpClient private constructor() {
             return instance!!
         }
     }
-
 }

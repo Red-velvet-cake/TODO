@@ -7,6 +7,8 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.utils.Constants.HOST
+import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -26,7 +28,7 @@ class TodoServiceImpl : TodoService {
         onGetAllPersonalTodoFailure: (e: IOException) -> Unit
     ) {
         val url = HttpUrl.Builder()
-            .scheme(SCHEME_HTTPS)
+            .scheme(SCHEME)
             .host(HOST)
             .addPathSegment(TO_DO_PATH_SEGMENT)
             .addPathSegment(PATH_PERSONAL)
@@ -62,7 +64,7 @@ class TodoServiceImpl : TodoService {
             .build()
 
         val url = HttpUrl.Builder()
-            .scheme(SCHEME_HTTPS)
+            .scheme(SCHEME)
             .host(HOST)
             .addPathSegment(TO_DO_PATH_SEGMENT)
             .addPathSegment(TO_DO_PATH_SEGMENT)
@@ -87,7 +89,6 @@ class TodoServiceImpl : TodoService {
             }
 
         })
-
     }
 
     override fun updatePersonalTodoStatus(
@@ -102,7 +103,7 @@ class TodoServiceImpl : TodoService {
             .build()
 
         val url = HttpUrl.Builder()
-            .scheme(SCHEME_HTTPS)
+            .scheme(SCHEME)
             .host(HOST)
             .addPathSegment(TO_DO_PATH_SEGMENT)
             .addPathSegment(PATH_PERSONAL)
@@ -134,7 +135,7 @@ class TodoServiceImpl : TodoService {
     ) {
         val url = HttpUrl
             .Builder()
-            .scheme(SCHEME_HTTPS)
+            .scheme(SCHEME)
             .host(HOST)
             .addPathSegment(TO_DO_PATH_SEGMENT)
             .addPathSegment(TEAM_PATH_SEGMENT)
@@ -203,8 +204,6 @@ class TodoServiceImpl : TodoService {
     companion object {
         private const val PARAM_ID = "id"
         private const val PARAM_STATUS = "status"
-        private const val SCHEME_HTTPS = "https"
-        private const val HOST = "team-todo-62dmq.ondigitalocean.app"
         private const val PATH_PERSONAL = "personal"
         private const val HEADER_AUTHORIZATION = "Authorization"
         private const val AUTH_TOKEN =
