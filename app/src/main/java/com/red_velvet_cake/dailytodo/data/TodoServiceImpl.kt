@@ -11,12 +11,11 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okio.IOException
-import org.jetbrains.annotations.NotNull
 
 class TodoServiceImpl : TodoService {
 
     private val client = OkHttpClient()
-    
+
     override fun createPersonalTodo(
         todo: TODO,
         onCreatePersonalTodoSuccess: (Boolean) -> Unit,
@@ -48,42 +47,6 @@ class TodoServiceImpl : TodoService {
 
             override fun onResponse(call: Call, response: Response) {
                 onCreatePersonalTodoSuccess(response.isSuccessful)
-            }
-
-        })
-    }
-
-    override fun createTeamTodo(
-        todo: TODO,
-        onCreateTeamTodoSuccess: (Boolean) -> Unit,
-        onCreateTeamTodoFailure: (e: IOException) -> Unit
-    ) {
-        val requestBody = FormBody.Builder()
-            .add(TITLE, todo.title)
-            .add(DESCRIPTION, todo.description)
-            .add(ASSIGNEE, todo.assignee.toString())
-            .build()
-
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME_HTTPS)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(PATH_PERSONAL)
-            .build()
-
-        val request = Request
-            .Builder()
-            .url(url)
-            .addHeader(HEADER_AUTHORIZATION, "Bearer $AUTH_TOKEN")
-            .put(requestBody)
-            .build()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onCreateTeamTodoFailure(e)
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                onCreateTeamTodoSuccess(response.isSuccessful)
             }
 
         })

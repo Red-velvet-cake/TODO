@@ -12,12 +12,6 @@ interface TodoService {
         onCreatePersonalTodoFailure: (e: IOException) -> Unit
     )
 
-    fun createTeamTodo(
-        todo: TODO,
-        onCreateTeamTodoSuccess: (Boolean) -> Unit,
-        onCreateTeamTodoFailure: (e: IOException) -> Unit
-    )
-
     fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
