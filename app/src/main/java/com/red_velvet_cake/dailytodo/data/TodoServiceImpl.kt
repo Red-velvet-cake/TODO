@@ -2,10 +2,7 @@ package com.red_velvet_cake.dailytodo.data
 
 import android.util.Log
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
-import com.red_velvet_cake.dailytodo.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.model.*
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -18,6 +15,42 @@ import okio.IOException
 class TodoServiceImpl : TodoService {
 
     private val client = OkHttpClient()
+
+    override fun createPersonalTodo(
+        title: String,
+        description: String,
+        onCreatePersonalTodoSuccess: (Boolean) -> Unit,
+        onCreatePersonalTodoFailure: (e: IOException) -> Unit
+    ) {
+
+        val requestBody = FormBody.Builder()
+            .add(TITLE, title)
+            .add(DESCRIPTION, description)
+            .build()
+
+        val url = HttpUrl.Builder()
+            .scheme(SCHEME_HTTPS)
+            .host(HOST)
+            .addPathSegment(TO_DO_PATH_SEGMENT)
+            .addPathSegment(PATH_PERSONAL)
+            .build()
+
+        val request = Request
+            .Builder()
+            .url(url)
+            .addHeader(HEADER_AUTHORIZATION, "Bearer $AUTH_TOKEN")
+            .put(requestBody)
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                onCreatePersonalTodoFailure(e)
+            }
+            override fun onResponse(call: Call, response: Response) {
+                onCreatePersonalTodoSuccess(response.isSuccessful)
+            }
+
+        })
+    }
 
     override fun getAllPersonalTodos(
         onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
@@ -37,6 +70,7 @@ class TodoServiceImpl : TodoService {
             override fun onFailure(call: Call, e: IOException) {
                 onGetAllPersonalTodoFailure(e)
             }
+
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string().let {
                     val result = Gson().fromJson(it, GetAllPersonalTodosResponse::class.java)
@@ -171,5 +205,8 @@ class TodoServiceImpl : TodoService {
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6Ijk4YWRiZWJkLTg2YmQtNDg3Yy1hYjI1LWVlY2IzOGQxZjIxZSIsInRlYW1JZCI6IjAxYThhOTg4LTQ0NjItNDNhNi1hOThhLTE2MjY4NzNmYTc4NyIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxNDAyMjc3fQ.iCNnBgrYNOZSc707UD-oY8h9PsW0WNyocAmD7-hMucM"
         private const val TO_DO_PATH_SEGMENT = "todo"
         private const val TEAM_PATH_SEGMENT = "team"
+
+        private const val TITLE = "title"
+        private const val DESCRIPTION = "description"
     }
 }

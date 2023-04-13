@@ -1,25 +1,30 @@
 package com.red_velvet_cake.dailytodo.data
 
-import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
-import com.red_velvet_cake.dailytodo.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.model.*
 import okio.IOException
 
 
 interface TodoService {
+
+    fun createPersonalTodo(
+        title: String,
+        description: String,
+        onCreatePersonalTodoSuccess: (Boolean) -> Unit,
+        onCreatePersonalTodoFailure: (e: IOException) -> Unit
+    )
+
     fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
         onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
-        onUpdatePersonalTodoStatusFailure: (e: java.io.IOException) -> Unit
+        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
     )
 
     fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
         onUpdateTeamTodoStatusSuccess: (updateTeamStatusResponse: UpdateTeamTodoStatusResponse) -> Unit,
-        onUpdateTeamTodoStatusFailure: (e: java.io.IOException) -> Unit
+        onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
     )
 
     fun getAllPersonalTodos(
