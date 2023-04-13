@@ -1,7 +1,7 @@
 package com.red_velvet_cake.dailytodo.presenter.createTodo
 
 import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
-import com.red_velvet_cake.dailytodo.model.TODO
+import com.red_velvet_cake.dailytodo.data.model.PersonalTODORequest
 import okio.IOException
 
 class CreateTodoPresenter(
@@ -9,9 +9,9 @@ class CreateTodoPresenter(
 ) {
     private val todoService = TodoServiceImpl()
 
-    fun createPersonalTodo(todo: TODO) {
+    fun createPersonalTodo(personalTodoRequest: PersonalTODORequest) {
         todoService.createPersonalTodo(
-            todo,
+            personalTodoRequest,
             ::onCreatePersonalTodoSuccess,
             ::onCreatePersonalTodoFailure
         )

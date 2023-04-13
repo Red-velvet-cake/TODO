@@ -2,7 +2,7 @@ package com.red_velvet_cake.dailytodo.data
 
 import android.util.Log
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.model.*
+import com.red_velvet_cake.dailytodo.data.model.*
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -17,14 +17,14 @@ class TodoServiceImpl : TodoService {
     private val client = OkHttpClient()
 
     override fun createPersonalTodo(
-        todo: TODO,
+        personalTodoRequest: PersonalTODORequest,
         onCreatePersonalTodoSuccess: (Boolean) -> Unit,
         onCreatePersonalTodoFailure: (e: IOException) -> Unit
     ) {
 
         val requestBody = FormBody.Builder()
-            .add(TITLE, todo.title)
-            .add(DESCRIPTION, todo.description)
+            .add(TITLE, personalTodoRequest.title)
+            .add(DESCRIPTION, personalTodoRequest.description)
             .build()
 
         val url = HttpUrl.Builder()

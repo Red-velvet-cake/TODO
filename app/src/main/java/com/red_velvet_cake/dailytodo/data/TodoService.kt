@@ -1,13 +1,13 @@
 package com.red_velvet_cake.dailytodo.data
 
-import com.red_velvet_cake.dailytodo.model.*
+import com.red_velvet_cake.dailytodo.data.model.*
 import okio.IOException
 
 
 interface TodoService {
 
     fun createPersonalTodo(
-        todo: TODO,
+        personalTodoRequest: PersonalTODORequest,
         onCreatePersonalTodoSuccess: (Boolean) -> Unit,
         onCreatePersonalTodoFailure: (e: IOException) -> Unit
     )
