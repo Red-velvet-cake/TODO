@@ -4,8 +4,8 @@ import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.data.model.PersonalTODORequest
 import okio.IOException
 
-class CreateTodoPresenter(
-    private val view: ICreateTodoView,
+class CreatePersonalTodoPresenter(
+    private val view: ICreatePersonalTodoView,
 ) {
     private val todoService = TodoServiceImpl()
 
@@ -16,7 +16,6 @@ class CreateTodoPresenter(
             ::onCreatePersonalTodoFailure
         )
     }
-
 
     private fun onCreatePersonalTodoSuccess(isSuccess: Boolean) {
         view.onCreatePersonalTodoSuccess(isSuccess)
