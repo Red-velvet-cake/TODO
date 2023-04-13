@@ -1,7 +1,7 @@
 package com.red_velvet_cake.dailytodo.presenter.updateTeam
 
 import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
-import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
 import java.io.IOException
 
 class UpdateTeamPresenter(private val view: IMainView) {

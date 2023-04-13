@@ -1,6 +1,19 @@
 package com.red_velvet_cake.dailytodo.data
 
-import com.red_velvet_cake.dailytodo.domain.TodoService
+import android.util.Log
+import com.google.gson.Gson
+import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
+import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.FormBody
+import okhttp3.HttpUrl
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import okio.IOException
 
 class TodoServiceImpl : TodoService {
 
@@ -24,6 +37,7 @@ class TodoServiceImpl : TodoService {
             override fun onFailure(call: Call, e: IOException) {
                 onGetAllPersonalTodoFailure(e)
             }
+
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string().let {
                     val result = Gson().fromJson(it, GetAllPersonalTodosResponse::class.java)
