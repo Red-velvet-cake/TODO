@@ -5,50 +5,46 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.red_velvet_cake.dailytodo.R
-import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
-import com.red_velvet_cake.dailytodo.data.network.ApiClient
 import com.red_velvet_cake.dailytodo.databinding.ActivityLoginBinding
+import com.red_velvet_cake.dailytodo.model.login.LoginResponse
+import com.red_velvet_cake.dailytodo.presenter.login.IloginView
+import com.red_velvet_cake.dailytodo.presenter.login.LoginPresenter
 import com.red_velvet_cake.dailytodo.ui.base.BaseActivity
 import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
+import okio.IOException
 
-class LoginActivity : BaseActivity<ActivityLoginBinding>() {
+class LoginActivity : BaseActivity<ActivityLoginBinding>(), IloginView {
     override val LOG_TAG: String = LoginActivity::class.simpleName!!
 
     override val bindingInflater: (LayoutInflater) -> ActivityLoginBinding =
         ActivityLoginBinding::inflate
-    private val apiClient = ApiClient()
-    private val todoService = TodoServiceImpl(apiClient)
+
+    private val loginPresenter = LoginPresenter(this)
+
     override fun setUp() {
         setupSignUpTextView()
-
     }
 
     override fun addCallbacks() {
-        binding?.loginButton?.setOnClickListener {
-            // Assuming you have EditText views with the IDs 'usernameEditText' and 'passwordEditText'
-            val username = binding.userNameTextField.text.toString().trim()
-            val password = binding.passwordTextField.text.toString().trim()
-
-            if (username.isNotEmpty() && password.isNotEmpty()) {
-                login(username, password)
-            } else {
-            }
+        binding.loginButton.setOnClickListener {
+            val username = binding.userNameTextField.text.toString()
+            val password = binding.passwordTextField.text.toString()
+            loginPresenter.loginUser(username, password)
         }
     }
 
-    private fun login(username: String, password: String) {
-        todoService.login(username, password) { success, result ->
-            runOnUiThread {
-                if (success) {
-                } else {
-                }
-            }
-        }
+    override fun onLoginSuccess(loginResponse: LoginResponse) {
+        Log.d(LOG_TAG, "onLoginSuccess: ${loginResponse.username}")
+    }
+
+    override fun onLoginFailure(exception: IOException) {
+        Log.d(LOG_TAG, "onLoginSuccess: ${exception.message}")
     }
 
     override fun isInternetAvailable(connectionStatus: ConnectionStatus) {
@@ -75,7 +71,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         val endIndex = startIndex + "sign up".length
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                // Handle sign up click here
+
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -93,5 +89,4 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         binding.signUpTextView.text = spannableString
         binding.signUpTextView.movementMethod = LinkMovementMethod.getInstance()
     }
-
 }

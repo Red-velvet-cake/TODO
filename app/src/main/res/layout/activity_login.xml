@@ -31,7 +31,7 @@
     <EditText
         android:id="@+id/user_name_text_field"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_48dp"
+        android:layout_height="@dimen/_56dp"
         android:layout_marginStart="@dimen/_16dp"
         android:layout_marginTop="@dimen/_32dp"
         android:layout_marginEnd="@dimen/_16dp"
@@ -48,9 +48,9 @@
     <EditText
         android:id="@+id/password_text_field"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_48dp"
+        android:layout_height="@dimen/_56dp"
         android:layout_marginStart="@dimen/_16dp"
-        android:layout_marginTop="@dimen/_24dp"
+        android:layout_marginTop="@dimen/_12dp"
         android:layout_marginEnd="@dimen/_16dp"
         android:background="@drawable/custom_login_input"
         android:drawableStart="@drawable/ic_password"
@@ -81,6 +81,7 @@
         android:layout_marginEnd="@dimen/_16dp"
         android:background="@drawable/rounded_button"
         android:text="@string/login"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_text_field" />
