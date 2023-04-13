@@ -13,13 +13,13 @@ import androidx.core.content.ContextCompat
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.databinding.ActivityLoginBinding
 import com.red_velvet_cake.dailytodo.model.login.LoginResponse
-import com.red_velvet_cake.dailytodo.presenter.login.IloginView
+import com.red_velvet_cake.dailytodo.presenter.login.ILoginView
 import com.red_velvet_cake.dailytodo.presenter.login.LoginPresenter
 import com.red_velvet_cake.dailytodo.ui.base.BaseActivity
 import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
 import okio.IOException
 
-class LoginActivity : BaseActivity<ActivityLoginBinding>(), IloginView {
+class LoginActivity : BaseActivity<ActivityLoginBinding>(), ILoginView {
     override val LOG_TAG: String = LoginActivity::class.simpleName!!
 
     override val bindingInflater: (LayoutInflater) -> ActivityLoginBinding =

@@ -5,7 +5,7 @@ import com.red_velvet_cake.dailytodo.model.login.LoginRequest
 import com.red_velvet_cake.dailytodo.model.login.LoginResponse
 import okio.IOException
 
-class LoginPresenter(private val view: IloginView) {
+class LoginPresenter(private val view: ILoginView) {
     private val todoServiceImpl = TodoServiceImpl()
 
     fun loginUser(username: String, password: String) {
