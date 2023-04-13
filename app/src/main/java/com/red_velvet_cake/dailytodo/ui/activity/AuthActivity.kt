@@ -16,7 +16,4 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>() {
     override fun addCallbacks() {}
 
     override fun isInternetAvailable(connectionStatus: ConnectionStatus) {}
-
-
-
 }
