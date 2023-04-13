@@ -2,12 +2,13 @@ package com.red_velvet_cake.dailytodo.data
 
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.PersonalTODORequest
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
 import com.red_velvet_cake.dailytodo.data.model.login.LoginRequest
 import com.red_velvet_cake.dailytodo.data.model.login.LoginResponse
-import com.red_velvet_cake.dailytodo.data.model.*
+import okhttp3.Response
 import okio.IOException
 
 interface TodoService {
@@ -16,6 +17,14 @@ interface TodoService {
         personalTodoRequest: PersonalTODORequest,
         onCreatePersonalTodoSuccess: (Boolean) -> Unit,
         onCreatePersonalTodoFailure: (e: IOException) -> Unit
+    )
+
+    fun createTeamTodo(
+        title: String,
+        description: String,
+        assignee: String,
+        onCreateTeamTodoSuccess: (Response) -> Unit,
+        onCreateTeamTodoFailure: (IOException) -> Unit
     )
 
     fun loginUser(

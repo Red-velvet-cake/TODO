@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.PersonalTODORequest
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
@@ -11,7 +12,6 @@ import com.red_velvet_cake.dailytodo.data.model.login.LoginRequest
 import com.red_velvet_cake.dailytodo.data.model.login.LoginResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
-import com.red_velvet_cake.dailytodo.data.model.*
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -57,6 +57,42 @@ class TodoServiceImpl : TodoService {
                     val result = Gson().fromJson(it, LoginResponse::class.java)
                     onLoginUserSuccess(result)
                 }
+            }
+        })
+    }
+
+    override fun createTeamTodo(
+        title: String,
+        description: String,
+        assignee: String,
+        onCreateTeamTodoSuccess: (Response) -> Unit,
+        onCreateTeamTodoFailure: (IOException) -> Unit
+    ) {
+        val requestBody = FormBody.Builder().add(TITLE, title)
+            .add(DESCRIPTION, description)
+            .add(ASSIGNEE, assignee).build()
+
+        val url = HttpUrl.Builder().scheme(SCHEME)
+            .host(HOST)
+            .addPathSegment(TO_DO_PATH_SEGMENT)
+            .addPathSegment(TEAM_PATH_SEGMENT)
+            .addQueryParameter(TITLE, title)
+            .addQueryParameter(DESCRIPTION, description)
+            .addQueryParameter(ASSIGNEE, assignee)
+            .build()
+
+        val request = Request.Builder().url(url).addHeader(HEADER_AUTHORIZATION, AUTH_TOKEN)
+            .post(requestBody).build()
+
+        client.newCall(request).enqueue(object :Callback{
+            override fun onFailure(call: Call, e: IOException) {
+                Log.i("todo",e.message.toString())
+                onCreateTeamTodoFailure(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                Log.i("todo",response.body?.string().toString())
+                onCreateTeamTodoSuccess(response)
             }
         })
     }

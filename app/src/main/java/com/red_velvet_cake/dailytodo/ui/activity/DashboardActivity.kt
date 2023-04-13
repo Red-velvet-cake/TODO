@@ -4,6 +4,7 @@ package com.red_velvet_cake.dailytodo.ui.activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.widget.Toast
+import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.databinding.ActivityDashboardBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseActivity
 import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
