@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.presenter.createTodo
+package com.red_velvet_cake.dailytodo.presenter.createPersonalTodo
 
 import okio.IOException
 

@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.presenter.createTodo
+package com.red_velvet_cake.dailytodo.presenter.createPersonalTodo
 
 import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.data.model.PersonalTODORequest
