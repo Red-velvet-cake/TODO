@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
 import okhttp3.Call
@@ -16,8 +17,9 @@ import okhttp3.Response
 import okio.IOException
 
 class TodoServiceImpl : TodoService {
-
+    private val authOkHttpClient = AuthOkHttpClient.getInstance()
     private val client = OkHttpClient()
+    private val gson = Gson()
 
     override fun getAllPersonalTodos(
         onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
@@ -161,6 +163,43 @@ class TodoServiceImpl : TodoService {
         })
     }
 
+    override fun registerAccount(
+        userName: String,
+        password: String,
+        teamId: String,
+        onRegisterAccountSuccess: (registerAccountResponse: RegisterAccountResponse) -> Unit,
+        onRegisterAccountFailure: (e: IOException) -> Unit
+    ) {
+        val formBody = FormBody.Builder()
+            .add(USERNAME, userName)
+            .add(PASSWORD, password)
+            .add(TEAM_ID, teamId)
+            .build()
+
+        val url = authOkHttpClient.httpUrlBuilder
+            .addPathSegment(REGISTER_PATH)
+            .build()
+
+        val request = Request.Builder()
+            .url(url)
+            .post(formBody)
+            .build()
+
+        authOkHttpClient.client
+            .newCall(request)
+            .enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    onRegisterAccountFailure(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val body = response.body?.string()
+                    val result = gson.fromJson(body, RegisterAccountResponse::class.java)
+                    onRegisterAccountSuccess(result)
+                }
+            })
+    }
+
     companion object {
         private const val PARAM_ID = "id"
         private const val PARAM_STATUS = "status"
@@ -172,5 +211,9 @@ class TodoServiceImpl : TodoService {
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6Ijk4YWRiZWJkLTg2YmQtNDg3Yy1hYjI1LWVlY2IzOGQxZjIxZSIsInRlYW1JZCI6IjAxYThhOTg4LTQ0NjItNDNhNi1hOThhLTE2MjY4NzNmYTc4NyIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxNDAyMjc3fQ.iCNnBgrYNOZSc707UD-oY8h9PsW0WNyocAmD7-hMucM"
         private const val TO_DO_PATH_SEGMENT = "todo"
         private const val TEAM_PATH_SEGMENT = "team"
+        private const val REGISTER_PATH = "signup"
+        private const val USERNAME = "username"
+        private const val PASSWORD = "password"
+        private const val TEAM_ID = "teamId"
     }
 }
