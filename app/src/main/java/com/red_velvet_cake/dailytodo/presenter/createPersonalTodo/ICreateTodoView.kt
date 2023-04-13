@@ -2,7 +2,7 @@ package com.red_velvet_cake.dailytodo.presenter.createPersonalTodo
 
 import okio.IOException
 
-interface ICreateTodoView {
+interface ICreatePersonalTodoView {
 
     fun onCreatePersonalTodoSuccess(isSuccess: Boolean)
     fun onCreatePersonalTodoFailure(e: IOException)
