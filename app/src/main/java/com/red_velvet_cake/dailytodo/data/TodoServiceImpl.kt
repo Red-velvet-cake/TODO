@@ -11,6 +11,7 @@ import com.red_velvet_cake.dailytodo.data.model.login.LoginRequest
 import com.red_velvet_cake.dailytodo.data.model.login.LoginResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
+import com.red_velvet_cake.dailytodo.data.model.*
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -57,6 +58,42 @@ class TodoServiceImpl : TodoService {
                     onLoginUserSuccess(result)
                 }
             }
+        })
+    }
+
+    override fun createPersonalTodo(
+        personalTodoRequest: PersonalTODORequest,
+        onCreatePersonalTodoSuccess: (Boolean) -> Unit,
+        onCreatePersonalTodoFailure: (e: IOException) -> Unit
+    ) {
+
+        val requestBody = FormBody.Builder()
+            .add(TITLE, personalTodoRequest.title)
+            .add(DESCRIPTION, personalTodoRequest.description)
+            .build()
+
+        val url = HttpUrl.Builder()
+            .scheme(SCHEME)
+            .host(HOST)
+            .addPathSegment(TO_DO_PATH_SEGMENT)
+            .addPathSegment(PATH_PERSONAL)
+            .build()
+
+        val request = Request
+            .Builder()
+            .url(url)
+            .addHeader(HEADER_AUTHORIZATION, "Bearer $AUTH_TOKEN")
+            .put(requestBody)
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                onCreatePersonalTodoFailure(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                onCreatePersonalTodoSuccess(response.isSuccessful)
+            }
+
         })
     }
 
@@ -125,6 +162,7 @@ class TodoServiceImpl : TodoService {
             }
 
         })
+
     }
 
     override fun updatePersonalTodoStatus(
@@ -253,5 +291,9 @@ class TodoServiceImpl : TodoService {
         private const val PARAM_USERNAME = "username"
         private const val PARAM_PASSWORD = "password"
         private const val PATH_LOGIN = "login"
+
+        private const val TITLE = "title"
+        private const val DESCRIPTION = "description"
+        private const val ASSIGNEE = "assignee"
     }
 }

@@ -7,9 +7,16 @@ import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
 import com.red_velvet_cake.dailytodo.data.model.login.LoginRequest
 import com.red_velvet_cake.dailytodo.data.model.login.LoginResponse
+import com.red_velvet_cake.dailytodo.data.model.*
 import okio.IOException
 
 interface TodoService {
+
+    fun createPersonalTodo(
+        personalTodoRequest: PersonalTODORequest,
+        onCreatePersonalTodoSuccess: (Boolean) -> Unit,
+        onCreatePersonalTodoFailure: (e: IOException) -> Unit
+    )
 
     fun loginUser(
         loginRequest: LoginRequest,
@@ -21,14 +28,14 @@ interface TodoService {
         todoId: String,
         newTodoStatus: Int,
         onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
-        onUpdatePersonalTodoStatusFailure: (e: java.io.IOException) -> Unit
+        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
     )
 
     fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
         onUpdateTeamTodoStatusSuccess: (updateTeamStatusResponse: UpdateTeamTodoStatusResponse) -> Unit,
-        onUpdateTeamTodoStatusFailure: (e: java.io.IOException) -> Unit
+        onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
     )
 
     fun getAllPersonalTodos(
