@@ -2,17 +2,13 @@ package com.red_velvet_cake.dailytodo.data
 
 import android.util.Log
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
-import com.red_velvet_cake.dailytodo.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoStatusResponse
-import com.red_velvet_cake.dailytodo.model.login.LoginRequest
-import com.red_velvet_cake.dailytodo.model.login.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.data.model.login.LoginRequest
+import com.red_velvet_cake.dailytodo.data.model.login.LoginResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
