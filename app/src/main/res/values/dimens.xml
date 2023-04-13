@@ -7,6 +7,9 @@
     <dimen name="_16dp">16dp</dimen>
     <dimen name="_24dp">24dp</dimen>
     <dimen name="_32dp">32dp</dimen>
+    <dimen name="_48dp">48dp</dimen>
+    <dimen name="_56dp">56dp</dimen>
+    <dimen name="_94dp">94dp</dimen>
 
 
     <!--    fonts -->
