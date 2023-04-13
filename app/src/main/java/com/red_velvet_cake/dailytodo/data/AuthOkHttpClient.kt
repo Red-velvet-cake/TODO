@@ -6,7 +6,7 @@ import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
-class AuthOkHttpClient {
+class AuthOkHttpClient private constructor() {
     private val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     val httpUrlBuilder = HttpUrl.Builder()
