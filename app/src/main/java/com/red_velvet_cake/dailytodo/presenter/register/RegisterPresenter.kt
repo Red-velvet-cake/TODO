@@ -1,13 +1,16 @@
 package com.red_velvet_cake.dailytodo.presenter.register
 
 import com.red_velvet_cake.dailytodo.data.TodoService
+import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import java.io.IOException
 
 class RegisterPresenter(
     private val view: IRegisterView,
-    private val service: TodoService
 ) {
+
+    private val service: TodoService = TodoServiceImpl()
+
     fun registerAccount(username: String, password: String, teamId: String) {
         service.registerAccount(
             username,

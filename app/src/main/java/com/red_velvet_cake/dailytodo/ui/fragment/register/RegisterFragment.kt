@@ -4,7 +4,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.red_velvet_cake.dailytodo.BuildConfig
-import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.databinding.FragmentRegisterBinding
 import com.red_velvet_cake.dailytodo.presenter.register.IRegisterView
@@ -12,7 +11,7 @@ import com.red_velvet_cake.dailytodo.presenter.register.RegisterPresenter
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), IRegisterView {
-    private val presenter = RegisterPresenter(this, TodoServiceImpl())
+    private val presenter = RegisterPresenter(this)
 
     companion object {
         const val TAG = "RegisterFragment"
