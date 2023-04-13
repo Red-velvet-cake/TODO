@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.model.login
+package com.red_velvet_cake.dailytodo.data.model.login
 
 data class LoginResponse(
     val userId: String,
