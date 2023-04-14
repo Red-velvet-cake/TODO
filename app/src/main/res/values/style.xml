@@ -37,4 +37,5 @@
     <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
         <item name="titleTextAppearance">@style/ToolbarTextStyle</item>
     </style>
+
 </resources>
