@@ -22,5 +22,10 @@
 
     <color name="on_primary">#DEFFFFFF</color>
 
+    <color name="light_secondary">#FFFFFF</color>
+    <color name="color_todo_title">#99000000</color>
+    <color name="color_todo_description">#99000000</color>
+    <color name="black_38">#61000000</color>
+
 
 </resources>

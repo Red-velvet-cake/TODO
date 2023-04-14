@@ -28,6 +28,7 @@ class MainPresenter(private val view: IMainView) {
         )
     }
 
+
     private fun onUpdatePersonalTodoStatusSuccess(updatePersonalStatusResponse: UpdatePersonalStatusResponse) {
         view.onUpdatePersonalTodoStatusSuccess(updatePersonalStatusResponse)
     }

@@ -33,4 +33,11 @@
     <string name="don_t_have_account_sign_up">Don’t have account? sign up</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="register">Register</string>
+    <string name="aya_abdelaziz_hawraa"><![CDATA[Aya Abdelaziz &Hawraa....]]></string>
+    <string name="search_view_hint">search...</string>
+    <string name="uxui_studio_meeting">UXUI Studio Meeting</string>
+    <string name="_21_30">21:30</string>
+    <string name="_24_08_2023">24-08-2023</string>
+    <string name="todo_description">This is my description amet consectetur. Nec sed ut venenatis. Nulla amet amet...</string>
+
 </resources>
