@@ -2,12 +2,7 @@ package com.red_velvet_cake.dailytodo.data
 
 import android.util.Log
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.PersonalTODORequest
-import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.data.model.*
 import com.red_velvet_cake.dailytodo.data.model.login.LoginRequest
 import com.red_velvet_cake.dailytodo.data.model.login.LoginResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
@@ -65,38 +60,38 @@ class TodoServiceImpl : TodoService {
         title: String,
         description: String,
         assignee: String,
-        onCreateTeamTodoSuccess: (Response) -> Unit,
+        onCreateTeamTodoSuccess: (CreateTodoTeam) -> Unit,
         onCreateTeamTodoFailure: (IOException) -> Unit
     ) {
-        val requestBody = FormBody.Builder().add(TITLE, title)
-            .add(DESCRIPTION, description)
-            .add(ASSIGNEE, assignee).build()
+        val requestBody = FormBody.Builder().add("title", title)
+            .add("description", description)
+            .add("assignee", assignee).build()
 
-        val url = HttpUrl.Builder().scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(TEAM_PATH_SEGMENT)
-            .addQueryParameter(TITLE, title)
-            .addQueryParameter(DESCRIPTION, description)
-            .addQueryParameter(ASSIGNEE, assignee)
+
+        val url = HttpUrl.Builder().scheme("https")
+            .host("team-todo-62dmq.ondigitalocean.app")
+            .addPathSegment("todo")
+            .addPathSegment("team")
             .build()
-
-        val request = Request.Builder().url(url).addHeader(HEADER_AUTHORIZATION, AUTH_TOKEN)
+        val request = Request.Builder().url(url).addHeader("Authorization",AUTH_TOKEN)
             .post(requestBody).build()
-
-        client.newCall(request).enqueue(object :Callback{
+        client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                Log.i("todo",e.message.toString())
                 onCreateTeamTodoFailure(e)
+
             }
 
             override fun onResponse(call: Call, response: Response) {
-                Log.i("todo",response.body?.string().toString())
-                onCreateTeamTodoSuccess(response)
-            }
-        })
-    }
+                response.body?.string().let {
+                    val result = Gson().fromJson(it, CreateTodoTeam::class.java)
+                    onCreateTeamTodoSuccess(result)
+                }
 
+            }
+
+        })
+
+    }
     override fun createPersonalTodo(
         personalTodoRequest: PersonalTODORequest,
         onCreatePersonalTodoSuccess: (Boolean) -> Unit,
