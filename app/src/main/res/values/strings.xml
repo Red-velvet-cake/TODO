@@ -39,5 +39,7 @@
     <string name="_21_30">21:30</string>
     <string name="_24_08_2023">24-08-2023</string>
     <string name="todo_description">This is my description amet consectetur. Nec sed ut venenatis. Nulla amet amet...</string>
+    <string name="all_">All</string>
+    <string name="todo">TODO</string>
 
 </resources>

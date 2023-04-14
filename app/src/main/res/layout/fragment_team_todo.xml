@@ -18,27 +18,64 @@
             android:id="@+id/app_bar"
             style="@style/ToolbarStyle"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_left"
             app:title="@string/team" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_56"
-        android:layout_marginHorizontal="@dimen/_16dp"
-        android:layout_marginTop="@dimen/_16dp"
-        android:background="@drawable/bg_search_view_default"
-        android:backgroundTint="@color/light_secondary"
-        app:iconifiedByDefault="false"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16dp"
+        app:chipSpacing="@dimen/_8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
-        app:queryBackground="@null"
-        app:queryHint="@string/search_view_hint"
-        app:searchIcon="@drawable/ic_search" />
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/card_background"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/all_"
+            android:textColor="@color/light_grey_color"
+            android:textSize="@dimen/_12sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_todo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/chip_background_color"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/todo"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_12sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_in_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/card_background"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/in_progress"
+            android:textColor="@color/light_grey_color"
+            android:textSize="@dimen/_12sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/card_background"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/done"
+            android:textColor="@color/light_grey_color"
+            android:textSize="@dimen/_12sp" />
+
+    </com.google.android.material.chip.ChipGroup>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/team_todo_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16dp"
@@ -47,7 +84,7 @@
         android:paddingTop="@dimen/_16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintTop_toBottomOf="@+id/chip_group"
         tools:listitem="@layout/layout_team_todo_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

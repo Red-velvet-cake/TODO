@@ -1,85 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/_8dp"
-    android:background="@color/card_background"
-    app:cardCornerRadius="@dimen/_16dp"
-    card_view:cardElevation="@dimen/_0dp">
+    android:background="@drawable/bg_card_default"
+    android:orientation="vertical"
+    android:padding="@dimen/_16dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/_16dp">
+    <TextView
+        android:id="@+id/todo_title_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/uxui_studio_meeting"
+        android:textColor="@color/color_todo_title"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/todo_title_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:text="@string/uxui_studio_meeting"
-            android:textColor="@color/color_todo_title"
-            android:textSize="@dimen/_16sp" />
+    <TextView
+        android:id="@+id/todo_description_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16dp"
+        android:background="@android:color/transparent"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins"
+        android:maxLines="2"
+        android:text="@string/todo_description"
+        android:textColor="@color/color_todo_description"
+        android:textSize="@dimen/_12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todo_title_textview" />
 
-        <TextView
-            android:id="@+id/todo_description_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16dp"
-            android:fontFamily="@font/poppins"
-            android:text="@string/todo_description"
-            android:textColor="@color/color_todo_description"
-            android:textSize="@dimen/_12sp" />
+    <TextView
+        android:id="@+id/textview_todo_assignee_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8dp"
+        android:layout_weight="2"
+        android:background="@android:color/transparent"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/aya_abdelaziz_hawraa"
+        android:textColor="@color/black_38"
+        android:textSize="@dimen/_8sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todo_description_textview" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
+    <TextView
+        android:id="@+id/textview_todo_creation_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginEnd="@dimen/_12dp"
+        android:layout_weight=".5"
+        android:background="@android:color/transparent"
+        android:drawablePadding="@dimen/_4dp"
+        android:gravity="center_vertical"
+        android:text="@string/_21_30"
+        android:textColor="@color/black_38"
+        android:textSize="@dimen/_8sp"
+        app:drawableStartCompat="@drawable/ic_time"
+        app:layout_constraintEnd_toStartOf="@+id/textview_todo_creation_date"
+        app:layout_constraintTop_toBottomOf="@+id/todo_description_textview" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:ellipsize="end"
-                android:fontFamily="@font/poppins_medium"
-                android:text="@string/aya_abdelaziz_hawraa"
-                android:textColor="@color/black_38"
-                android:textSize="@dimen/_8sp" />
+    <TextView
+        android:id="@+id/textview_todo_creation_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/_8dp"
+        android:layout_weight=".5"
+        android:background="@android:color/transparent"
+        android:drawablePadding="@dimen/_4dp"
+        android:gravity="center_vertical"
+        android:text="@string/_24_08_2023"
+        android:textColor="@color/black_38"
+        android:textSize="@dimen/_8sp"
+        app:drawableStartCompat="@drawable/ic_calnder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todo_description_textview" />
 
-            <TextView
-                android:id="@+id/creation_time_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:drawablePadding="@dimen/_4dp"
-                android:gravity="center_vertical"
-                android:text="@string/_21_30"
-                android:textColor="@color/black_38"
-                android:textSize="@dimen/_8sp"
-                app:drawableStartCompat="@drawable/ic_time" />
 
-            <TextView
-                android:id="@+id/creation_date_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_weight=".5"
-                android:drawablePadding="@dimen/_4dp"
-                android:gravity="center_vertical"
-                android:text="@string/_24_08_2023"
-                android:textColor="@color/black_38"
-                android:textSize="@dimen/_8sp"
-                app:drawableStartCompat="@drawable/ic_calnder" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
 
 
 
