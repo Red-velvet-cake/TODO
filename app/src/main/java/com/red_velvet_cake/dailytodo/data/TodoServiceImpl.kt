@@ -2,6 +2,7 @@ package com.red_velvet_cake.dailytodo.data
 
 import android.util.Log
 import com.google.gson.Gson
+import com.orhanobut.hawk.Hawk
 import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
@@ -14,7 +15,8 @@ import okio.IOException
 class TodoServiceImpl : TodoService {
 
     private val client = OkHttpClient()
-
+    private val authToken: String
+        get() = Hawk.get<String>("auth_token") ?: ""
     override fun getAllPersonalTodos(
         onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
         onGetAllPersonalTodoFailure: (e: IOException) -> Unit
@@ -27,7 +29,7 @@ class TodoServiceImpl : TodoService {
             .build()
 
         val request =
-            Request.Builder().url(url).header(HEADER_AUTHORIZATION, "Bearer $AUTH_TOKEN").build()
+            Request.Builder().url(url).header(HEADER_AUTHORIZATION, "Bearer $authToken").build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -64,7 +66,7 @@ class TodoServiceImpl : TodoService {
         val request = Request
             .Builder()
             .url(url)
-            .addHeader(HEADER_AUTHORIZATION, "Bearer $AUTH_TOKEN")
+            .addHeader(HEADER_AUTHORIZATION, "Bearer $authToken")
             .put(requestBody)
             .build()
 
@@ -112,6 +114,7 @@ class TodoServiceImpl : TodoService {
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let {
                     val result = Gson().fromJson(it, LoginResponse::class.java)
+                    Hawk.put(authToken, result.token)
                     onLoginUserSuccess(result)
                 }
             }
@@ -139,7 +142,7 @@ class TodoServiceImpl : TodoService {
         val request = Request.Builder()
             .url(url).put(requestBody).addHeader(
                 HEADER_AUTHORIZATION,
-                "bearer $AUTH_TOKEN"
+                "bearer $authToken"
             ).build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -171,7 +174,7 @@ class TodoServiceImpl : TodoService {
         val request = Request
             .Builder()
             .url(url)
-            .addHeader(HEADER_AUTHORIZATION, AUTH_TOKEN)
+            .addHeader(HEADER_AUTHORIZATION, authToken)
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -198,8 +201,6 @@ class TodoServiceImpl : TodoService {
         private const val HOST = "team-todo-62dmq.ondigitalocean.app"
         private const val PATH_PERSONAL = "personal"
         private const val HEADER_AUTHORIZATION = "Authorization"
-        private const val AUTH_TOKEN =
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6Ijk4YWRiZWJkLTg2YmQtNDg3Yy1hYjI1LWVlY2IzOGQxZjIxZSIsInRlYW1JZCI6IjAxYThhOTg4LTQ0NjItNDNhNi1hOThhLTE2MjY4NzNmYTc4NyIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxNDAyMjc3fQ.iCNnBgrYNOZSc707UD-oY8h9PsW0WNyocAmD7-hMucM"
         private const val TO_DO_PATH_SEGMENT = "todo"
         private const val TEAM_PATH_SEGMENT = "team"
         private const val PARAM_USERNAME = "username"
