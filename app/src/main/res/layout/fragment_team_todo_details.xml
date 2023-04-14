@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -20,23 +21,20 @@
             android:layout_height="match_parent"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-
-
-
     <TextView
         android:fontFamily="@font/poppins"
-        android:id="@+id/name_assigne"
+        android:id="@+id/textview_assigne_name"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_12dp"
-        app:layout_constraintTop_toBottomOf="@id/name_task"
-        app:layout_constraintStart_toStartOf="@id/name_task"
+        app:layout_constraintTop_toBottomOf="@id/textview_todo_name"
+        app:layout_constraintStart_toStartOf="@id/textview_todo_name"
         tools:text="Yaseen Zaqut"
-        style="@style/TextViewInDetailsTodo"
+        style="@style/TextViewInTodoDetails"
         android:layout_marginTop="@dimen/_12dp"
          />
 
     <TextView
-        android:id="@+id/name_task"
+        android:id="@+id/textview_todo_name"
         android:layout_width="@dimen/_166dp"
         android:layout_height="@dimen/_24dp"
         tools:text="UX UI Studio Meeting"
@@ -54,17 +52,17 @@
         android:layout_height="@dimen/_12dp"
         android:src="@drawable/ic_calnder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name_assigne"
+        app:layout_constraintTop_toBottomOf="@id/textview_assigne_name"
         android:layout_marginTop="@dimen/_18dp"
         android:layout_marginStart="@dimen/_18dp"
         />
     
     <TextView
-        android:id="@+id/textview_date"
+        android:id="@+id/textview_creation_date"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_12dp"
         tools:text="24-08-2023"
-        style="@style/TextViewInDetailsTodo"
+        style="@style/TextViewInTodoDetails"
         app:layout_constraintStart_toEndOf="@id/icon_calender"
         app:layout_constraintTop_toTopOf="@id/icon_calender"
         />
@@ -76,19 +74,22 @@
         android:background="@android:color/transparent"
         android:src="@drawable/ic_time"
         android:layout_marginStart="@dimen/_8dp"
-        app:layout_constraintStart_toEndOf="@id/textview_date"
-        app:layout_constraintTop_toTopOf="@id/textview_date"
+        app:layout_constraintStart_toEndOf="@id/textview_creation_date"
+        app:layout_constraintTop_toTopOf="@id/textview_creation_date"
         />
+
     <TextView
+        android:id="@+id/textview_todo_creation_time"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_12dp"
         tools:text="21:30"
-        style="@style/TextViewInDetailsTodo"
+        style="@style/TextViewInTodoDetails"
         app:layout_constraintStart_toEndOf="@id/icon_time"
         app:layout_constraintTop_toTopOf="@id/icon_time"
         />
 
     <TextView
+        android:id="@+id/textview_details_todo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/icon_calender"
@@ -98,6 +99,5 @@
         android:layout_marginVertical="@dimen/_18dp"
         android:textColor="@color/secondary_text"
         />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
