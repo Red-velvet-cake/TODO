@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <com.github.mikephil.charting.charts.RadarChart
+        android:id="@+id/radar_chart_statistic"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="@dimen/_0dp"
+        android:layout_margin="@dimen/_16dp"
+        app:layout_constraintBottom_toBottomOf="@id/card_statistic_personal"
+        app:layout_constraintEnd_toEndOf="@+id/card_statistic_personal"
+        app:layout_constraintStart_toEndOf="@+id/text_pending_tasks"
+        app:layout_constraintTop_toTopOf="@id/card_statistic_personal" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_statistic_personal"
         android:layout_width="match_parent"
