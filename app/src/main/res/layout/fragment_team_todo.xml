@@ -37,29 +37,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/card_background"
-            android:text="@string/all_" />
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/all_"
+            android:textColor="@color/light_grey_color"
+            android:textSize="@dimen/_12sp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_todo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/chip_background_color"
+            android:fontFamily="@font/poppins_semibold"
             android:text="@string/todo"
-            android:textColor="@color/primary" />
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_12sp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_in_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/card_background"
-            android:text="@string/in_progress" />
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/in_progress"
+            android:textColor="@color/light_grey_color"
+            android:textSize="@dimen/_12sp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/card_background"
-            android:text="@string/done" />
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/done"
+            android:textColor="@color/light_grey_color"
+            android:textSize="@dimen/_12sp" />
 
     </com.google.android.material.chip.ChipGroup>
 
