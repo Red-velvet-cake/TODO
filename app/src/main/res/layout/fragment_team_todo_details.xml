@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="ba"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/primary"
+        >
+    </View>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_104dp"
+        app:cardElevation="@dimen/_0dp"
+        android:layout_marginHorizontal="16dp"
+        app:cardCornerRadius="@dimen/_8dp"
+        android:layout_marginTop="@dimen/_142dp"
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        app:layout_constraintBottom_toBottomOf="@id/appbar"
+        tools:layout_editor_absoluteX="0dp">
+
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/name_task"
+        android:layout_width="@dimen/_166dp"
+        android:layout_height="@dimen/_24dp"
+        tools:text="UX UI Studio Meeting"
+        android:textSize="@dimen/_16sp"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@id/cardview_title"
+        app:layout_constraintStart_toStartOf="@id/cardview_title"
+        android:layout_marginTop="@dimen/_24dp"
+        android:layout_marginStart="@dimen/_16sp"
+        android:textColor="@color/primary_text"
+        />
+
+    <ImageView
+        android:id="@+id/ic_calender"
+        android:layout_width="@dimen/_12dp"
+        android:layout_height="@dimen/_12dp"
+        android:src="@drawable/ic_calnder"
+        app:layout_constraintStart_toStartOf="@id/cardview_title"
+        app:layout_constraintTop_toBottomOf="@id/name_task"
+        android:layout_marginTop="@dimen/_18dp"
+        android:layout_marginStart="@dimen/_18dp"
+        />
+    
+    <TextView
+        android:id="@+id/textview_date"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_12dp"
+        tools:text="24-08-2023"
+        style="@style/TextViewInDetailsTodo"
+        app:layout_constraintStart_toEndOf="@id/ic_calender"
+        app:layout_constraintTop_toTopOf="@id/ic_calender"
+        />
+    
+    <ImageView
+        android:id="@+id/ic_time"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_14dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_time"
+        android:layout_marginStart="@dimen/_8dp"
+        app:layout_constraintStart_toEndOf="@id/textview_date"
+        app:layout_constraintTop_toTopOf="@id/textview_date"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_12dp"
+        tools:text="21:30"
+        style="@style/TextViewInDetailsTodo"
+        app:layout_constraintStart_toEndOf="@id/ic_time"
+        app:layout_constraintTop_toTopOf="@id/ic_time"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_descreption"
+        android:layout_width="match_parent"
+        app:cardElevation="@dimen/_0dp"
+        android:layout_height="@dimen/_328dp"
+        app:layout_constraintTop_toBottomOf="@id/cardview_title"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_16dp"
+        app:cardCornerRadius="@dimen/_8dp"
+        />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/cardview_descreption"
+        app:layout_constraintEnd_toEndOf="@id/cardview_descreption"
+        app:layout_constraintStart_toStartOf="@id/cardview_descreption"
+        android:layout_marginHorizontal="@dimen/_12dp"
+        android:layout_marginTop="@dimen/_36dp"
+        android:background="@android:color/transparent"
+        tools:text="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        android:textSize="@dimen/_12sp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

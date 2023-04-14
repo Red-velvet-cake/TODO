@@ -10,6 +10,10 @@
     <dimen name="_48dp">48dp</dimen>
     <dimen name="_56dp">56dp</dimen>
     <dimen name="_94dp">94dp</dimen>
+    <dimen name="_104dp">104dp</dimen>
+    <dimen name="_200dp">200dp</dimen>
+    <dimen name="_142dp">142dp</dimen>
+    <dimen name="_166dp">166dp</dimen>
 
 
     <!--    fonts -->
@@ -20,5 +24,12 @@
 
 
     <dimen name="_0dp">0dp</dimen>
+    <dimen name="_18dp">18dp</dimen>
+    <dimen name="_6dp">6dp</dimen>
+    <dimen name="_14dp">14dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_328dp">328dp</dimen>
+    <dimen name="_36dp">36dp</dimen>
+
 
 </resources>
