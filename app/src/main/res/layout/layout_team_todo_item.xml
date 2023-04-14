@@ -38,7 +38,7 @@
         android:weightSum="3">
 
         <TextView
-            android:id="@+id/"
+            android:id="@+id/textview_todo_assignee_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -50,7 +50,7 @@
             android:textSize="@dimen/_8sp" />
 
         <TextView
-            android:id="@+id/creation_time_textview"
+            android:id="@+id/textview_todo_creation_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
@@ -63,7 +63,7 @@
             app:drawableStartCompat="@drawable/ic_time" />
 
         <TextView
-            android:id="@+id/creation_date_textview"
+            android:id="@+id/textview_todo_creation_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
