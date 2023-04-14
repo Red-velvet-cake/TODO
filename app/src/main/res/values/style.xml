@@ -35,9 +35,6 @@
     </style>
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
-        <item name="android:background">@color/background</item>
-        <item name="theme">@style/Theme.DailyTODO</item>
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="titleTextAppearance">@style/ToolbarTextStyle</item>
     </style>
 </resources>
