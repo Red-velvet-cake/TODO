@@ -1,15 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.PersonalTodoFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
+    tools:context=".ui.fragment.register.PersonalTodosFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/card_background"
+        app:navigationIcon="@drawable/ic_left"
+        app:title="@string/personal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
-</FrameLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_56dp"
+        android:layout_marginTop="@dimen/_32dp"
+        app:boxStrokeWidth="@dimen/_0dp"
+        app:boxStrokeWidthFocused="@dimen/_0dp"
+        app:hintEnabled="false"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_bar"
+            style="@style/EditTextDefaultStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_56dp"
+            android:drawableStart="@drawable/ic_search"
+            android:hint="@string/search"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_bar_layout"
+        tools:listitem="@layout/item_personal_todo"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
