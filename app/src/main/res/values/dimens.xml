@@ -30,6 +30,7 @@
     <dimen name="_20dp">20dp</dimen>
     <dimen name="_328dp">328dp</dimen>
     <dimen name="_36dp">36dp</dimen>
+    <dimen name="_26dp">26dp</dimen>
 
 
 </resources>

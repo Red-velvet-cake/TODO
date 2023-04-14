@@ -10,7 +10,6 @@
         app:title="@string/details"
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:outlineSpotShadowColor="@color/accent"
         android:layout_height="@dimen/_56dp"
         app:layout_constraintTop_toTopOf="parent"
         >
@@ -23,76 +22,64 @@
 
     <TextView
         android:fontFamily="@font/poppins"
-        android:id="@+id/textview_assigne_name"
+        android:id="@+id/text_view_assigne_name"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_12dp"
-        app:layout_constraintTop_toBottomOf="@id/textview_todo_name"
-        app:layout_constraintStart_toStartOf="@id/textview_todo_name"
+        app:layout_constraintTop_toBottomOf="@id/text_view_todo_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/_16dp"
         tools:text="Yaseen Zaqut"
         style="@style/TextViewInTodoDetails"
         android:layout_marginTop="@dimen/_12dp"
          />
 
     <TextView
-        android:id="@+id/textview_todo_name"
-        android:layout_width="@dimen/_166dp"
-        android:layout_height="@dimen/_24dp"
-        tools:text="UX UI Studio Meeting"
-        android:textSize="@dimen/_16sp"
-        app:layout_constraintTop_toBottomOf="@id/appbar"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/text_view_todo_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_24dp"
-        android:layout_marginStart="@dimen/_16sp"
+        android:paddingEnd="@dimen/_16dp"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginEnd="@dimen/_16dp"
         android:textColor="@color/primary_text"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        tools:text="UX UI Studio Meeting "
         />
 
-    <ImageView
-        android:id="@+id/icon_calender"
-        android:layout_width="@dimen/_12dp"
-        android:layout_height="@dimen/_12dp"
-        android:src="@drawable/ic_calnder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_assigne_name"
-        android:layout_marginTop="@dimen/_18dp"
-        android:layout_marginStart="@dimen/_18dp"
-        />
-    
     <TextView
-        android:id="@+id/textview_creation_date"
+        android:id="@+id/text_view_creation_date"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_12dp"
         tools:text="24-08-2023"
+        android:drawablePadding="@dimen/_6dp"
+        android:layout_marginStart="@dimen/_16dp"
         style="@style/TextViewInTodoDetails"
-        app:layout_constraintStart_toEndOf="@id/icon_calender"
-        app:layout_constraintTop_toTopOf="@id/icon_calender"
-        />
-    
-    <ImageView
-        android:id="@+id/icon_time"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_14dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_time"
-        android:layout_marginStart="@dimen/_8dp"
-        app:layout_constraintStart_toEndOf="@id/textview_creation_date"
-        app:layout_constraintTop_toTopOf="@id/textview_creation_date"
-        />
+        android:layout_marginTop="@dimen/_26dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_view_assigne_name"
+        app:drawableStartCompat="@drawable/ic_calender_small" />
+
 
     <TextView
-        android:id="@+id/textview_todo_creation_time"
+        android:id="@+id/text_view_todo_creation_time"
+        android:drawablePadding="@dimen/_6dp"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_12dp"
         tools:text="21:30"
         style="@style/TextViewInTodoDetails"
-        app:layout_constraintStart_toEndOf="@id/icon_time"
-        app:layout_constraintTop_toTopOf="@id/icon_time"
-        />
+        app:layout_constraintStart_toEndOf="@id/text_view_creation_date"
+        app:layout_constraintTop_toTopOf="@id/text_view_creation_date"
+        app:drawableStartCompat="@drawable/ic_time_small" />
 
     <TextView
-        android:id="@+id/textview_details_todo"
+        android:id="@+id/text_view_todo_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/icon_calender"
+        app:layout_constraintTop_toBottomOf="@id/text_view_creation_date"
         tools:text="@string/details_todos"
         android:paddingHorizontal="@dimen/_16dp"
         android:fontFamily="@font/poppins"
