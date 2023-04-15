@@ -242,24 +242,36 @@ class TodoServiceImpl : TodoService {
         onRegisterAccountFailure: (e: IOException) -> Unit
     ) {
         val formBody =
-            FormBody.Builder().add(USERNAME, userName).add(PASSWORD, password).add(TEAM_ID, teamId)
+            FormBody.Builder()
+                .add(USERNAME, userName)
+                .add(PASSWORD, password)
+                .add(TEAM_ID, teamId)
                 .build()
 
-        val url = authOkHttpClient.httpUrlBuilder.addPathSegment(REGISTER_PATH).build()
+        val url = HttpUrl
+            .Builder()
+            .scheme(SCHEME)
+            .host(HOST)
+            .addPathSegment(REGISTER_PATH)
+            .build()
 
-        val request = Request.Builder().url(url).post(formBody).build()
+        val request = Request.Builder()
+            .url(url)
+            .post(formBody)
+            .build()
 
-        authOkHttpClient.client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onRegisterAccountFailure(e)
-            }
+        authOkHttpClient.client.newCall(request)
+            .enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    onRegisterAccountFailure(e)
+                }
 
-            override fun onResponse(call: Call, response: Response) {
-                val body = response.body?.string()
-                val result = gson.fromJson(body, RegisterAccountResponse::class.java)
-                onRegisterAccountSuccess(result)
-            }
-        })
+                override fun onResponse(call: Call, response: Response) {
+                    val body = response.body?.string()
+                    val result = gson.fromJson(body, RegisterAccountResponse::class.java)
+                    onRegisterAccountSuccess(result)
+                }
+            })
     }
 
     companion object {

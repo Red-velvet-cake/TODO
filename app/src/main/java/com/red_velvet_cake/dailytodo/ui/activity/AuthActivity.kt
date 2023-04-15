@@ -8,6 +8,7 @@ import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
 class AuthActivity : BaseActivity<ActivityAuthBinding>() {
     override val LOG_TAG: String
         get() = this::class.java.name
+
     override val bindingInflater: (LayoutInflater) -> ActivityAuthBinding
         get() = ActivityAuthBinding::inflate
 
