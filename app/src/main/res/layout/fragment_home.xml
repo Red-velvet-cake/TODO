@@ -8,17 +8,18 @@
     tools:context=".ui.fragment.home.HomeFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_home"
+        android:id="@+id/app_bar_layout_home"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_80dp"
         android:background="@color/background"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_home"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar_home"
-        tools:listitem="@layout/item_title_type_tasks" />
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout_home"
+        tools:listitem="@layout/item_todos_section_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

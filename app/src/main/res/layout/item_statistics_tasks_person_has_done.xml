@@ -7,16 +7,16 @@
 
     <com.github.mikephil.charting.charts.RadarChart
         android:id="@+id/radar_chart_statistic"
-        android:layout_width="@dimen/_0dp"
+        android:layout_width="@dimen/_126dp"
         android:layout_height="@dimen/_0dp"
         android:layout_margin="@dimen/_16dp"
-        app:layout_constraintBottom_toBottomOf="@id/card_statistic_personal"
-        app:layout_constraintEnd_toEndOf="@+id/card_statistic_personal"
-        app:layout_constraintStart_toEndOf="@+id/text_pending_tasks"
-        app:layout_constraintTop_toTopOf="@id/card_statistic_personal" />
+        app:layout_constraintBottom_toBottomOf="@id/card_view_statistic_personal"
+        app:layout_constraintEnd_toEndOf="@+id/card_view_statistic_personal"
+        app:layout_constraintStart_toEndOf="@+id/text_view_pending_todo"
+        app:layout_constraintTop_toTopOf="@id/card_view_statistic_personal" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_statistic_personal"
+        android:id="@+id/card_view_statistic_personal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_158dp"
         android:layout_marginHorizontal="@dimen/_16dp"
@@ -24,11 +24,11 @@
         android:foreground="@drawable/background_card"
         app:cardCornerRadius="@dimen/_16dp"
         app:cardElevation="@dimen/_0dp"
-        app:layout_constraintBottom_toBottomOf="@id/text_team"
-        app:layout_constraintTop_toTopOf="@id/text_pending_tasks" />
+        app:layout_constraintBottom_toBottomOf="@id/text_view_team"
+        app:layout_constraintTop_toTopOf="@id/text_view_pending_todo" />
 
     <TextView
-        android:id="@+id/text_pending_tasks"
+        android:id="@+id/text_view_pending_todo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_32dp"
@@ -42,34 +42,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/image_point_circle_personal"
+    <TextView
+        android:id="@+id/text_view_personal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_13dp"
         android:background="@android:color/transparent"
         android:elevation="@dimen/_1dp"
-        android:src="@drawable/ic_point_circle_bold"
-        app:layout_constraintStart_toStartOf="@id/text_pending_tasks"
-        app:layout_constraintTop_toBottomOf="@id/text_pending_tasks" />
-
-    <TextView
-        android:id="@+id/text_personal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8dp"
-        android:background="@android:color/transparent"
-        android:elevation="@dimen/_1dp"
         android:fontFamily="@font/poppins"
         android:text="@string/personal"
+        android:drawableStart="@drawable/ic_point_circle_bold"
+        android:drawablePadding="@dimen/_8dp"
         android:textColor="@color/on_primary"
         android:textSize="@dimen/_12sp"
-        app:layout_constraintBottom_toBottomOf="@id/image_point_circle_personal"
-        app:layout_constraintStart_toEndOf="@id/image_point_circle_personal"
-        app:layout_constraintTop_toTopOf="@id/image_point_circle_personal" />
+        app:layout_constraintStart_toStartOf="@id/text_view_pending_todo"
+        app:layout_constraintTop_toBottomOf="@id/text_view_pending_todo" />
 
     <TextView
-        android:id="@+id/text_personal_result"
+        android:id="@+id/text_view_personal_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_4dp"
@@ -78,39 +68,29 @@
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/purple_5_text"
         android:textSize="@dimen/_12sp"
-        app:layout_constraintBottom_toBottomOf="@id/image_point_circle_personal"
-        app:layout_constraintStart_toEndOf="@id/text_personal"
-        app:layout_constraintTop_toTopOf="@id/image_point_circle_personal"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_personal"
+        app:layout_constraintStart_toEndOf="@id/text_view_personal"
+        app:layout_constraintTop_toTopOf="@id/text_view_personal"
         tools:text="12" />
 
-    <ImageView
-        android:id="@+id/image_point_circle_team"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_18dp"
-        android:background="@android:color/transparent"
-        android:elevation="@dimen/_1dp"
-        android:src="@drawable/ic_point_circle_light"
-        app:layout_constraintStart_toStartOf="@id/image_point_circle_personal"
-        app:layout_constraintTop_toBottomOf="@id/image_point_circle_personal" />
-
     <TextView
-        android:id="@+id/text_team"
+        android:id="@+id/text_view_team"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8dp"
         android:background="@android:color/transparent"
         android:elevation="@dimen/_1dp"
         android:fontFamily="@font/poppins"
         android:text="@string/team"
         android:textColor="@color/on_primary"
         android:textSize="@dimen/_12sp"
-        app:layout_constraintBottom_toBottomOf="@id/image_point_circle_team"
-        app:layout_constraintStart_toEndOf="@id/image_point_circle_team"
-        app:layout_constraintTop_toTopOf="@id/image_point_circle_team" />
+        android:layout_marginTop="@dimen/_8dp"
+        android:drawableStart="@drawable/ic_point_circle_light"
+        android:drawablePadding="@dimen/_8dp"
+        app:layout_constraintStart_toStartOf="@id/text_view_personal"
+        app:layout_constraintTop_toBottomOf="@id/text_view_personal" />
 
     <TextView
-        android:id="@+id/text_team_result"
+        android:id="@+id/text_view_team_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_4dp"
@@ -119,25 +99,25 @@
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/secondary"
         android:textSize="@dimen/_12sp"
-        app:layout_constraintBottom_toBottomOf="@id/image_point_circle_team"
-        app:layout_constraintStart_toEndOf="@id/text_team"
-        app:layout_constraintTop_toTopOf="@id/image_point_circle_team"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_team"
+        app:layout_constraintStart_toEndOf="@id/text_view_team"
+        app:layout_constraintTop_toTopOf="@id/text_view_team"
         tools:text="8" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_completed_task"
+        android:id="@+id/card_view_completed_todo"
         android:layout_width="@dimen/_0dp"
         android:layout_height="86dp"
         android:layout_marginTop="@dimen/_16dp"
         app:cardCornerRadius="@dimen/_16dp"
         app:cardElevation="@dimen/_0dp"
-        app:layout_constraintEnd_toStartOf="@+id/card_pending_tasks"
-        app:layout_constraintStart_toStartOf="@+id/card_statistic_personal"
-        app:layout_constraintTop_toBottomOf="@id/card_statistic_personal" />
+        app:layout_constraintEnd_toStartOf="@+id/card_view_pending_todo"
+        app:layout_constraintStart_toStartOf="@+id/card_view_statistic_personal"
+        app:layout_constraintTop_toBottomOf="@id/card_view_statistic_personal" />
 
 
     <TextView
-        android:id="@+id/text_completed_tasks_result"
+        android:id="@+id/text_view_completed_todo_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16dp"
@@ -146,13 +126,13 @@
         android:fontFamily="@font/poppins_semibold"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/_16sp"
-        app:layout_constraintEnd_toEndOf="@id/card_completed_task"
-        app:layout_constraintStart_toStartOf="@id/card_completed_task"
-        app:layout_constraintTop_toTopOf="@+id/card_completed_task"
+        app:layout_constraintEnd_toEndOf="@id/card_view_completed_todo"
+        app:layout_constraintStart_toStartOf="@id/card_view_completed_todo"
+        app:layout_constraintTop_toTopOf="@+id/card_view_completed_todo"
         tools:text="12" />
 
     <TextView
-        android:id="@+id/text_completed_tasks"
+        android:id="@+id/text_view_completed_todo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8dp"
@@ -162,24 +142,24 @@
         android:text="@string/completed_task"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/_12sp"
-        app:layout_constraintEnd_toEndOf="@id/text_completed_tasks_result"
-        app:layout_constraintStart_toStartOf="@id/text_completed_tasks_result"
-        app:layout_constraintTop_toBottomOf="@+id/text_completed_tasks_result" />
+        app:layout_constraintEnd_toEndOf="@id/text_view_completed_todo_result"
+        app:layout_constraintStart_toStartOf="@id/text_view_completed_todo_result"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_completed_todo_result" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_pending_tasks"
+        android:id="@+id/card_view_pending_todo"
         android:layout_width="@dimen/_0dp"
         android:layout_height="@dimen/_86dp"
         android:layout_marginStart="@dimen/_8dp"
         app:cardCornerRadius="@dimen/_16dp"
         app:cardElevation="@dimen/_0dp"
-        app:layout_constraintEnd_toEndOf="@+id/card_statistic_personal"
-        app:layout_constraintStart_toEndOf="@id/card_completed_task"
-        app:layout_constraintTop_toTopOf="@id/card_completed_task" />
+        app:layout_constraintEnd_toEndOf="@+id/card_view_statistic_personal"
+        app:layout_constraintStart_toEndOf="@id/card_view_completed_todo"
+        app:layout_constraintTop_toTopOf="@id/card_view_completed_todo" />
 
 
     <TextView
-        android:id="@+id/text_pending_tasks_result"
+        android:id="@+id/text_view_pending_todo_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16dp"
@@ -188,13 +168,13 @@
         android:fontFamily="@font/poppins_semibold"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/_16sp"
-        app:layout_constraintEnd_toEndOf="@id/card_pending_tasks"
-        app:layout_constraintStart_toStartOf="@id/card_pending_tasks"
-        app:layout_constraintTop_toTopOf="@+id/card_pending_tasks"
+        app:layout_constraintEnd_toEndOf="@id/card_view_pending_todo"
+        app:layout_constraintStart_toStartOf="@id/card_view_pending_todo"
+        app:layout_constraintTop_toTopOf="@+id/card_view_pending_todo"
         tools:text="8" />
 
     <TextView
-        android:id="@+id/text_pend_task"
+        android:id="@+id/text_view_pend_todo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8dp"
@@ -204,8 +184,8 @@
         android:text="@string/pending_tasks"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/_12sp"
-        app:layout_constraintEnd_toEndOf="@id/text_pending_tasks_result"
-        app:layout_constraintStart_toStartOf="@id/text_pending_tasks_result"
-        app:layout_constraintTop_toBottomOf="@+id/text_completed_tasks_result" />
+        app:layout_constraintEnd_toEndOf="@id/text_view_pending_todo_result"
+        app:layout_constraintStart_toStartOf="@id/text_view_pending_todo_result"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_completed_todo_result" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

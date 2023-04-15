@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/background">
+
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_tasks"
+        android:id="@+id/card_view_todo"
         android:layout_width="match_parent"
-        android:layout_height="148dp"
+        android:layout_height="@dimen/_148dp"
         android:layout_marginTop="@dimen/_8dp"
         android:layout_marginEnd="@dimen/_8dp"
         app:cardCornerRadius="@dimen/_16dp"
         app:cardElevation="@dimen/_0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_title_task"
+        android:id="@+id/text_view_todo_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16dp"
@@ -27,13 +27,13 @@
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/_16sp"
-        app:layout_constraintStart_toStartOf="@id/card_tasks"
-        app:layout_constraintTop_toTopOf="@id/card_tasks"
+        app:layout_constraintStart_toStartOf="@id/card_view_todo"
+        app:layout_constraintTop_toTopOf="@id/card_view_todo"
         tools:text="UXUI Studio Meeting" />
 
     <TextView
-        android:id="@+id/text_description_task"
-        android:layout_width="wrap_content"
+        android:id="@+id/text_view_description_todo"
+        android:layout_width="@dimen/_0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16dp"
         android:layout_marginTop="@dimen/_16dp"
@@ -44,77 +44,58 @@
         android:lines="2"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/_12sp"
-        app:layout_constraintStart_toStartOf="@id/card_tasks"
-        app:layout_constraintTop_toBottomOf="@id/text_title_task"
-        tools:text="This is my descriopt ame n const tdfdfsd f.djf. .dfdfkdf.fd fsdlkfsdfjsdf.fd fkdslf" />
+        app:layout_constraintEnd_toEndOf="@id/card_view_todo"
+        app:layout_constraintStart_toStartOf="@id/card_view_todo"
+        app:layout_constraintTop_toBottomOf="@id/text_view_todo_title"
+        tools:text="This is my description amet consecterur.Nec sed ut venentis.Nulla amet amet" />
 
     <TextView
-        android:id="@+id/text_assignment"
+        android:id="@+id/text_view_assignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16dp"
-        android:layout_marginTop="24dp"
         android:background="@android:color/transparent"
         android:elevation="@dimen/_1dp"
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/accent_text"
         android:textSize="@dimen/_8sp"
-        app:layout_constraintStart_toStartOf="@id/card_tasks"
-        app:layout_constraintTop_toBottomOf="@id/text_description_task"
+        android:layout_marginBottom="@dimen/_18dp"
+        app:layout_constraintBottom_toBottomOf="@id/card_view_todo"
+        app:layout_constraintStart_toStartOf="@id/card_view_todo"
         tools:text="Mahmoud Al Mallahi" />
 
     <TextView
-        android:id="@+id/text_date"
+        android:id="@+id/text_view_update_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16dp"
         android:background="@android:color/transparent"
         android:elevation="@dimen/_1dp"
+        android:drawableStart="@drawable/ic_calnder"
+        android:drawablePadding="@dimen/_6dp"
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/accent_text"
         android:textSize="@dimen/_8sp"
-        app:layout_constraintBottom_toBottomOf="@id/text_assignment"
-        app:layout_constraintEnd_toEndOf="@id/card_tasks"
-        app:layout_constraintTop_toTopOf="@id/text_assignment"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_assignment"
+        app:layout_constraintEnd_toEndOf="@id/card_view_todo"
+        app:layout_constraintTop_toTopOf="@id/text_view_assignment"
         tools:text="24-08-2023" />
 
-    <ImageView
-        android:id="@+id/image_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_6dp"
-        android:background="@android:color/transparent"
-        android:elevation="@dimen/_1dp"
-        android:src="@drawable/ic_calnder"
-        app:layout_constraintBottom_toBottomOf="@id/text_assignment"
-        app:layout_constraintEnd_toStartOf="@id/text_date"
-        app:layout_constraintTop_toTopOf="@id/text_assignment" />
-
     <TextView
-        android:id="@+id/text_time"
+        android:id="@+id/text_view_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_14dp"
         android:background="@android:color/transparent"
         android:elevation="@dimen/_1dp"
+        android:drawableStart="@drawable/ic_time"
+        android:drawablePadding="@dimen/_6dp"
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/accent_text"
         android:textSize="@dimen/_8sp"
-        app:layout_constraintBottom_toBottomOf="@id/text_assignment"
-        app:layout_constraintEnd_toStartOf="@id/image_date"
-        app:layout_constraintTop_toTopOf="@id/text_assignment"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_assignment"
+        app:layout_constraintEnd_toStartOf="@id/text_view_update_date"
+        app:layout_constraintTop_toTopOf="@id/text_view_assignment"
         tools:text="21:30" />
-
-    <ImageView
-        android:id="@+id/image_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_6dp"
-        android:background="@android:color/transparent"
-        android:elevation="@dimen/_1dp"
-        android:src="@drawable/ic_time"
-        app:layout_constraintBottom_toBottomOf="@id/text_assignment"
-        app:layout_constraintEnd_toStartOf="@id/text_time"
-        app:layout_constraintTop_toTopOf="@id/text_assignment" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

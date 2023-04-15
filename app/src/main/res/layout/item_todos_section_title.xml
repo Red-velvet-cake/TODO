@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/text_type_tasks"
+        android:id="@+id/text_view_todo_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16dp"
@@ -19,7 +20,7 @@
         tools:text="Personal Tasks" />
 
     <TextView
-        android:id="@+id/text_view_all"
+        android:id="@+id/text_view_show_view_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16dp"
@@ -27,9 +28,9 @@
         android:text="@string/view_all"
         android:textColor="@color/accent_text"
         android:textSize="@dimen/_12sp"
-        app:layout_constraintBottom_toBottomOf="@id/text_type_tasks"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_todo_type"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text_type_tasks" />
+        app:layout_constraintTop_toTopOf="@id/text_view_todo_type" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
