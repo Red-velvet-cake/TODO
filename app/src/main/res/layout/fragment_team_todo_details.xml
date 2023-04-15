@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.AppBarLayout
+        app:title="@string/details"
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_56dp"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <com.google.android.material.appbar.MaterialToolbar
+            app:navigationIcon="@drawable/ic_left"
+            android:layout_width="match_parent"
+            app:title="@string/details"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:fontFamily="@font/poppins"
+        android:id="@+id/text_view_assigne_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_12dp"
+        app:layout_constraintTop_toBottomOf="@id/text_view_todo_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/_16dp"
+        tools:text="Yaseen Zaqut"
+        style="@style/TextViewInTodoDetails"
+        android:layout_marginTop="@dimen/_12dp"
+         />
+
+    <TextView
+        android:id="@+id/text_view_todo_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24dp"
+        android:paddingEnd="@dimen/_16dp"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        tools:text="UX UI Studio Meeting "
+        />
+
+    <TextView
+        android:id="@+id/text_view_creation_date"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_12dp"
+        tools:text="24-08-2023"
+        android:drawablePadding="@dimen/_6dp"
+        android:layout_marginStart="@dimen/_16dp"
+        style="@style/TextViewInTodoDetails"
+        android:layout_marginTop="@dimen/_26dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_view_assigne_name"
+        app:drawableStartCompat="@drawable/ic_calender_small" />
+
+
+    <TextView
+        android:id="@+id/text_view_todo_creation_time"
+        android:drawablePadding="@dimen/_6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_12dp"
+        tools:text="21:30"
+        style="@style/TextViewInTodoDetails"
+        app:layout_constraintStart_toEndOf="@id/text_view_creation_date"
+        app:layout_constraintTop_toTopOf="@id/text_view_creation_date"
+        app:drawableStartCompat="@drawable/ic_time_small" />
+
+    <TextView
+        android:id="@+id/text_view_todo_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_view_creation_date"
+        tools:text="@string/todo_details"
+        android:paddingHorizontal="@dimen/_16dp"
+        android:fontFamily="@font/poppins"
+        android:layout_marginVertical="@dimen/_18dp"
+        android:textColor="@color/secondary_text"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
