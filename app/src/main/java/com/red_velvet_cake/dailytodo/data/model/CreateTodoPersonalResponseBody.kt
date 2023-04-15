@@ -2,10 +2,10 @@ package com.red_velvet_cake.dailytodo.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class PersonalTodo(
-    @SerializedName("id") val id: String,
-    @SerializedName("title") val title: String,
+data class CreateTodoPersonalResponseBody(
+    @SerializedName("creationTime") val creationTime: String,
     @SerializedName("description") val description: String,
+    @SerializedName("id") val id: String,
     @SerializedName("status") val status: Int,
-    @SerializedName("creationTime") val creationTime: String
+    @SerializedName("title") val title: String
 )

@@ -16,7 +16,7 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
 
     override fun setUp() {
         teamTodoPresenter = TeamTodoPresenter(this)
-        teamTodoPresenter.responseTeamTodo()
+        teamTodoPresenter.getAllTeamTodos()
         teamToDoAdapter = TeamToDoAdapter()
     }
 
