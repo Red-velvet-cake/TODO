@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.data
+package com.red_velvet_cake.dailytodo.data.remote
 
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME

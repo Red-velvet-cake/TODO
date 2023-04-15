@@ -1,30 +1,21 @@
-package com.red_velvet_cake.dailytodo.presenter
+package com.red_velvet_cake.dailytodo.presenter.update_personal_status
 
-import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
-import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
+import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import java.io.IOException
 
-
-class MainPresenter(private val view: IMainView) {
+class UpdatePersonalStatusPresenter(private val view: UpdatePersonalStatusView) {
 
     private val todoServiceImpl = TodoServiceImpl()
 
     fun updatePersonalTodoStatus(
-        todoId: String, newTodoStatus: Int
+        todoId: String, newTodoStatus: Int,
     ) {
         todoServiceImpl.updatePersonalTodoStatus(
             todoId,
             newTodoStatus,
             ::onUpdatePersonalTodoStatusSuccess,
             ::onUpdatePersonalTodoStatusFailure
-        )
-    }
-
-    fun responseTeamTodo() {
-        todoServiceImpl.getAllTeamTodos(
-            ::onGetAllTeamTodosSuccess,
-            ::onGetAllTeamTodosFailure
         )
     }
 
@@ -35,12 +26,5 @@ class MainPresenter(private val view: IMainView) {
     private fun onUpdatePersonalTodoStatusFailure(exception: IOException) {
         view.onUpdatePersonalTodoStatusFailure(exception)
     }
-
-    private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
-        view.onGetAllTeamTodosSuccess(getAllTeamTodosResponse)
-    }
-
-    private fun onGetAllTeamTodosFailure(exception: IOException) {
-        view.onGetAllTeamTodosFailure(exception)
-    }
 }
+

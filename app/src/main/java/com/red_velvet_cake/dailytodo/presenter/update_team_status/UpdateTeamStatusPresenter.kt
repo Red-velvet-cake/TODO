@@ -1,10 +1,10 @@
-package com.red_velvet_cake.dailytodo.presenter.updateTeam
+package com.red_velvet_cake.dailytodo.presenter.update_team_status
 
-import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import java.io.IOException
 
-class UpdateTeamPresenter(private val view: IMainView) {
+class UpdateTeamStatusPresenter(private val view: UpdateTeamTodoStatusView) {
 
     private val todoServiceImpl = TodoServiceImpl()
 
