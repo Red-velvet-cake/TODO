@@ -1,5 +1,6 @@
 package com.red_velvet_cake.dailytodo.data
 
+import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
 import com.orhanobut.hawk.Hawk
@@ -7,10 +8,12 @@ import com.red_velvet_cake.dailytodo.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.model.login.ApiResponse
 import com.red_velvet_cake.dailytodo.model.login.LoginRequest
 import com.red_velvet_cake.dailytodo.model.login.LoginResponse
 import okhttp3.*
 import okio.IOException
+import org.json.JSONObject
 
 class TodoServiceImpl : TodoService {
 
@@ -96,14 +99,13 @@ class TodoServiceImpl : TodoService {
             .addPathSegment(PATH_LOGIN)
             .build()
 
-        val requestBody = FormBody.Builder()
-            .add(PARAM_USERNAME, loginRequest.username)
-            .add(PARAM_PASSWORD, loginRequest.password)
-            .build()
+        val credentials = "${loginRequest.username}:${loginRequest.password}"
+        val encodedCredentials = Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
+        val authHeaderValue = "Basic $encodedCredentials"
 
         val request = Request.Builder()
             .url(url)
-            .post(requestBody)
+            .header(HEADER_AUTHORIZATION, authHeaderValue)
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -112,10 +114,17 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                response.body?.string()?.let {
-                    val result = Gson().fromJson(it, LoginResponse::class.java)
-                    Hawk.put(authToken, result.token)
-                    onLoginUserSuccess(result)
+                response.body?.string()?.let { responseBody ->
+                    val apiResponse = Gson().fromJson(responseBody, ApiResponse::class.java)
+                    if (apiResponse.isSuccess) {
+                        val valueJson = JSONObject(responseBody).getJSONObject("value")
+                        val loginResponse = Gson().fromJson(valueJson.toString(), LoginResponse::class.java)
+                        Hawk.put(authToken, loginResponse.token)
+                        onLoginUserSuccess(loginResponse)
+                    } else {
+                        val message = apiResponse.message
+                        onLoginUserFailure(IOException(message))
+                    }
                 }
             }
         })
