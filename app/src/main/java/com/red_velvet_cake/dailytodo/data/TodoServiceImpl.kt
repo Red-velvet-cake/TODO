@@ -2,15 +2,14 @@ package com.red_velvet_cake.dailytodo.data
 
 import android.util.Log
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeam
+import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
+import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.PersonalTODORequest
+import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
-import com.red_velvet_cake.dailytodo.data.model.login.LoginRequest
-import com.red_velvet_cake.dailytodo.data.model.login.LoginResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
@@ -28,7 +27,8 @@ class TodoServiceImpl : TodoService {
     private val gson = Gson()
 
     override fun loginUser(
-        loginRequest: LoginRequest,
+        username: String,
+        password: String,
         onLoginUserSuccess: (loginResponse: LoginResponse) -> Unit,
         onLoginUserFailure: (exception: IOException) -> Unit
     ) {
@@ -39,8 +39,8 @@ class TodoServiceImpl : TodoService {
             .build()
 
         val requestBody = FormBody.Builder()
-            .add(PARAM_USERNAME, loginRequest.username)
-            .add(PARAM_PASSWORD, loginRequest.password)
+            .add(PARAM_USERNAME, username)
+            .add(PARAM_PASSWORD, password)
             .build()
 
         val request = Request.Builder()
@@ -66,7 +66,7 @@ class TodoServiceImpl : TodoService {
         title: String,
         description: String,
         assignee: String,
-        onCreateTeamTodoSuccess: (CreateTodoTeam) -> Unit,
+        onCreateTeamTodoSuccess: (CreateTodoTeamResponse) -> Unit,
         onCreateTeamTodoFailure: (IOException) -> Unit
     ) {
         val requestBody = FormBody.Builder().add(TITLE, title)
@@ -90,7 +90,7 @@ class TodoServiceImpl : TodoService {
 
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string().let {
-                    val result = Gson().fromJson(it, CreateTodoTeam::class.java)
+                    val result = Gson().fromJson(it, CreateTodoTeamResponse::class.java)
                     onCreateTeamTodoSuccess(result)
                 }
             }
@@ -98,14 +98,15 @@ class TodoServiceImpl : TodoService {
     }
 
     override fun createPersonalTodo(
-        personalTodoRequest: PersonalTODORequest,
-        onCreatePersonalTodoSuccess: (Boolean) -> Unit,
+        title: String,
+        description: String,
+        onCreatePersonalTodoSuccess: (CreateTodoPersonalResponse) -> Unit,
         onCreatePersonalTodoFailure: (e: IOException) -> Unit
     ) {
 
         val requestBody = FormBody.Builder()
-            .add(TITLE, personalTodoRequest.title)
-            .add(DESCRIPTION, personalTodoRequest.description)
+            .add(TITLE, title)
+            .add(DESCRIPTION, description)
             .build()
 
         val url = HttpUrl.Builder()
@@ -127,7 +128,10 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                onCreatePersonalTodoSuccess(response.isSuccessful)
+                response.body?.string().let {
+                    val result = Gson().fromJson(it, CreateTodoPersonalResponse::class.java)
+                    onCreatePersonalTodoSuccess(result)
+                }
             }
 
         })

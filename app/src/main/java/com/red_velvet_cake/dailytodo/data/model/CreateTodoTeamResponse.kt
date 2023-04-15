@@ -1,10 +1,7 @@
 package com.red_velvet_cake.dailytodo.data.model
 
-data class GetAllPersonalTodosResponse(
-    val value: List<PersonalTodo>,
+data class CreateTodoTeamResponse(
+    val value: CreateTodoTeamResponseBody,
     val message: String,
     val isSuccess: Boolean
 )
-
-
-
