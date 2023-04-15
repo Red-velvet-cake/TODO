@@ -159,7 +159,7 @@ class TodoServiceImpl : TodoService {
                 .build()
 
         val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(TO_DO_PATH_SEGMENT).build()
+            .addPathSegment(TEAM_PATH_SEGMENT).build()
 
         val request = Request.Builder().url(url).put(requestBody).build()
 
