@@ -29,9 +29,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Other configurations specific to debug build type
+            def teamId = project.findProperty("TEAM_ID") ?: "default_team_id"
+            buildConfigField "String", "TEAM_ID", "\"${teamId}\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            def teamId = project.findProperty("TEAM_ID") ?: "default_team_id"
+            buildConfigField "String", "TEAM_ID", "\"${teamId}\""
         }
     }
     compileOptions {
@@ -68,4 +75,7 @@ dependencies {
 
     //Gson
     implementation("com.google.code.gson:gson:2.10.1")
+
+    //mpchart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

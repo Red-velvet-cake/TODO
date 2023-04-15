@@ -32,5 +32,9 @@
     <string name="try_again">حاول مره اخرى</string>
     <string name="don_t_have_account_sign_up">ليس لديك حساب؟ سجل هنا.</string>
     <string name="register">انشاء حساب</string>
-
+    <string name="register_success">تم إنشاء حسابك بنجاح! يرجى تسجيل الدخول</string>
+    <string name="username_validation_error">الحد الأدنى لاسم المستخدم هو 4 مراتب</string>
+    <string name="password_validation_error">الحد الأدنى لكلمة المرور هو 8 مراتب</string>
+    <string name="confirm_password_validation_error">كلمة المرور غير متطابقة</string>
+    <string name="loading">جار التحميل</string>
 </resources>
