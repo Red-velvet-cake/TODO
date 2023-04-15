@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.data
+package com.red_velvet_cake.dailytodo.data.remote
 
 import android.util.Log
 import com.google.gson.Gson

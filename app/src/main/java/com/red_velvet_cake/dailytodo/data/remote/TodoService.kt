@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.data
+package com.red_velvet_cake.dailytodo.data.remote
 
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
