@@ -1,6 +1,8 @@
 package com.red_velvet_cake.dailytodo.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class LoginResponseBody(
-    val expireAt: String,
-    val token: String
+    @SerializedName("expireAt") val expireAt: String,
+    @SerializedName("token") val token: String
 )

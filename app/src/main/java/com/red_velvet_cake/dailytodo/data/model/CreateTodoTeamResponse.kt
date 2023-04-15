@@ -1,7 +1,9 @@
 package com.red_velvet_cake.dailytodo.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class CreateTodoTeamResponse(
-    val value: CreateTodoTeamResponseBody,
-    val message: String,
-    val isSuccess: Boolean
+    @SerializedName("value") val value: CreateTodoTeamResponseBody,
+    @SerializedName("message") val message: String,
+    @SerializedName("isSuccess") val isSuccess: Boolean
 )

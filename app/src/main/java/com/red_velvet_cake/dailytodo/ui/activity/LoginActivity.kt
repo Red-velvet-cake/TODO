@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.orhanobut.hawk.Hawk
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.databinding.ActivityLoginBinding
@@ -42,7 +41,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginView {
 
     override fun onLoginSuccess(loginResponse: LoginResponse) {
         Log.d(LOG_TAG, "onLoginSuccess: ${loginResponse.loginResponseBody}")
-        Hawk.put("auth_token", loginResponse.token)
     }
 
     override fun onLoginFailure(exception: IOException) {
