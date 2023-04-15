@@ -21,6 +21,8 @@
     <color name="red">#EA5B5B</color>
 
     <color name="on_primary">#DEFFFFFF</color>
+    <color name="chip_background_color">#E5DFFF</color>
+    <color name="light_grey_color">#9E9DA0</color>
 
 
 </resources>

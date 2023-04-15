@@ -21,9 +21,10 @@
     <string name="hint_descriptions">Task description</string>
     <string name="cancel">Cancel</string>
     <string name="create">Create</string>
+    <string name="todo">TODO</string>
     <string name="done">Done</string>
     <string name="in_progress">In Progress</string>
-    <string name="all">TODO</string>
+    <string name="all">All</string>
     <string name="details">Details</string>
     <string name="search">Search</string>
     <string name="not_result">No results found!</string>
