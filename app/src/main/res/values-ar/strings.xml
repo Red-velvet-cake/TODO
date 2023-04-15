@@ -31,4 +31,6 @@
     <string name="check_your_wifi">تحقق من الانترنت الخاص بك</string>
     <string name="try_again">حاول مره اخرى</string>
     <string name="don_t_have_account_sign_up">ليس لديك حساب؟ سجل هنا.</string>
+    <string name="register">انشاء حساب</string>
+
 </resources>
