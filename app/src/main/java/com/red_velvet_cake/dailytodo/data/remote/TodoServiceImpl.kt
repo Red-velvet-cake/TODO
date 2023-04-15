@@ -1,5 +1,6 @@
 package com.red_velvet_cake.dailytodo.data.remote
 
+import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
@@ -41,11 +42,11 @@ class TodoServiceImpl : TodoService {
         onLoginUserFailure: (exception: IOException) -> Unit
     ) {
         val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(PATH_LOGIN).build()
-
-        val requestBody =
-            FormBody.Builder().add(PARAM_USERNAME, username).add(PARAM_PASSWORD, password).build()
-
-        val request = Request.Builder().url(url).post(requestBody).build()
+        val credentials = "${username}:${password}"
+        val encodedCredentials = Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
+        val authHeaderValue = "Basic $encodedCredentials"
+        val request =
+            Request.Builder().url(url).header(HEADER_AUTHORIZATION, authHeaderValue).build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -53,14 +54,13 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                Log.d("alhams", "onResponse: ${response.body?.string()}")
-//                response.body?.string()?.let {
-//                    Log.d("alhams", "onResponse: $it")
+                response.body?.string()?.let {
+                    Log.d("alhams", "onResponse: $it")
 //                    val result = Gson().fromJson(it, LoginResponse::class.java)
 //                    Log.d("alhams", "onResponse: ${result.loginResponseBody.token}")
 //                    LocalData[HEADER_AUTHORIZATION] = result.loginResponseBody.token
 //                    onLoginUserSuccess(result)
-//                }
+                }
             }
         })
     }
@@ -271,8 +271,6 @@ class TodoServiceImpl : TodoService {
         private const val USERNAME = "username"
         private const val PASSWORD = "password"
         private const val TEAM_ID = "teamId"
-        private const val PARAM_USERNAME = "username"
-        private const val PARAM_PASSWORD = "password"
         private const val PATH_LOGIN = "login"
         private const val TITLE = "title"
         private const val DESCRIPTION = "description"
