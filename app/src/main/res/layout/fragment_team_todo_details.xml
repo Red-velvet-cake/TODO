@@ -58,7 +58,7 @@
         android:drawablePadding="@dimen/_6dp"
         android:layout_marginStart="@dimen/_16dp"
         style="@style/TextViewInTodoDetails"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="@dimen/_26dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/text_view_assigne_name"
         app:drawableStartCompat="@drawable/ic_calender_small" />
