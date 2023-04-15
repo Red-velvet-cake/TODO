@@ -7,7 +7,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view_auth"
-        android:name="com.red_velvet_cake.dailytodo.ui.register.RegisterFragment"
+        android:name="com.red_velvet_cake.dailytodo.ui.login.LoginFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

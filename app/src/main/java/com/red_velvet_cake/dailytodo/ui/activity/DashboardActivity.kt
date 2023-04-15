@@ -9,7 +9,7 @@ import com.orhanobut.hawk.Hawk
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.databinding.ActivityDashboardBinding
-import com.red_velvet_cake.dailytodo.presenter.login.LoginView
+import com.red_velvet_cake.dailytodo.ui.login.LoginView
 import com.red_velvet_cake.dailytodo.ui.base.BaseActivity
 import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
 import okio.IOException
