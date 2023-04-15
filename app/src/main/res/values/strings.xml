@@ -41,5 +41,15 @@
     <string name="todo_description">This is my description amet consectetur. Nec sed ut venenatis. Nulla amet amet...</string>
     <string name="all_">All</string>
     <string name="todo">TODO</string>
+    <string name="name">Name</string>
+    <string name="_name">Name</string>
+    <string name="title">Title</string>
+    <string name="_task_title">Task title</string>
+    <string name="type">Type</string>
+    <string name="personalButton">Personal</string>
+    <string name="teamButton">Team</string>
+    <string name="_description">Description</string>
+    <string name="task_description">Task description</string>
+    <string name="_create">Create</string>
 
 </resources>
