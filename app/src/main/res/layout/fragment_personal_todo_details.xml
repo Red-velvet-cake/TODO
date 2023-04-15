@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.PersonalTodoDetailsFragment">
+    app:layoutDescription="@xml/fragment_personal_todo_details_scene"
+    tools:context=".ui.Personaldetails.PersonalTodoDetailsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -53,9 +54,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:drawablePadding="@dimen/_4dp"
         android:background="#00FFFFFF"
         android:drawableLeft="@drawable/ic_calnder"
+        android:drawablePadding="@dimen/_4dp"
         android:elevation="1dp"
         android:text="@string/calnder"
         android:textColor="@color/gray600"
@@ -68,9 +69,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:drawablePadding="@dimen/_4dp"
         android:background="#00FFFFFF"
         android:drawableLeft="@drawable/ic_time"
+        android:drawablePadding="@dimen/_4dp"
         android:elevation="1dp"
         android:text="@string/time"
         android:textColor="@color/gray600"
@@ -91,7 +92,7 @@
         app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/text_contint_details"
         android:layout_width="342dp"
         android:layout_height="302dp"
         android:layout_marginStart="16dp"
@@ -103,4 +104,4 @@
         app:layout_constraintStart_toStartOf="@+id/materialCardView2"
         app:layout_constraintTop_toTopOf="@+id/materialCardView2" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

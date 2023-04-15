@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1000">
+        <KeyFrameSet>
+        </KeyFrameSet>
+        <OnSwipe />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@+id/text_titel"
+            motion:layout_constraintStart_toStartOf="@+id/materialCardView"
+            android:id="@+id/text_calnder"
+            android:layout_marginStart="16dp" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+
+        <Constraint
+            android:elevation="@dimen/_0dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="104dp"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="63dp"
+            android:visibility="gone"
+            android:id="@+id/materialCardView" />
+        <Constraint
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/text_titel"
+            motion:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            android:layout_marginTop="@dimen/_24dp"
+            android:layout_marginStart="16dp" />
+        <Constraint
+            android:elevation="0dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="328dp"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toBottomOf="@+id/text_time"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/materialCardView2"
+            android:layout_marginTop="24dp" />
+        <Constraint
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@+id/text_titel"
+            motion:layout_constraintStart_toStartOf="@+id/text_titel"
+            android:id="@+id/text_calnder" />
+    </ConstraintSet>
+</MotionScene>
