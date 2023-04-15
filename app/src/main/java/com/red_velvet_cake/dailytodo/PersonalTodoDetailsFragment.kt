@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.ui.Personaldetails
+package com.red_velvet_cake.dailytodo
 
 import android.os.Bundle
 import android.view.LayoutInflater

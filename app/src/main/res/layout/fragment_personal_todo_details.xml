@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/fragment_personal_todo_details_scene"
-    tools:context=".ui.Personaldetails.PersonalTodoDetailsFragment">
+    tools:context=".PersonalTodoDetailsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
