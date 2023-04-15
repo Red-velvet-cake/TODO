@@ -22,7 +22,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), LoginView {
     override fun setUp() {
 //        lunchAuthActivity()
         Hawk.init(this).build()
-        TodoServiceImpl().loginUser("test user3", "123456789", {}, {})
+        TodoServiceImpl().loginUser("test user2", "123456789", {}, {})
     }
 
     override fun addCallbacks() {}

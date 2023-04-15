@@ -1,15 +1,11 @@
 package com.red_velvet_cake.dailytodo.data.remote
 
+import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
-import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
-import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.LoginResponse
-import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
+import com.orhanobut.hawk.Hawk
+import com.red_velvet_cake.dailytodo.data.local.LocalData
+import com.red_velvet_cake.dailytodo.data.model.*
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
@@ -21,6 +17,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.IOException
+import org.json.JSONObject
 
 class TodoServiceImpl : TodoService {
 
@@ -41,26 +38,31 @@ class TodoServiceImpl : TodoService {
         onLoginUserFailure: (exception: IOException) -> Unit
     ) {
         val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(PATH_LOGIN).build()
+        val credentials = "${username}:${password}"
+        val encodedCredentials = Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
+        val authHeaderValue = "Basic $encodedCredentials"
+        val request =
+            Request.Builder().url(url).header(HEADER_AUTHORIZATION, authHeaderValue).build()
 
-        val requestBody =
-            FormBody.Builder().add(PARAM_USERNAME, username).add(PARAM_PASSWORD, password).build()
-
-        val request = Request.Builder().url(url).post(requestBody).build()
-
-        client.newCall(request).enqueue(object : Callback {
+        authOkHttpClient.client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onLoginUserFailure(e)
             }
 
             override fun onResponse(call: Call, response: Response) {
-                Log.d("alhams", "onResponse: ${response.body?.string()}")
-//                response.body?.string()?.let {
-//                    Log.d("alhams", "onResponse: $it")
-//                    val result = Gson().fromJson(it, LoginResponse::class.java)
-//                    Log.d("alhams", "onResponse: ${result.loginResponseBody.token}")
-//                    LocalData[HEADER_AUTHORIZATION] = result.loginResponseBody.token
-//                    onLoginUserSuccess(result)
-//                }
+                response.body?.string()?.let { responseBody ->
+
+                    val apiResponse = Gson().fromJson(responseBody, ApiResponse::class.java)
+                    if (apiResponse.isSuccess) {
+                        val valueJson = JSONObject(responseBody).getJSONObject("value")
+                        val loginResponse = Gson().fromJson(valueJson.toString(), LoginResponse::class.java)
+                        Hawk.put(LocalData[HEADER_AUTHORIZATION], loginResponse.loginResponseBody.token)
+                        onLoginUserSuccess(loginResponse)
+                    } else {
+                        val message = apiResponse.message
+                        onLoginUserFailure(IOException(message))
+                    }
+                }
             }
         })
     }
@@ -271,8 +273,6 @@ class TodoServiceImpl : TodoService {
         private const val USERNAME = "username"
         private const val PASSWORD = "password"
         private const val TEAM_ID = "teamId"
-        private const val PARAM_USERNAME = "username"
-        private const val PARAM_PASSWORD = "password"
         private const val PATH_LOGIN = "login"
         private const val TITLE = "title"
         private const val DESCRIPTION = "description"
