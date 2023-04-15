@@ -25,7 +25,8 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), LoginView {
         TodoServiceImpl().loginUser("test user2", "123456789", {}, {})
     }
 
-    override fun addCallbacks() {}
+    override fun addCallbacks() {
+    }
 
     override fun isInternetAvailable(connectionStatus: ConnectionStatus) {
         when (connectionStatus) {
