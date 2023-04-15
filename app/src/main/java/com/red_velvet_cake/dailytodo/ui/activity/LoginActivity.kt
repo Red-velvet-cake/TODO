@@ -11,15 +11,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.red_velvet_cake.dailytodo.R
-import com.red_velvet_cake.dailytodo.data.model.login.LoginResponse
+import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.databinding.ActivityLoginBinding
-import com.red_velvet_cake.dailytodo.presenter.login.ILoginView
 import com.red_velvet_cake.dailytodo.presenter.login.LoginPresenter
+import com.red_velvet_cake.dailytodo.presenter.login.LoginView
 import com.red_velvet_cake.dailytodo.ui.base.BaseActivity
 import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
 import okio.IOException
 
-class LoginActivity : BaseActivity<ActivityLoginBinding>(), ILoginView {
+class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginView {
     override val LOG_TAG: String = LoginActivity::class.simpleName!!
 
     override val bindingInflater: (LayoutInflater) -> ActivityLoginBinding =
@@ -40,7 +40,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), ILoginView {
     }
 
     override fun onLoginSuccess(loginResponse: LoginResponse) {
-        Log.d(LOG_TAG, "onLoginSuccess: ${loginResponse.username}")
+        Log.d(LOG_TAG, "onLoginSuccess: ${loginResponse.loginResponseBody}")
     }
 
     override fun onLoginFailure(exception: IOException) {
