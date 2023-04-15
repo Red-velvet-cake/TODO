@@ -74,6 +74,7 @@
             android:textSize="@dimen/_12sp" />
 
     </com.google.android.material.chip.ChipGroup>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_personal_todo"
         android:layout_width="match_parent"
@@ -81,7 +82,8 @@
         android:layout_marginTop="@dimen/_16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chip_group"
-        />
+        tools:listitem="@layout/item_personal_todo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

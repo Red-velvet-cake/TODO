@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_8dp"
+    android:background="@drawable/bg_edit_text_default"
+    android:orientation="vertical"
+    android:padding="@dimen/_16dp">
+
+    <TextView
+        android:id="@+id/todo_title_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/todo_description_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16dp"
+        android:background="@android:color/transparent"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins"
+        android:maxLines="2"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todo_title_textview" />
+
+    <TextView
+        android:id="@+id/textview_todo_creation_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginEnd="@dimen/_12dp"
+        android:layout_weight=".5"
+        android:background="@android:color/transparent"
+        android:drawablePadding="@dimen/_4dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/accent_text"
+        android:textSize="@dimen/_8sp"
+        app:drawableStartCompat="@drawable/ic_time"
+        app:layout_constraintEnd_toStartOf="@+id/textview_todo_creation_date"
+        app:layout_constraintTop_toBottomOf="@+id/todo_description_textview" />
+
+    <TextView
+        android:id="@+id/textview_todo_creation_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/_8dp"
+        android:layout_weight=".5"
+        android:background="@android:color/transparent"
+        android:drawablePadding="@dimen/_4dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/accent_text"
+        android:textSize="@dimen/_8sp"
+        app:drawableStartCompat="@drawable/ic_calnder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todo_description_textview" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
