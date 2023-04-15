@@ -1,6 +1,5 @@
 package com.red_velvet_cake.dailytodo.ui.register
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.red_velvet_cake.dailytodo.BuildConfig
@@ -25,52 +24,54 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
             "strongPassword",
             BuildConfig.TEAM_ID
         )
-
-        presenter.showUsernameError("Username is too short")
-        presenter.showPasswordError("Password is too short")
-        presenter.showConfirmPasswordError("Passwords do not match")
     }
 
     override fun addCallBacks() {}
-
-    override fun onRegisterAccountSuccess(registerAccountResponse: RegisterAccountResponse) {
-        Log.d(TAG, "onRegisterAccountSuccess: $registerAccountResponse")
+    override fun handleRegisterAccountSuccess(registerAccountResponse: RegisterAccountResponse) {
+        TODO("Not yet implemented")
     }
 
-    override fun onRegisterAccountFailure(exception: IOException) {
-        Log.d(TAG, "onRegisterAccountFailure: ${exception.message}")
+    override fun handleRegisterAccountFailure(exception: IOException) {
+        TODO("Not yet implemented")
     }
 
-    override fun onRegisterAccountClicked() {}
-
-    override fun onLoginClicked() {}
-
-    override fun isUsernameValid(username: String): Boolean {
-        return username.length >= 4
+    override fun handleRegisterButtonClick() {
+        TODO("Not yet implemented")
     }
 
-    override fun isPasswordValid(password: String): Boolean {
-        return password.length >= 8
+    override fun handleLoginButtonClick() {
+        TODO("Not yet implemented")
     }
 
-    override fun isConfirmPasswordValid(password: String, confirmPassword: String): Boolean {
-        return password == confirmPassword
+    override fun validateUsername(username: String): Boolean {
+        TODO("Not yet implemented")
     }
 
-    override fun showUsernameError(message: String) {
-        binding.textInputLayoutUsername.error = message
+    override fun validatePassword(password: String): Boolean {
+        TODO("Not yet implemented")
     }
 
-    override fun showPasswordError(message: String) {
-        binding.textInputLayoutPassword.errorIconDrawable = null
-        binding.textInputLayoutPassword.error = message
+    override fun validateConfirmPassword(password: String, confirmPassword: String): Boolean {
+        TODO("Not yet implemented")
     }
 
-    override fun showConfirmPasswordError(message: String) {
-        binding.textInputLayoutConfirmPassword.error = message
+    override fun showUsernameValidationError(message: String) {
+        TODO("Not yet implemented")
     }
 
-    override fun showLoading() {}
+    override fun showPasswordValidationError(message: String) {
+        TODO("Not yet implemented")
+    }
 
-    override fun hideLoading() {}
+    override fun showConfirmPasswordValidationError(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun hideLoading() {
+        TODO("Not yet implemented")
+    }
 }

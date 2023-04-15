@@ -16,49 +16,49 @@ class RegisterPresenter(
             username,
             password,
             teamId,
-            ::onRegisterAccountSuccess,
-            ::onRegisterAccountFailure
+            ::handleRegisterAccountSuccess,
+            ::handleRegisterAccountFailure
         )
     }
 
-    private fun onRegisterAccountSuccess(registerAccountResponse: RegisterAccountResponse) {
-        view.onRegisterAccountSuccess(registerAccountResponse)
+    private fun handleRegisterAccountSuccess(registerAccountResponse: RegisterAccountResponse) {
+        view.handleRegisterAccountSuccess(registerAccountResponse)
     }
 
-    private fun onRegisterAccountFailure(exception: IOException) {
-        view.onRegisterAccountFailure(exception)
+    private fun handleRegisterAccountFailure(exception: IOException) {
+        view.handleRegisterAccountFailure(exception)
     }
 
-    fun onRegisterAccountClicked() {
-        view.onRegisterAccountClicked()
+    fun handleRegisterButtonClick() {
+        view.handleRegisterButtonClick()
     }
 
-    fun onLoginClicked() {
-        view.onLoginClicked()
+    fun handleLoginButtonClick() {
+        view.handleLoginButtonClick()
     }
 
-    fun isUsernameValid(username: String): Boolean {
-        return view.isUsernameValid(username)
+    fun validateUsername(username: String): Boolean {
+        return view.validateUsername(username)
     }
 
-    fun isPasswordValid(password: String): Boolean {
-        return view.isPasswordValid(password)
+    fun validatePassword(password: String): Boolean {
+        return view.validatePassword(password)
     }
 
-    fun isConfirmPasswordValid(password: String, confirmPassword: String): Boolean {
-        return view.isConfirmPasswordValid(password, confirmPassword)
+    fun validateConfirmPassword(password: String, confirmPassword: String): Boolean {
+        return view.validateConfirmPassword(password, confirmPassword)
     }
 
-    fun showUsernameError(message: String) {
-        view.showUsernameError(message)
+    fun showUsernameValidationError(message: String) {
+        view.showUsernameValidationError(message)
     }
 
-    fun showPasswordError(message: String) {
-        view.showPasswordError(message)
+    fun showPasswordValidationError(message: String) {
+        view.showPasswordValidationError(message)
     }
 
-    fun showConfirmPasswordError(message: String) {
-        view.showConfirmPasswordError(message)
+    fun showConfirmPasswordValidationError(message: String) {
+        view.showConfirmPasswordValidationError(message)
     }
 
     fun showLoading() {

@@ -4,25 +4,25 @@ import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import okio.IOException
 
 interface RegisterView {
-    fun onRegisterAccountSuccess(registerAccountResponse: RegisterAccountResponse)
+    fun handleRegisterAccountSuccess(registerAccountResponse: RegisterAccountResponse)
 
-    fun onRegisterAccountFailure(exception: IOException)
+    fun handleRegisterAccountFailure(exception: IOException)
 
-    fun onRegisterAccountClicked()
+    fun handleRegisterButtonClick()
 
-    fun onLoginClicked()
+    fun handleLoginButtonClick()
 
-    fun isUsernameValid(username: String): Boolean
+    fun validateUsername(username: String): Boolean
 
-    fun isPasswordValid(password: String): Boolean
+    fun validatePassword(password: String): Boolean
 
-    fun isConfirmPasswordValid(password: String, confirmPassword: String): Boolean
+    fun validateConfirmPassword(password: String, confirmPassword: String): Boolean
 
-    fun showUsernameError(message: String)
+    fun showUsernameValidationError(message: String)
 
-    fun showPasswordError(message: String)
+    fun showPasswordValidationError(message: String)
 
-    fun showConfirmPasswordError(message: String)
+    fun showConfirmPasswordValidationError(message: String)
 
     fun showLoading()
 
