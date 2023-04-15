@@ -2,23 +2,12 @@ package com.red_velvet_cake.dailytodo.data
 
 import android.util.Log
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.PersonalTODORequest
-import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.data.model.*
 import com.red_velvet_cake.dailytodo.data.model.login.LoginRequest
 import com.red_velvet_cake.dailytodo.data.model.login.LoginResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.FormBody
-import okhttp3.HttpUrl
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
 import okio.IOException
 
 class TodoServiceImpl : TodoService {
@@ -254,7 +243,7 @@ class TodoServiceImpl : TodoService {
         val request = Request
             .Builder()
             .url(url)
-            .addHeader(HEADER_AUTHORIZATION, AUTH_TOKEN)
+            .addHeader(HEADER_AUTHORIZATION, "bearer $AUTH_TOKEN")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -263,13 +252,10 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val result =
-                    Gson().fromJson(
-                        response.body?.string().toString(),
-                        GetAllTeamTodosResponse::class.java
-                    )
-                Log.i("iii", result.value[0].creationTime)
-                onGetAllTeamTodosSuccess(result)
+                response.body?.string().let {
+                    val result = Gson().fromJson(it, GetAllTeamTodosResponse::class.java)
+                    onGetAllTeamTodosSuccess(result)
+                }
             }
         })
     }
@@ -317,7 +303,7 @@ class TodoServiceImpl : TodoService {
         private const val PATH_PERSONAL = "personal"
         private const val HEADER_AUTHORIZATION = "Authorization"
         private const val AUTH_TOKEN =
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6Ijk4YWRiZWJkLTg2YmQtNDg3Yy1hYjI1LWVlY2IzOGQxZjIxZSIsInRlYW1JZCI6IjAxYThhOTg4LTQ0NjItNDNhNi1hOThhLTE2MjY4NzNmYTc4NyIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxNDAyMjc3fQ.iCNnBgrYNOZSc707UD-oY8h9PsW0WNyocAmD7-hMucM"
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6Ijk4YWRiZWJkLTg2YmQtNDg3Yy1hYjI1LWVlY2IzOGQxZjIxZSIsInRlYW1JZCI6IjAxYThhOTg4LTQ0NjItNDNhNi1hOThhLTE2MjY4NzNmYTc4NyIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxNjg3NDgwfQ.WM_FaP2AQ-20iQuq-FnlE-5cG15FCuOBMN_brmeRsk0"
         private const val TO_DO_PATH_SEGMENT = "todo"
         private const val TEAM_PATH_SEGMENT = "team"
         private const val REGISTER_PATH = "signup"
