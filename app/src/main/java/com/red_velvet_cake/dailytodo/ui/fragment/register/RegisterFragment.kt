@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import com.red_velvet_cake.dailytodo.BuildConfig
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.databinding.FragmentRegisterBinding
-import com.red_velvet_cake.dailytodo.presenter.register.IRegisterView
 import com.red_velvet_cake.dailytodo.presenter.register.RegisterPresenter
+import com.red_velvet_cake.dailytodo.presenter.register.RegisterView
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import okio.IOException
 
-class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), IRegisterView {
+class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
     private val presenter = RegisterPresenter(this)
 
     companion object {
@@ -34,8 +35,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), IRegisterView 
         Log.d(TAG, "onRegisterAccountSuccess: $registerAccountResponse")
     }
 
-    override fun onRegisterAccountFailure(message: String) {
-        Log.d(TAG, "onRegisterAccountFailure: $message")
+    override fun onRegisterAccountFailure(exception: IOException) {
+        Log.d(TAG, "onRegisterAccountFailure: ${exception.message}")
     }
 
 }

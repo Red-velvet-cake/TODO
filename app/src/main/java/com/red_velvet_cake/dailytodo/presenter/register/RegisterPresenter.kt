@@ -1,12 +1,12 @@
 package com.red_velvet_cake.dailytodo.presenter.register
 
-import com.red_velvet_cake.dailytodo.data.TodoService
-import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
+import com.red_velvet_cake.dailytodo.data.remote.TodoService
+import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import java.io.IOException
 
 class RegisterPresenter(
-    private val view: IRegisterView,
+    private val view: RegisterView,
 ) {
 
     private val service: TodoService = TodoServiceImpl()
@@ -25,7 +25,7 @@ class RegisterPresenter(
         view.onRegisterAccountSuccess(registerAccountResponse)
     }
 
-    private fun onRegisterAccountFailure(error: IOException) {
-        view.onRegisterAccountFailure(error.message ?: "Unknown error")
+    private fun onRegisterAccountFailure(exception: IOException) {
+        view.onRegisterAccountFailure(exception)
     }
 }

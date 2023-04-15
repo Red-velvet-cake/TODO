@@ -1,12 +1,11 @@
-package com.red_velvet_cake.dailytodo.presenter.createTeamTodo
+package com.red_velvet_cake.dailytodo.presenter.create_team_todo
 
-import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
-import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeam
-import com.red_velvet_cake.dailytodo.data.model.PersonalTODORequest
+import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
+import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import okio.IOException
 
 class CreateTeamTodoPresenter(
-    private val view: ICreateTeamTodoView,
+    private val view: CreateTeamTodoView,
 ) {
     private val todoService = TodoServiceImpl()
 
@@ -25,9 +24,8 @@ class CreateTeamTodoPresenter(
 
     }
 
-    private fun onCreateTeamTodoSuccess(createTodoTeam: CreateTodoTeam) {
-        view.onCreateTeamTodoSuccess(createTodoTeam)
-
+    private fun onCreateTeamTodoSuccess(createTodoTeamResponse: CreateTodoTeamResponse) {
+        view.onCreateTeamTodoSuccess(createTodoTeamResponse)
     }
 
     private fun onCreateTeamTodoFailure(e: IOException) {
