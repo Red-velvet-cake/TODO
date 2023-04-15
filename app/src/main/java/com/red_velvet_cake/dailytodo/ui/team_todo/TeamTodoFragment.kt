@@ -1,9 +1,11 @@
 package com.red_velvet_cake.dailytodo.ui.team_todo
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
+import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
 import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 import okio.IOException
@@ -18,6 +20,9 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
         teamTodoPresenter = TeamTodoPresenter(this)
         teamTodoPresenter.getAllTeamTodos()
         teamToDoAdapter = TeamToDoAdapter()
+        teamTodoPresenter.updateTeamTodoStatus("8ae1a1fa-6e60-4eea-8e61-8ba5d5420f8d", 1)
+
+
     }
 
     override fun addCallBacks() {
@@ -25,9 +30,13 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
     }
 
     override fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
+        val itemTouchHelperCallback = ItemTeamTodoTouchHelperCallback(teamToDoAdapter)
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         teamToDoAdapter.submitList(getAllTeamTodosResponse.value)
         requireActivity().runOnUiThread {
             binding.teamTodoRecycler.adapter = teamToDoAdapter
+            itemTouchHelper.attachToRecyclerView(binding.teamTodoRecycler)
+
         }
     }
 
@@ -35,11 +44,11 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
 
     }
 
-    override fun onUpdatePersonalTodoStatusSuccess(updatePersonalStatusResponse: UpdatePersonalStatusResponse) {
-
+    override fun onUpdateTeamTodoStatusSuccess(updateTeamTodoStatusResponse: UpdateTeamTodoStatusResponse) {
+        Log.d("TAG", "onUpdateTeamTodoStatusSuccess: ${updateTeamTodoStatusResponse.isSuccess} ")
     }
 
-    override fun onUpdatePersonalTodoStatusFailure(exception: IOException) {
+    override fun onUpdateTeamTodoStatusFailure(exception: IOException) {
 
     }
 

@@ -1,7 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.team_todo
 
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
+import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import java.io.IOException
 
@@ -9,15 +9,15 @@ class TeamTodoPresenter(private val view: TeamTodo) {
 
     private val todoServiceImpl = TodoServiceImpl()
 
-    fun updatePersonalTodoStatus(
+    fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
     ) {
-        todoServiceImpl.updatePersonalTodoStatus(
+        todoServiceImpl.updateTeamTodoStatus(
             todoId,
             newTodoStatus,
-            ::onUpdatePersonalTodoStatusSuccess,
-            ::onUpdatePersonalTodoStatusFailure
+            ::onUpdateTeamTodoStatusSuccess,
+            ::onUpdateTeamTodoStatusFailure
         )
     }
 
@@ -29,12 +29,12 @@ class TeamTodoPresenter(private val view: TeamTodo) {
     }
 
 
-    private fun onUpdatePersonalTodoStatusSuccess(updatePersonalStatusResponse: UpdatePersonalStatusResponse) {
-        view.onUpdatePersonalTodoStatusSuccess(updatePersonalStatusResponse)
+    private fun onUpdateTeamTodoStatusSuccess(updateTeamTodoStatusResponse: UpdateTeamTodoStatusResponse) {
+        view.onUpdateTeamTodoStatusSuccess(updateTeamTodoStatusResponse)
     }
 
-    private fun onUpdatePersonalTodoStatusFailure(exception: IOException) {
-        view.onUpdatePersonalTodoStatusFailure(exception)
+    private fun onUpdateTeamTodoStatusFailure(exception: IOException) {
+        view.onUpdateTeamTodoStatusFailure(exception)
     }
 
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {

@@ -6,7 +6,8 @@ import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.LayoutTeamTodoItemBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseAdapter
 
-class TeamToDoAdapter : BaseAdapter<TeamTodo, LayoutTeamTodoItemBinding>() {
+class TeamToDoAdapter() :
+    BaseAdapter<TeamTodo, LayoutTeamTodoItemBinding>() {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> LayoutTeamTodoItemBinding =
         LayoutTeamTodoItemBinding::inflate
@@ -20,6 +21,7 @@ class TeamToDoAdapter : BaseAdapter<TeamTodo, LayoutTeamTodoItemBinding>() {
             textviewTodoCreationDate.text = date
             textviewTodoCreationTime.text = time
 
+
         }
     }
 
@@ -27,7 +29,19 @@ class TeamToDoAdapter : BaseAdapter<TeamTodo, LayoutTeamTodoItemBinding>() {
         oldItemPosition: Int,
         newItemPosition: Int,
         newItems: List<T>
-    ) = getOldItems()[oldItemPosition].id == (newItems[newItemPosition] as TeamTodo).id
+    ): Boolean {
+        return (getOldItems()[oldItemPosition] == newItems[newItemPosition])
+    }
+
+    fun swipedLeft(position: Int) {
+        notifyItemRemoved(position)
+    }
+
+    fun swipedRight(position: Int) {
+        notifyItemRemoved(position)
+//        teamTodoPresenter.updatePersonalTodoStatus(getOldItems()[position].id , 2)
+
+    }
 
     private fun extractDateAndTime(dateTimeString: String): Pair<String, String> {
         val parts = dateTimeString.split("T")
