@@ -20,11 +20,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
 
     override fun addCallBacks() {
         binding.buttonRegister.setOnClickListener {
-            handleRegisterButtonClick()
+            presenter.handleRegisterButtonClick()
         }
 
         binding.textViewLogin.setOnClickListener {
-            handleLoginButtonClick()
+            presenter.handleLoginButtonClick()
         }
     }
 
@@ -56,18 +56,18 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
         val confirmPassword = binding.editTextConfirmPassword.text.toString().trim()
 
         when {
-            !validateUsername(username) -> {
-                showUsernameValidationError(getString(R.string.username_validation_error))
+            !presenter.validateUsername(username) -> {
+                presenter.showUsernameValidationError(getString(R.string.username_validation_error))
                 return false
             }
 
-            !validatePassword(password) -> {
-                showPasswordValidationError(getString(R.string.password_validation_error))
+            !presenter.validatePassword(password) -> {
+                presenter.showPasswordValidationError(getString(R.string.password_validation_error))
                 return false
             }
 
-            !validateConfirmPassword(password, confirmPassword) -> {
-                showConfirmPasswordValidationError(getString(R.string.confirm_password_validation_error))
+            !presenter.validateConfirmPassword(password, confirmPassword) -> {
+                presenter.showConfirmPasswordValidationError(getString(R.string.confirm_password_validation_error))
                 return false
             }
 
