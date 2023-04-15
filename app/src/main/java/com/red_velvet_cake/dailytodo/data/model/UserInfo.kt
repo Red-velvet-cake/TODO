@@ -1,6 +1,8 @@
 package com.red_velvet_cake.dailytodo.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class UserInfo(
-    val userId: String,
-    val username: String,
+    @SerializedName("userID") val userId: String,
+    @SerializedName("userName") val username: String,
 )
