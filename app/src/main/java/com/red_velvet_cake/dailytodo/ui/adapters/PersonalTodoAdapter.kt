@@ -1,8 +1,8 @@
 package com.red_velvet_cake.dailytodo.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.databinding.ItemPersonalTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseAdapter
@@ -12,7 +12,7 @@ class PersonalTodoAdapter:BaseAdapter<PersonalTodo,ItemPersonalTodoBinding>() {
         get() = ItemPersonalTodoBinding::inflate
 
     override fun bindItem(binding: ItemPersonalTodoBinding, item: PersonalTodo) {
-        binding.apply {
+        with(binding) {
             todoTitleTextview.text=item.title
             todoDescriptionTextview.text=item.description
             textviewTodoCreationDate.text=item.creationTime.split("T")[0]
@@ -23,9 +23,23 @@ class PersonalTodoAdapter:BaseAdapter<PersonalTodo,ItemPersonalTodoBinding>() {
     override fun <T> areItemsTheSame(
         oldItemPosition: Int,
         newItemPosition: Int,
-        newItems: List<T>,
+        newItems: List<T>
     ): Boolean {
 return (getOldItems()[oldItemPosition]==newItems[newItemPosition])
     }
+
+    fun swipedLeft(position: Int)
+    {
+        notifyItemRemoved(position)
+        //updeate status
+        Log.i("iii","item $position swiped left")
+    }
+    fun swipedRight(position: Int)
+    {
+        notifyItemRemoved(position)
+        //update status
+        Log.i("iii","item $position swiped right")
+    }
+
 
 }
