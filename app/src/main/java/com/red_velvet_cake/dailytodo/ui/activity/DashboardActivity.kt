@@ -17,7 +17,8 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
         lunchAuthActivity()
     }
 
-    override fun addCallbacks() {}
+    override fun addCallbacks() {
+    }
 
     override fun isInternetAvailable(connectionStatus: ConnectionStatus) {
         when (connectionStatus) {
