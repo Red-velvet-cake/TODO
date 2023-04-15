@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.ui
+package com.red_velvet_cake.dailytodo.ui.team_todo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

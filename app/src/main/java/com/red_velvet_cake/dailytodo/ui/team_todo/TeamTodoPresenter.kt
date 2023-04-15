@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.presenter
+package com.red_velvet_cake.dailytodo.ui.team_todo
 
 import com.red_velvet_cake.dailytodo.data.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
@@ -6,7 +6,7 @@ import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import java.io.IOException
 
 
-class MainPresenter(private val view: IMainView) {
+class TeamTodoPresenter(private val view: TeamTodo) {
 
     private val todoServiceImpl = TodoServiceImpl()
 
