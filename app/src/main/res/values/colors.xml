@@ -21,6 +21,7 @@
     <color name="red">#EA5B5B</color>
 
     <color name="on_primary">#DEFFFFFF</color>
+    <color name="purple_5_text">#F8F7FF</color>
 
     <color name="light_secondary">#FFFFFF</color>
     <color name="color_todo_title">#99000000</color>
