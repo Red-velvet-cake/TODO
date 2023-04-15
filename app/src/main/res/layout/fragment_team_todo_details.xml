@@ -80,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/text_view_creation_date"
-        tools:text="@string/details_todos"
+        tools:text="@string/todo_details"
         android:paddingHorizontal="@dimen/_16dp"
         android:fontFamily="@font/poppins"
         android:layout_marginVertical="@dimen/_18dp"
