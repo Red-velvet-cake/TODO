@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.ui.activity
+package com.red_velvet_cake.dailytodo.ui.login
 
 import android.text.SpannableString
 import android.text.Spanned
@@ -8,30 +8,26 @@ import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
-import com.red_velvet_cake.dailytodo.databinding.ActivityLoginBinding
-import com.red_velvet_cake.dailytodo.presenter.login.LoginPresenter
-import com.red_velvet_cake.dailytodo.presenter.login.LoginView
-import com.red_velvet_cake.dailytodo.ui.base.BaseActivity
-import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
+import com.red_velvet_cake.dailytodo.databinding.FragmentLoginBinding
+import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 import okio.IOException
 
-class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginView {
-    override val LOG_TAG: String = LoginActivity::class.simpleName!!
 
-    override val bindingInflater: (LayoutInflater) -> ActivityLoginBinding =
-        ActivityLoginBinding::inflate
+class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
+    override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
+        get() = FragmentLoginBinding::inflate
+     val LOG_TAG: String = LoginFragment::class.simpleName!!
 
     private val loginPresenter = LoginPresenter(this)
-
     override fun setUp() {
         setupSignUpTextView()
     }
 
-    override fun addCallbacks() {
+    override fun addCallBacks() {
         binding.loginButton.setOnClickListener {
             val username = binding.userNameTextField.text.toString()
             val password = binding.passwordTextField.text.toString()
@@ -47,23 +43,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginView {
         Log.d(LOG_TAG, "onLoginSuccess: ${exception.message}")
     }
 
-    override fun isInternetAvailable(connectionStatus: ConnectionStatus) {
-        when (connectionStatus) {
-            ConnectionStatus.Available -> Toast.makeText(
-                this,
-                ConnectionStatus.Available.name,
-                Toast.LENGTH_SHORT
-            )
-                .show()
-            ConnectionStatus.Unavailable -> Toast.makeText(
-                this,
-                ConnectionStatus.Unavailable.name,
-                Toast.LENGTH_SHORT
-            )
-                .show()
-        }
-    }
-
     private fun setupSignUpTextView() {
         val text = "Don’t have an account? sign up"
         val spannableString = SpannableString(text)
@@ -76,7 +55,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginView {
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
-                ds.color = ContextCompat.getColor(this@LoginActivity, R.color.primary)
+                ds.color = ContextCompat.getColor(requireContext(), R.color.primary)
                 ds.isUnderlineText = false
             }
         }
@@ -89,4 +68,5 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginView {
         binding.signUpTextView.text = spannableString
         binding.signUpTextView.movementMethod = LinkMovementMethod.getInstance()
     }
+
 }

@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.presenter.login
+package com.red_velvet_cake.dailytodo.ui.login
 
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
