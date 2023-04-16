@@ -4,7 +4,6 @@ import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
 import com.orhanobut.hawk.Hawk
-import com.red_velvet_cake.dailytodo.data.local.LocalData
 import com.red_velvet_cake.dailytodo.data.model.ApiResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
@@ -62,7 +61,7 @@ class TodoServiceImpl : TodoService {
                     val apiResponse = Gson().fromJson(responseBody, ApiResponse::class.java)
                     if (apiResponse.isSuccess) {
                         val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
-                        Hawk.put(LocalData[HEADER_AUTHORIZATION], loginResponse.loginResponseBody.token)
+                        Hawk.put(HEADER_AUTHORIZATION, loginResponse.loginResponseBody.token)
                         onLoginUserSuccess(loginResponse)
                     } else {
                         val message = apiResponse.message
