@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
@@ -20,7 +21,7 @@ import okio.IOException
 class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
         get() = FragmentLoginBinding::inflate
-     val LOG_TAG: String = LoginFragment::class.simpleName!!
+     private val LOG_TAG: String = LoginFragment::class.simpleName!!
 
     private val loginPresenter = LoginPresenter(this)
     override fun setUp() {
@@ -28,19 +29,41 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
     }
 
     override fun addCallBacks() {
-        binding.loginButton.setOnClickListener {
-            val username = binding.userNameTextField.text.toString()
-            val password = binding.passwordTextField.text.toString()
-            loginPresenter.loginUser(username, password)
+        binding.buttonLogin.setOnClickListener {
+            val username = binding.editTextUsername.text.toString()
+            val password = binding.editTextPassword.text.toString()
+            if (validateInputFields(username, password)) {
+                loginPresenter.loginUser(username, password)
+            }
         }
     }
 
-    override fun onLoginSuccess(loginResponse: LoginResponse) {
+    override fun onSuccess(loginResponse: LoginResponse) {
         Log.d(LOG_TAG, "onLoginSuccess: ${loginResponse.loginResponseBody}")
     }
 
-    override fun onLoginFailure(exception: IOException) {
-        Log.d(LOG_TAG, "onLoginSuccess: ${exception.message}")
+    override fun onFailure(exception: IOException) {
+        Toast.makeText(requireContext(), exception.message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun validateInputFields(username: String, password: String): Boolean {
+        var isValid = true
+
+        if (username.isBlank()) {
+            binding.editTextUsername.error = "Username cannot be empty"
+            isValid = false
+        } else {
+            binding.editTextUsername.error = null
+        }
+
+        if (password.isBlank()) {
+            binding.editTextPassword.error = "Password cannot be empty"
+            isValid = false
+        } else {
+            binding.editTextPassword.error = null
+        }
+
+        return isValid
     }
 
     private fun setupSignUpTextView() {
@@ -65,8 +88,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
             endIndex,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        binding.signUpTextView.text = spannableString
-        binding.signUpTextView.movementMethod = LinkMovementMethod.getInstance()
+        binding.textViewSignUp.text = spannableString
+        binding.textViewSignUp.movementMethod = LinkMovementMethod.getInstance()
     }
 
 }

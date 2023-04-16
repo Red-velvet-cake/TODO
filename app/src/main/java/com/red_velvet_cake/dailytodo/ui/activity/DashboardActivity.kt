@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import com.orhanobut.hawk.Hawk
+import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.databinding.ActivityDashboardBinding
@@ -21,8 +22,9 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), LoginView {
 
     override fun setUp() {
 //        lunchAuthActivity()
-        Hawk.init(this).build()
-        TodoServiceImpl().loginUser("test user2", "123456789", {}, {})
+//        Hawk.init(this).build()
+        SharedPrefs.initPrefUtil(this)
+        TodoServiceImpl().loginUser("Ibrahim", "abcdabcd", {}, {})
     }
 
     override fun addCallbacks() {}
@@ -48,11 +50,11 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), LoginView {
         startActivity(intent)
     }
 
-    override fun onLoginSuccess(loginResponse: LoginResponse) {
+    override fun onSuccess(loginResponse: LoginResponse) {
         Log.d("alhams", "onLoginSuccess: $loginResponse")
     }
 
-    override fun onLoginFailure(exception: IOException) {
+    override fun onFailure(exception: IOException) {
         Log.d("alhams", "onLoginSuccess: ${exception.message}")
     }
 

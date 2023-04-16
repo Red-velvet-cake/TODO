@@ -11,16 +11,16 @@ class LoginPresenter(private val view: LoginView) {
         todoServiceImpl.loginUser(
             username,
             password,
-            ::onLoginSuccess,
-            ::onLoginFailure
+            this::onSuccess,
+            this::onFailure
         )
     }
 
-    private fun onLoginSuccess(loginResponse: LoginResponse) {
-        view.onLoginSuccess(loginResponse)
+    private fun onSuccess(loginResponse: LoginResponse) {
+        view.onSuccess(loginResponse)
     }
 
-    private fun onLoginFailure(exception: IOException) {
-        view.onLoginFailure(exception)
+    private fun onFailure(exception: IOException) {
+        view.onFailure(exception)
     }
 }

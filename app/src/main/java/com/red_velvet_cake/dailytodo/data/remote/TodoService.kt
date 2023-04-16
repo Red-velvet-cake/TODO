@@ -1,13 +1,6 @@
 package com.red_velvet_cake.dailytodo.data.remote
 
-import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
-import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
-import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.LoginResponse
-import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.data.model.*
 import okio.IOException
 
 interface TodoService {

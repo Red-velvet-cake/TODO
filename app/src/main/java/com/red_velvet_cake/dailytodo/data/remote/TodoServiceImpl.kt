@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.orhanobut.hawk.Hawk
 import com.red_velvet_cake.dailytodo.data.local.LocalData
+import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
 import com.red_velvet_cake.dailytodo.data.model.*
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
@@ -51,15 +52,13 @@ class TodoServiceImpl : TodoService {
 
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
-
-                    val apiResponse = Gson().fromJson(responseBody, ApiResponse::class.java)
-                    if (apiResponse.isSuccess) {
-                        val valueJson = JSONObject(responseBody).getJSONObject("value")
-                        val loginResponse = Gson().fromJson(valueJson.toString(), LoginResponse::class.java)
-                        Hawk.put(LocalData[HEADER_AUTHORIZATION], loginResponse.loginResponseBody.token)
+                    val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
+                    if (loginResponse.isSuccess) {
+                        Log.d("Token ", "onResponse: ${loginResponse.loginResponseBody.token}")
+                        SharedPrefs.token = loginResponse.loginResponseBody.token
                         onLoginUserSuccess(loginResponse)
                     } else {
-                        val message = apiResponse.message
+                        val message = loginResponse.message
                         onLoginUserFailure(IOException(message))
                     }
                 }
