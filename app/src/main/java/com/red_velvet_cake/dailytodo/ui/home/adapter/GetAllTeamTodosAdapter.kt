@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.TeamTodo
+import com.red_velvet_cake.dailytodo.data.model.TeamTodoResponse
 import com.red_velvet_cake.dailytodo.databinding.ItemPersonalAndTeamTasksBinding
 
 class GetAllTeamTodosAdapter(private val allTodos: GetAllTeamTodosResponse) :
@@ -31,12 +31,12 @@ class GetAllTeamTodosAdapter(private val allTodos: GetAllTeamTodosResponse) :
     inner class GetAllTeamTodosHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemPersonalAndTeamTasksBinding.bind(itemView)
 
-        fun bind(teamTodo: TeamTodo) {
-            val creationTime = teamTodo.creationTime.split("T")
+        fun bind(teamTodoResponse: TeamTodoResponse) {
+            val creationTime = teamTodoResponse.creationTime.split("T")
             binding.apply {
-                textViewTodoTitle.text = teamTodo.title
-                textViewDescriptionTodo.text = teamTodo.description
-                textViewAssignment.text = teamTodo.assignee
+                textViewTodoTitle.text = teamTodoResponse.title
+                textViewDescriptionTodo.text = teamTodoResponse.description
+                textViewAssignment.text = teamTodoResponse.assignee
                 textViewUpdateDate.text = creationTime[0]
                 textViewTime.text = creationTime[1]
             }

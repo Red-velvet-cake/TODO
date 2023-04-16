@@ -3,18 +3,10 @@ package com.red_velvet_cake.dailytodo.data.remote
 import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
-import com.orhanobut.hawk.Hawk
-import com.red_velvet_cake.dailytodo.data.local.LocalData
 import com.red_velvet_cake.dailytodo.data.model.*
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.FormBody
-import okhttp3.HttpUrl
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.IOException
 import org.json.JSONObject
@@ -56,7 +48,7 @@ class TodoServiceImpl : TodoService {
                     if (apiResponse.isSuccess) {
                         val valueJson = JSONObject(responseBody).getJSONObject("value")
                         val loginResponse = Gson().fromJson(valueJson.toString(), LoginResponse::class.java)
-                        Hawk.put(LocalData[HEADER_AUTHORIZATION], loginResponse.loginResponseBody.token)
+//                        Hawk.put(LocalData[HEADER_AUTHORIZATION], loginResponse.loginResponseBody.token)
                         onLoginUserSuccess(loginResponse)
                     } else {
                         val message = apiResponse.message
