@@ -1,6 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.home
 
 
+import android.util.Log
 import android.view.LayoutInflater
 
 import android.view.ViewGroup
@@ -20,32 +21,50 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
         get() = FragmentHomeBinding::inflate
 
     private var lists = mutableListOf<HomeItems<Any>>()
+    private lateinit var adapter: HomeAdapter
 
     override fun setUp() {
+        adapter = HomeAdapter(lists)
         val homePresenter = HomePresenter(this)
         homePresenter.getAllTodos()
-
-        val adapter = HomeAdapter(lists)
+        Log.i("mah", "list $lists")
         binding.recyclerViewHome.adapter = adapter
 
     }
 
     override fun addCallBacks() {
-
     }
 
     override fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
-        lists.add(HomeItems(getAllPersonalTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
+
+        requireActivity().runOnUiThread {
+            lists.add(
+                HomeItems(
+                    getAllPersonalTodosResponse,
+                    HomeItemType.ITEM_STATISTICS_TASKS_HAS_DONE
+                )
+            )
+            lists.add(HomeItems("Personal Task", HomeItemType.ITEM_TODOS_SECTION_TITLE))
+            lists.add(HomeItems(getAllPersonalTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
+            adapter.notifyDataSetChanged()
+        }
     }
 
-    override fun onGetAllPersonalTodosFailure(e: IOException) {
+    override fun onGetAllPersonalTodosFailure(exception: IOException) {
+        Log.i("mah", "personal ${exception.message}")
     }
 
     override fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
-        lists.add(HomeItems(getAllTeamTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
+        requireActivity().runOnUiThread {
+            lists.add(HomeItems("Team Task", HomeItemType.ITEM_TODOS_SECTION_TITLE))
+            lists.add(HomeItems(getAllTeamTodosResponse, HomeItemType.LIST_TEAM_TASKS))
+            adapter.notifyDataSetChanged()
+        }
+
+
     }
 
     override fun onGetAllTeamTodosFailure(exception: IOException) {
-        TODO("Not yet implemented")
+        Log.i("mah", "team ${exception.message}")
     }
 }

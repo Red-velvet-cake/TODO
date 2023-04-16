@@ -1,5 +1,6 @@
 package com.red_velvet_cake.dailytodo.ui.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,11 +66,13 @@ class HomeAdapter(private val list: List<HomeItems<Any>>) :
     override fun getItemCount() = list.size
 
     override fun getItemViewType(position: Int): Int {
+        Log.i("main", list[position].type.toString())
         return when (list[position].type) {
             HomeItemType.ITEM_STATISTICS_TASKS_HAS_DONE -> R.layout.item_statistics_tasks_person_has_done
             HomeItemType.ITEM_TODOS_SECTION_TITLE -> R.layout.item_todos_section_title
-            HomeItemType.LIST_PERSONAL_TASKS -> R.layout.item_personal_and_team_tasks
-            else -> R.layout.item_personal_and_team_tasks
+            HomeItemType.LIST_PERSONAL_TASKS, HomeItemType.LIST_TEAM_TASKS
+            -> R.layout.item_personal_and_team_tasks
+
         }
     }
 
@@ -80,7 +83,11 @@ class HomeAdapter(private val list: List<HomeItems<Any>>) :
     inner class StaticsTasksPersonHasDoneHolder(viewItem: View) : BaseHomeHolder(viewItem) {
         private val binding = ItemStatisticsTasksPersonHasDoneBinding.bind(viewItem)
         override fun bind(item: HomeItems<Any>) {
-            TODO("Not yet implemented")
+            val personal = item as GetAllPersonalTodosResponse
+            binding.textViewPersonalResult.text = personal.value.size.toString()
+            binding.textViewTeamResult.text = personal.value.size.toString()
+            binding.textViewCompletedTodoResult.text = personal.value.size.toString()
+            binding.textViewPendingTodoResult.text = personal.value.size.toString()
         }
 
     }
