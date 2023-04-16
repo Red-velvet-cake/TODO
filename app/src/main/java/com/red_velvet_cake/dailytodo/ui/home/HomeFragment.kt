@@ -1,60 +1,51 @@
 package com.red_velvet_cake.dailytodo.ui.home
 
-import android.os.Bundle
+
 import android.view.LayoutInflater
-import android.view.View
+
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.red_velvet_cake.dailytodo.R
+import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.databinding.FragmentHomeBinding
+import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeAdapter
+import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItemType
+import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItems
+import com.red_velvet_cake.dailytodo.ui.home.adapter.IHomeView
+import java.io.IOException
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
+    override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
+        get() = FragmentHomeBinding::inflate
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private var lists = mutableListOf<HomeItems<Any>>()
+
+    override fun setUp() {
+        val homePresenter = HomePresenter(this)
+        homePresenter.getAllTodos()
+
+        val adapter = HomeAdapter(lists)
+        binding.recyclerViewHome.adapter = adapter
+
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    override fun addCallBacks() {
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
+        lists.add(HomeItems(getAllPersonalTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
+    }
+
+    override fun onGetAllPersonalTodosFailure(e: IOException) {
+    }
+
+    override fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
+        lists.add(HomeItems(getAllTeamTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
+    }
+
+    override fun onGetAllTeamTodosFailure(exception: IOException) {
+        TODO("Not yet implemented")
     }
 }
