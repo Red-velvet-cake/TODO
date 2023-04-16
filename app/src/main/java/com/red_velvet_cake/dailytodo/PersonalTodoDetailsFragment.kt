@@ -1,27 +1,43 @@
 package com.red_velvet_cake.dailytodo
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.red_velvet_cake.dailytodo.R
+import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
+import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoDetailsBinding
+import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 
 
-class PersonalTodoDetailsFragment : Fragment() {
+class PersonalTodoDetailsFragment() : BaseFragment<FragmentPersonalTodoDetailsBinding>() {
+
+    private var personalTodo: PersonalTodo? = null
+    override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentPersonalTodoDetailsBinding
+        get() = FragmentPersonalTodoDetailsBinding::inflate
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun setUp() {
+        personalTodo = arguments?.getParcelable(KEY_PERSONAL_TODO)
+        binding.apply {
+            textViewTodoTitle.text = personalTodo?.title
+            textViewTodoCreationTime.text = personalTodo?.creationTime
+            textViewTodoDetails.text = personalTodo?.description
+        }
+    }
+
+    override fun addCallBacks() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_personal_todo_details, container, false)
+    companion object {
+        private const val KEY_PERSONAL_TODO = "PersonalTodo"
+        fun newInstance(personalTodo: PersonalTodo) =
+            PersonalTodoDetailsFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(KEY_PERSONAL_TODO, personalTodo)
+                }
+
+            }
     }
 
 }
