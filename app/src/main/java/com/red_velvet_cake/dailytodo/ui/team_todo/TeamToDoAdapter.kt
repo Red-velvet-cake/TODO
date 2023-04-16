@@ -36,12 +36,12 @@ class TeamToDoAdapter() :
 
     fun swipedLeft(position: Int) {
         notifyItemRemoved(position)
-        onUpdatedStatus(getOldItems()[position].id, 1)
+        onUpdatedStatus(getOldItems()[position].id, 2)
     }
 
     fun swipedRight(position: Int) {
         notifyItemRemoved(position)
-        onUpdatedStatus(getOldItems()[position].id, 0)
+        onUpdatedStatus(getOldItems()[position].id, 1)
     }
 
     private fun extractDateAndTime(dateTimeString: String): Pair<String, String> {

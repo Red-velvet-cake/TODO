@@ -23,7 +23,23 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
     }
 
     override fun addCallBacks() {
-        setChipClickListeners()
+
+        binding.chipAll.setOnClickListener {
+            selectedChip = CHIP_ALL_VALUE
+            refreshTeamTodoList()
+        }
+        binding.chipTodo.setOnClickListener {
+            selectedChip = CHIP_TODO_VALUE
+            refreshTeamTodoList()
+        }
+        binding.chipDone.setOnClickListener {
+            selectedChip = CHIP_DONE_VALUE
+            refreshTeamTodoList()
+        }
+        binding.chipInProgress.setOnClickListener {
+            selectedChip = CHIP_IN_PROGRESS_VALUE
+            refreshTeamTodoList()
+        }
     }
 
     private fun initializePresenter() {
