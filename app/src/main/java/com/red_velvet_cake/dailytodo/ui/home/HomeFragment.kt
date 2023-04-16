@@ -3,7 +3,6 @@ package com.red_velvet_cake.dailytodo.ui.home
 
 import android.util.Log
 import android.view.LayoutInflater
-
 import android.view.ViewGroup
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
@@ -27,7 +26,6 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
         adapter = HomeAdapter(lists)
         val homePresenter = HomePresenter(this)
         homePresenter.getAllTodos()
-        Log.i("mah", "list $lists")
         binding.recyclerViewHome.adapter = adapter
 
     }
@@ -36,7 +34,6 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
     }
 
     override fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
-
         requireActivity().runOnUiThread {
             lists.add(
                 HomeItems(
@@ -55,8 +52,8 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
     }
 
     override fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
+        lists.add(HomeItems("Team Task", HomeItemType.ITEM_TODOS_SECTION_TITLE))
         requireActivity().runOnUiThread {
-            lists.add(HomeItems("Team Task", HomeItemType.ITEM_TODOS_SECTION_TITLE))
             lists.add(HomeItems(getAllTeamTodosResponse, HomeItemType.LIST_TEAM_TASKS))
             adapter.notifyDataSetChanged()
         }
