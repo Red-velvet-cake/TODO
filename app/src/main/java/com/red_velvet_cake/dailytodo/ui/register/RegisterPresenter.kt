@@ -29,9 +29,9 @@ class RegisterPresenter(
         username: String,
         password: String
     ) {
-        view.hideLoading()
+        view.showRegisterButtonEnabledState()
         if (registerAccountResponse.isSuccess) {
-            view.showToast(registerAccountResponse.message ?: "Account created successfully")
+            view.showToast("Account created successfully.")
             loginUsingCredentials(username, password)
         } else {
             view.showToast(registerAccountResponse.message)
@@ -44,24 +44,28 @@ class RegisterPresenter(
 
     fun clickRegisterButton(username: String, password: String, confirmPassword: String) {
         if (validateForm(username, password, confirmPassword)) {
-            view.showLoading()
-            registerAccount(username, password)
+            view.showRegisterButtonLoadingState()
+            registerAccount(username.trim(), password.trim())
         }
     }
 
     private fun validateForm(username: String, password: String, confirmPassword: String): Boolean {
+        val trimmedUsername = username.trim()
+        val trimmedPassword = password.trim()
+        val trimmedConfirmPassword = confirmPassword.trim()
+
         return when {
-            !validateUsername(username) -> {
+            !validateUsername(trimmedUsername) -> {
                 view.showValidationError(RegisterFormError.USERNAME_INVALID)
                 false
             }
 
-            !validatePassword(password) -> {
+            !validatePassword(trimmedPassword) -> {
                 view.showValidationError(RegisterFormError.PASSWORD_INVALID)
                 false
             }
 
-            !validateConfirmPassword(password, confirmPassword) -> {
+            !validateConfirmPassword(trimmedPassword, trimmedConfirmPassword) -> {
                 view.showValidationError(RegisterFormError.CONFIRM_PASSWORD_NOT_MATCHING)
                 false
             }
@@ -92,7 +96,7 @@ class RegisterPresenter(
     }
 
     private fun handleLoginUsingCredentialsSuccess(loginResponse: LoginResponse) {
-        view.hideLoading()
+        view.showRegisterButtonEnabledState()
         if (loginResponse.isSuccess) {
             view.navigateToHome()
         } else {

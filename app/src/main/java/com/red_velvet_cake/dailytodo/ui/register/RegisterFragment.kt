@@ -17,11 +17,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
     override fun setUp() {}
 
     override fun addCallBacks() {
-        onClickRegisterButton()
-        onLoginButtonClicked()
+        setupRegisterButtonClickListener()
+        setupLoginButtonClickListener()
     }
 
-    override fun showLoading() {
+    override fun showRegisterButtonLoadingState() {
         runOnUiThread {
             binding.buttonRegister.apply {
                 isEnabled = false
@@ -30,7 +30,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
         }
     }
 
-    override fun hideLoading() {
+    override fun showRegisterButtonEnabledState() {
         runOnUiThread {
             binding.buttonRegister.apply {
                 isEnabled = true
@@ -41,11 +41,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
 
     override fun showToast(message: String) {
         runOnUiThread {
-            Toast.makeText(
-                activity,
-                message,
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -70,17 +66,17 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
         }
     }
 
-    private fun onClickRegisterButton() {
+    private fun setupRegisterButtonClickListener() {
         binding.buttonRegister.setOnClickListener {
             presenter.clickRegisterButton(
-                binding.editTextUsername.text.toString().trim(),
-                binding.editTextPassword.text.toString().trim(),
-                binding.editTextConfirmPassword.text.toString().trim()
+                binding.editTextUsername.text.toString(),
+                binding.editTextPassword.text.toString(),
+                binding.editTextConfirmPassword.text.toString()
             )
         }
     }
 
-    private fun onLoginButtonClicked() {
+    private fun setupLoginButtonClickListener() {
         binding.textViewLogin.setOnClickListener {
             navigateToLogin()
         }
