@@ -17,8 +17,8 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>() {
             textViewTodoTitle.text = teamTodoDetails?.title
             textViewTodoDetails.text= teamTodoDetails?.description
             textViewAssigneName.text= teamTodoDetails?.assignee
-            textViewCreationDate.text = teamTodoDetails?.creationTime?.substring(0..10)
-            textViewTodoCreationTime.text = teamTodoDetails?.creationTime?.substring(11..16)
+            textViewCreationDate.text = teamTodoDetails?.creationTime?.substring(0..9)
+            textViewTodoCreationTime.text = teamTodoDetails?.creationTime?.substring(11..15)
 
         }
     }
