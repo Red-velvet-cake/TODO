@@ -49,15 +49,28 @@ class ItemTeamTodoTouchHelperCallback(
 
         val itemView = viewHolder.itemView
         var background: ColorDrawable
-        val backgroundCornerOffset =
-            itemView.width
+        val backgroundCornerOffset = itemView.width
         if (dX > 0) {
-            val text = "In Progress"
+            var text = ""
+            text = if (teamTodoAdapter.selectedChipAdapter == 1) {
+                "To Do"
+            } else if (teamTodoAdapter.selectedChipAdapter == 0) {
+                "Done"
+            } else {
+                "In progress"
+            }
             background = ColorDrawable(Color.parseColor("#7B61FF"))
             drawTextAndBackground(c, itemView, background, text, dX, backgroundCornerOffset)
         } else if (dX < 0) {
+            var text = ""
+            text = if (teamTodoAdapter.selectedChipAdapter == 1) {
+                "Done"
+            } else if (teamTodoAdapter.selectedChipAdapter == 0) {
+                "In progress"
+            } else {
+                "To do"
+            }
             background = ColorDrawable(Color.parseColor("#7B61FF"))
-            val text = "Done"
             drawTextAndBackground(c, itemView, background, text, dX, backgroundCornerOffset)
         }
 
@@ -77,10 +90,7 @@ class ItemTeamTodoTouchHelperCallback(
         background.setColor(Color.parseColor("#E5DFFF"))
         val radius = 16f
         background.cornerRadii = floatArrayOf(
-            radius, radius,
-            radius, radius,
-            radius, radius,
-            radius, radius
+            radius, radius, radius, radius, radius, radius, radius, radius
         )
         background.setBounds(itemView.left, itemView.top, itemView.right, itemView.bottom)
         background.draw(c)

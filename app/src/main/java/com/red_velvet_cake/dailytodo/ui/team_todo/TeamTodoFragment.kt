@@ -27,18 +27,22 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
         binding.chipAll.setOnClickListener {
             selectedChip = CHIP_ALL_VALUE
             refreshTeamTodoList()
+            teamToDoAdapter.setSelectedChip(selectedChip)
         }
         binding.chipTodo.setOnClickListener {
             selectedChip = CHIP_TODO_VALUE
             refreshTeamTodoList()
+            teamToDoAdapter.setSelectedChip(selectedChip)
         }
         binding.chipDone.setOnClickListener {
             selectedChip = CHIP_DONE_VALUE
             refreshTeamTodoList()
+            teamToDoAdapter.setSelectedChip(selectedChip)
         }
         binding.chipInProgress.setOnClickListener {
             selectedChip = CHIP_IN_PROGRESS_VALUE
             refreshTeamTodoList()
+            teamToDoAdapter.setSelectedChip(selectedChip)
         }
     }
 
@@ -51,25 +55,6 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
         teamToDoAdapter = TeamToDoAdapter()
         teamToDoAdapter.onUpdatedStatus = { id, updatedStatus ->
             teamTodoPresenter.updateTeamTodoStatus(id, updatedStatus)
-        }
-    }
-
-    private fun setChipClickListeners() {
-        binding.chipAll.setOnClickListener {
-            selectedChip = CHIP_ALL_VALUE
-            refreshTeamTodoList()
-        }
-        binding.chipTodo.setOnClickListener {
-            selectedChip = CHIP_TODO_VALUE
-            refreshTeamTodoList()
-        }
-        binding.chipDone.setOnClickListener {
-            selectedChip = CHIP_DONE_VALUE
-            refreshTeamTodoList()
-        }
-        binding.chipInProgress.setOnClickListener {
-            selectedChip = CHIP_IN_PROGRESS_VALUE
-            refreshTeamTodoList()
         }
     }
 
@@ -95,6 +80,14 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
     ): List<TeamTodoResponse> =
         if (selectedChip == CHIP_ALL_VALUE) teamTodoResponseList else teamTodoResponseList.filter { it.status == selectedChip }
 
+    companion object {
+        private const val CHIP_ALL_VALUE = 3
+        private const val CHIP_TODO_VALUE = 0
+        private const val CHIP_IN_PROGRESS_VALUE = 1
+        private const val CHIP_DONE_VALUE = 2
+    }
+
+
     override fun onGetAllTeamTodosFailure(exception: IOException) {
     }
 
@@ -102,13 +95,6 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
     }
 
     override fun onUpdateTeamTodoStatusFailure(exception: IOException) {
-    }
-
-    companion object {
-        private const val CHIP_ALL_VALUE = 3
-        private const val CHIP_TODO_VALUE = 0
-        private const val CHIP_IN_PROGRESS_VALUE = 1
-        private const val CHIP_DONE_VALUE = 2
     }
 
 }
