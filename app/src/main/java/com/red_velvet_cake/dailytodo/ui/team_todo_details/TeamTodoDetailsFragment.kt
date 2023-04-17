@@ -12,29 +12,26 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>() {
         FragmentTeamTodoDetailsBinding::inflate
 
     override fun setUp() {
+        val teamTodoDetails: TeamTodo? = arguments?.getParcelable(KEY)
         with(binding) {
-            textViewTodoDetails.text = arguments?.getString("details")
-            textViewTodoTitle.text = arguments?.getString("title")
-            textViewAssigneName.text = arguments?.getString("assignee")
-            textViewCreationDate.text = arguments?.getString("date")
-            textViewTodoCreationTime.text = arguments?.getString("time")
+            textViewTodoTitle.text = teamTodoDetails?.title
+            textViewTodoDetails.text= teamTodoDetails?.description
+            textViewAssigneName.text= teamTodoDetails?.assignee
+            textViewCreationDate.text = teamTodoDetails?.creationTime?.substring(0..10)
+            textViewTodoCreationTime.text = teamTodoDetails?.creationTime?.substring(11..16)
+
         }
     }
 
     override fun addCallBacks() {}
 
     companion object {
-        fun newInstance(teamTodo: TeamTodo): TeamTodoDetailsFragment {
-            val bundle = Bundle()
-            bundle.putString("title", teamTodo.title)
-            bundle.putString("details", teamTodo.description)
-            bundle.putString("assignee", teamTodo.assignee)
-            bundle.putString("date", teamTodo.creationTime.substring(0..9))
-            bundle.putString("time", teamTodo.creationTime.substring(11..15))
-
-            val fragment = TeamTodoDetailsFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
+        const val KEY = "team_todo"
+        fun newInstance(teamTodo: TeamTodo) =
+            TeamTodoDetailsFragment.apply {
+                val arguments = Bundle().apply {
+                    putParcelable(KEY, teamTodo)
+                }
+            }
     }
 }
