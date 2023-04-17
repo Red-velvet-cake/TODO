@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.register.RegisterFragment">
+    tools:context=".ui.register.RegisterFragment">
 
     <ImageView
         android:id="@+id/image_view_register"
@@ -19,8 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_56dp"
         android:layout_marginTop="@dimen/_32dp"
-        app:boxStrokeWidth="@dimen/_0dp"
-        app:boxStrokeWidthFocused="@dimen/_0dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:hintEnabled="false"
         app:layout_constraintTop_toBottomOf="@+id/image_view_register">
 
@@ -40,8 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_56dp"
         android:layout_marginTop="@dimen/_12dp"
-        app:boxStrokeWidth="@dimen/_0dp"
-        app:boxStrokeWidthFocused="@dimen/_0dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_input_layout_username">
@@ -62,8 +62,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_56dp"
         android:layout_marginTop="@dimen/_12dp"
-        app:boxStrokeWidth="@dimen/_0dp"
-        app:boxStrokeWidthFocused="@dimen/_0dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_input_layout_password">
@@ -86,7 +86,7 @@
         android:layout_marginHorizontal="@dimen/_16dp"
         android:layout_marginTop="@dimen/_32dp"
         android:background="@drawable/bg_button"
-        android:padding="@dimen/_0dp"
+        android:padding="0dp"
         android:paddingVertical="@dimen/_16dp"
         android:text="@string/register"
         android:textColor="@color/on_primary"
