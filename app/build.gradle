@@ -28,19 +28,6 @@ android {
         buildConfigField "String", "TEAM_ID", localProperties.getProperty("TEAM_ID")
     }
 
-    buildTypes {
-        debug {
-            // Other configurations specific to debug build type
-            def teamId = project.findProperty("TEAM_ID") ?: "default_team_id"
-            buildConfigField "String", "TEAM_ID", "\"${teamId}\""
-        }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            def teamId = project.findProperty("TEAM_ID") ?: "default_team_id"
-            buildConfigField "String", "TEAM_ID", "\"${teamId}\""
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
