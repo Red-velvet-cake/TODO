@@ -79,65 +79,63 @@
             android:text="@string/type"
             android:textSize="@dimen/_16dp" />
 
-        <LinearLayout
-            android:id="@+id/buttonCard"
+
+        <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8dp"
-            android:layout_marginHorizontal="@dimen/_16dp"
-            android:orientation="horizontal">
+            app:singleSelection="true">
 
-
-            <com.google.android.material.chip.ChipGroup
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonCard"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:singleSelection="true"
-                app:chipSpacingHorizontal="@dimen/_4dp">
-
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/buttonPersonal"
-                android:layout_width="160dp"
-                android:layout_height="65dp"
-                android:layout_marginStart="@dimen/_4dp"
-                app:chipStrokeColor="@color/primary"
-                app:chipStrokeWidth="1.5dp"
-                app:chipCornerRadius="@dimen/_16dp"
-                app:chipIcon="@drawable/ic_person"
-                app:chipIconTint="@color/primary"
-                app:chipStartPadding="@dimen/_32dp"
-                android:text="@string/personalButton"
-                android:textColor="@color/primary"
-                app:chipBackgroundColor="@color/background"
-                android:textAllCaps="false" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8dp"
+                android:orientation="horizontal">
 
                 <com.google.android.material.chip.Chip
-                    android:layout_width="160dp"
-                    android:layout_height="65dp"
+                    android:id="@+id/buttonPersonal"
+                    android:layout_width="0dp"
+                    android:layout_height="68dp"
                     android:layout_marginStart="@dimen/_4dp"
+                    android:text="@string/personalButton"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primary"
+                    app:chipBackgroundColor="@color/background"
+                    app:chipCornerRadius="@dimen/_16dp"
+                    app:chipIcon="@drawable/ic_person"
+                    app:chipIconTint="@color/primary"
+                    app:chipStartPadding="44dp"
+                    app:chipStrokeColor="@color/primary"
                     app:chipStrokeWidth="1.5dp"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonTeam"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/buttonTeam"
+                    android:layout_width="0dp"
+                    android:layout_height="68dp"
+                    android:layout_marginStart="@dimen/_4dp"
+                    android:text="@string/teamButton"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="@color/primary"
                     app:chipCornerRadius="@dimen/_16dp"
                     app:chipIcon="@drawable/ic_people"
                     app:chipIconTint="@color/white"
-                    app:chipStartPadding="@dimen/_32dp"
-                    android:text="@string/teamButton"
-                    android:textColor="@color/white"
-                    app:chipBackgroundColor="@color/primary"
+                    app:chipStartPadding="56dp"
                     app:chipStrokeColor="@color/primary"
-                    android:textAllCaps="false" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/buttonPersonal"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/buttonPeople"-->
-<!--                android:layout_width="160dp"-->
-<!--                android:layout_height="56dp"-->
-<!--                android:layout_marginStart="@dimen/_4dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@drawable/bg_button"-->
-<!--                android:src="@drawable/ic_people"-->
-<!--                android:text="@string/teamButton"-->
-<!--                android:textAllCaps="false" />-->
-            </com.google.android.material.chip.ChipGroup>
-        </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.chip.ChipGroup>
+
 
         <TextView
             android:id="@+id/descriptionCard"
