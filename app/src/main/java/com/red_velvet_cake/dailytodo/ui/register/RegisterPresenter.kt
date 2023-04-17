@@ -1,5 +1,6 @@
 package com.red_velvet_cake.dailytodo.ui.register
 
+import android.util.Log
 import com.red_velvet_cake.dailytodo.BuildConfig
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
@@ -19,15 +20,20 @@ class RegisterPresenter(
             username,
             password,
             BuildConfig.TEAM_ID,
-            ::handleRegisterAccountSuccess,
+            { response -> handleRegisterAccountSuccess(response, username, password) },
             ::handleRegisterAccountFailure
         )
     }
 
-    private fun handleRegisterAccountSuccess(registerAccountResponse: RegisterAccountResponse) {
+    private fun handleRegisterAccountSuccess(
+        registerAccountResponse: RegisterAccountResponse,
+        username: String,
+        password: String
+    ) {
         view.hideLoading()
         if (registerAccountResponse.isSuccess) {
             view.showToast(registerAccountResponse.message ?: "Account created successfully")
+            loginUsingCredentials(username, password)
         } else {
             view.showToast(registerAccountResponse.message)
         }
@@ -87,6 +93,7 @@ class RegisterPresenter(
     }
 
     private fun handleLoginUsingCredentialsSuccess(loginResponse: LoginResponse) {
+        Log.d("RegisterPresenter", loginResponse.toString())
         view.hideLoading()
         if (loginResponse.isSuccess) {
             view.navigateToHome()
@@ -96,6 +103,7 @@ class RegisterPresenter(
     }
 
     private fun handleLoginUsingCredentialsFailure(exception: IOException) {
+        Log.d("RegisterPresenter", exception.toString())
         view.showToast(exception.message.toString())
     }
 
