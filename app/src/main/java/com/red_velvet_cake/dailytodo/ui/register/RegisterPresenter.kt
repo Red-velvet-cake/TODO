@@ -1,6 +1,5 @@
 package com.red_velvet_cake.dailytodo.ui.register
 
-import android.util.Log
 import com.red_velvet_cake.dailytodo.BuildConfig
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
@@ -93,7 +92,6 @@ class RegisterPresenter(
     }
 
     private fun handleLoginUsingCredentialsSuccess(loginResponse: LoginResponse) {
-        Log.d("RegisterPresenter", loginResponse.toString())
         view.hideLoading()
         if (loginResponse.isSuccess) {
             view.navigateToHome()
@@ -103,7 +101,6 @@ class RegisterPresenter(
     }
 
     private fun handleLoginUsingCredentialsFailure(exception: IOException) {
-        Log.d("RegisterPresenter", exception.toString())
         view.showToast(exception.message.toString())
     }
 
