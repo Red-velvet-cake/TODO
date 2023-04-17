@@ -37,8 +37,8 @@ interface TodoService {
     fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
-        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
+        onSuccess: (isSuccess:Boolean) -> Unit,
+        onFailure: (e: IOException) -> Unit
     )
 
     fun updateTeamTodoStatus(

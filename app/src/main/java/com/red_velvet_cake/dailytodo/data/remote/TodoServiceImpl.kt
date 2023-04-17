@@ -188,8 +188,8 @@ class TodoServiceImpl : TodoService {
     override fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
-        onUpdatePersonalTodoStatusFailure: (exception: IOException) -> Unit
+        onSuccess: (isSuccess: Boolean) -> Unit,
+        onFailure: (e: IOException) -> Unit
     ) {
 
         val requestBody =
@@ -203,13 +203,12 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onUpdatePersonalTodoStatusFailure(e)
+                onFailure(e)
             }
 
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string().let {
-                    val result = gson.fromJson(it, UpdatePersonalStatusResponse::class.java)
-                    onUpdatePersonalTodoStatusSuccess(result)
+                    onSuccess(response.isSuccessful)
                 }
             }
         })
