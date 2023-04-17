@@ -1,6 +1,8 @@
 package com.red_velvet_cake.dailytodo.ui.team_todo_details
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import android.view.ViewGroup
 import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoDetailsBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
@@ -10,25 +12,29 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>() {
         FragmentTeamTodoDetailsBinding::inflate
 
     override fun setUp() {
-        // this variables just to testing
-        val title = "Title todo "
-        val details =
-            "details todo , details todo , details todo , details todo" +
-                    " , details todo , details todo , details todo , details todo , " +
-                    "details todo , details todo , details todo , details todo , "
-        val assignee = "Assignee Name "
-        val creationDate = "15/04/2023"
-        val creationTime = "05:30"
-
-        binding.let {
-            it.textViewTodoDetails.text = details
-            it.textViewTodoTitle.text = title
-            it.textViewAssigneName.text = assignee
-            it.textViewCreationDate.text = creationDate
-            it.textViewTodoCreationTime.text = creationTime
+        with(binding) {
+            textViewTodoDetails.text = arguments?.getString("details")
+            textViewTodoTitle.text = arguments?.getString("title")
+            textViewAssigneName.text = arguments?.getString("assignee")
+            textViewCreationDate.text = arguments?.getString("date")
+            textViewTodoCreationTime.text = arguments?.getString("time")
         }
     }
 
     override fun addCallBacks() {}
-    
+
+    companion object {
+        fun newInstance(teamTodo: TeamTodo): TeamTodoDetailsFragment {
+            val bundle = Bundle()
+            bundle.putString("title", teamTodo.title)
+            bundle.putString("details", teamTodo.description)
+            bundle.putString("assignee", teamTodo.assignee)
+            bundle.putString("date", teamTodo.creationTime.substring(0..9))
+            bundle.putString("time", teamTodo.creationTime.substring(11..15))
+
+            val fragment = TeamTodoDetailsFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
 }
