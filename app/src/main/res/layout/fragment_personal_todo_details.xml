@@ -39,13 +39,12 @@
         tools:text="UX UI Studio Meeting " />
 
     <ImageButton
-        android:id="@+id/image_button_todo_all"
+        android:id="@+id/image_button_show_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16dp"
-        android:src="@drawable/ic_left"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/_16sp"
+        android:background="@drawable/ripple_drop_down_menu"
+        android:src="@drawable/ic_down"
         app:layout_constraintBottom_toBottomOf="@+id/text_view_creation_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_view_todo_title"
@@ -87,47 +86,6 @@
         android:textColor="@color/secondary_text"
         app:layout_constraintTop_toBottomOf="@id/text_view_creation_date"
         tools:text="@string/details_todos" />
-
-    <TextView
-        android:id="@+id/todo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16dp"
-        android:paddingEnd="@dimen/_16dp"
-        android:text="Todo"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/_16sp"
-        app:layout_constraintStart_toStartOf="@+id/text_view_todo_description"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_todo_description"
-        tools:ignore="RtlSymmetry" />
-
-    <TextView
-        android:id="@+id/in_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16dp"
-        android:paddingEnd="@dimen/_16dp"
-        android:text="In Progress"
-        android:layout_marginStart="@dimen/_8dp"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/_16sp"
-        app:layout_constraintStart_toEndOf="@+id/todo"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_todo_description"
-        tools:ignore="RtlSymmetry" />
-
-    <TextView
-        android:id="@+id/done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16dp"
-        android:paddingEnd="@dimen/_16dp"
-        android:text="Done"
-        android:layout_marginStart="@dimen/_8dp"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/_16sp"
-        app:layout_constraintStart_toEndOf="@+id/in_progress"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_todo_description"
-        tools:ignore="RtlSymmetry" />
 
 
     <ProgressBar

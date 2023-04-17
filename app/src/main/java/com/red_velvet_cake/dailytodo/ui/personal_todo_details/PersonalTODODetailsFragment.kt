@@ -3,33 +3,45 @@ package com.red_velvet_cake.dailytodo.ui.personal_todo_details
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.PopupMenu
+import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoDetailsBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.utils.Constants
+import com.red_velvet_cake.dailytodo.utils.TodoStatus
 
 
 class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBinding>(),
-    PersonalTodoStatus {
+    PersonalTodoStatus, PopupMenu.OnMenuItemClickListener {
 
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentPersonalTodoDetailsBinding
         get() = FragmentPersonalTodoDetailsBinding::inflate
 
     private lateinit var presenter: PersonalTODOStatusPresenter
     private lateinit var todoService: TodoService
+    private lateinit var popupMenu: PopupMenu
+    private lateinit var details: PersonalTodo
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun setUp() {
-        setupInjection()
         showTodoDetails()
+        setupInjection()
+        popupMenu()
     }
 
-    override fun addCallBacks() {
-        setTodoStatus()
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun showTodoDetails() {
+        val bundle = this.arguments
+        bundle?.getParcelable(DETAILS_PARAM, PersonalTodo::class.java)?.let {
+            details = it
+        }
     }
 
     private fun setupInjection() {
@@ -37,14 +49,16 @@ class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         presenter = PersonalTODOStatusPresenter(this, todoService)
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun showTodoDetails() {
-        val bundle = this.arguments
-        bundle?.getParcelable(DETAILS_PARAM, PersonalTodo::class.java)
+    private fun popupMenu() {
+        popupMenu = PopupMenu(requireContext(), binding.imageButtonShowMenu)
+        popupMenu.inflate(R.menu.popup_menu)
+        popupMenu.setOnMenuItemClickListener(this)
     }
 
-    private fun setTodoStatus() {
-
+    override fun addCallBacks() {
+        binding.imageButtonShowMenu.setOnClickListener {
+            popupMenu.show()
+        }
     }
 
     override fun showLoading(status: Boolean) {
@@ -52,7 +66,29 @@ class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
     }
 
     override fun showError(errorMessage: String) {
-//        makeToast(errorMessage)
+        makeToast(errorMessage)
+    }
+
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.todo -> {
+                presenter.setTodoStatus(TodoStatus.Todo, "details.id")
+                return true
+            }
+
+            R.id.in_progress -> {
+                presenter.setTodoStatus(TodoStatus.InProgress, "details.id")
+                return true
+            }
+
+            R.id.done -> {
+                presenter.setTodoStatus(TodoStatus.Done, "details.id")
+                return true
+            }
+
+            else -> return false
+        }
     }
 
     private fun makeToast(message: String) {
