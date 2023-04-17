@@ -90,12 +90,12 @@ class RegisterPresenter(
         service.loginUser(
             username,
             password,
-            ::handleLoginUsingCredentialsSuccess,
-            ::handleLoginUsingCredentialsFailure
+            ::handleLoginSuccess,
+            ::handleLoginFailure
         )
     }
 
-    private fun handleLoginUsingCredentialsSuccess(loginResponse: LoginResponse) {
+    private fun handleLoginSuccess(loginResponse: LoginResponse) {
         view.showRegisterButtonEnabledState()
         if (loginResponse.isSuccess) {
             view.navigateToHome()
@@ -104,7 +104,7 @@ class RegisterPresenter(
         }
     }
 
-    private fun handleLoginUsingCredentialsFailure(exception: IOException) {
+    private fun handleLoginFailure(exception: IOException) {
         view.showToast(exception.message.toString())
     }
 
