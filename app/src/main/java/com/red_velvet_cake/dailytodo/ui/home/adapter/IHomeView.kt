@@ -2,14 +2,19 @@ package com.red_velvet_cake.dailytodo.ui.home.adapter
 
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import java.io.IOException
 
 interface IHomeView {
 
-    fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse)
+    fun showPersonalTodos(getAllPersonalTodosResponse: GetAllPersonalTodosResponse)
 
-    fun onGetAllPersonalTodosFailure(e: IOException)
+    fun showErrorOnPersonalTodoFailure(e: IOException)
 
-    fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse)
-    fun onGetAllTeamTodosFailure(exception: IOException)
+    fun showTeamTodos(getAllTeamTodosResponse: GetAllTeamTodosResponse)
+    fun showErrorOnTeamTodoFailure(exception: IOException)
+
+    fun navigateToTeamTodoDetails(teamTodo: TeamTodo)
+    fun navigateToPersonalTodoDetails(personalTodo: PersonalTodo)
 }

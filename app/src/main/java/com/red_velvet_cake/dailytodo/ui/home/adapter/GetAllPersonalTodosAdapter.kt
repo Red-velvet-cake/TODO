@@ -10,7 +10,10 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.databinding.ItemPersonalTodoBinding
 
-class GetAllPersonalTodosAdapter(private val todos: GetAllPersonalTodosResponse) :
+class GetAllPersonalTodosAdapter(
+    private val todos: GetAllPersonalTodosResponse,
+    private val onClickPersonalTodo: (PersonalTodo) -> Unit,
+) :
     RecyclerView.Adapter<GetAllPersonalTodosAdapter.GetAllPersonalTodosHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GetAllPersonalTodosHolder {
@@ -25,12 +28,15 @@ class GetAllPersonalTodosAdapter(private val todos: GetAllPersonalTodosResponse)
     override fun onBindViewHolder(holder: GetAllPersonalTodosHolder, position: Int) {
         val todo = todos.value[position]
         holder.bind(todo)
+        holder.binding.root.setOnClickListener {
+            onClickPersonalTodo(todo)
+        }
     }
 
     override fun getItemCount() = todos.value.size
 
     inner class GetAllPersonalTodosHolder(itemView: View) : ViewHolder(itemView) {
-        private val binding = ItemPersonalTodoBinding.bind(itemView)
+        val binding = ItemPersonalTodoBinding.bind(itemView)
 
         fun bind(personalTodo: PersonalTodo) {
             val creationTime = personalTodo.creationTime.split('T')

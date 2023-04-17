@@ -11,6 +11,8 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.ItemStatisticsTasksPersonHasDoneBinding
 import com.red_velvet_cake.dailytodo.databinding.ItemTodosSectionTitleBinding
 import com.red_velvet_cake.dailytodo.databinding.ListPersonalTodosBinding
@@ -19,6 +21,8 @@ import com.red_velvet_cake.dailytodo.ui.home.Statistics
 
 class HomeAdapter(
     private val list: List<HomeItems<Any>>,
+    private val onClickTeamTodo: (TeamTodo) -> Unit,
+    private val onClickPersonalTodo: (PersonalTodo) -> Unit,
     private var teamPendingTodosCount: Int = 0,
     private var personalPendingTodosCount: Int = 0
 ) :
@@ -135,7 +139,10 @@ class HomeAdapter(
     inner class PersonalTodosHolder(viewItem: View) : BaseHomeHolder(viewItem) {
         private val binding = ListPersonalTodosBinding.bind(viewItem)
         override fun bind(item: HomeItems<Any>) {
-            val adapter = GetAllPersonalTodosAdapter(item.data as GetAllPersonalTodosResponse)
+            val adapter = GetAllPersonalTodosAdapter(
+                item.data as GetAllPersonalTodosResponse,
+                onClickPersonalTodo
+            )
             binding.recyclerViewPersonalTodos.adapter = adapter
         }
 
@@ -145,7 +152,7 @@ class HomeAdapter(
         private val binding = ListTeamTodosBinding.bind(viewItem)
         override fun bind(item: HomeItems<Any>) {
             val statistics = item.data as Statistics
-            val adapter = GetAllTeamTodosAdapter(statistics.team)
+            val adapter = GetAllTeamTodosAdapter(statistics.team, onClickTeamTodo)
             binding.recyclerViewTeamTodos.adapter = adapter
         }
 

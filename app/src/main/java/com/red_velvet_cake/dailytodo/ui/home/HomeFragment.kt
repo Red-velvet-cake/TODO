@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentHomeBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeAdapter
@@ -21,19 +23,28 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
 
     private var lists = mutableListOf<HomeItems<Any>>()
     private lateinit var adapter: HomeAdapter
+    val homePresenter = HomePresenter(this)
+
 
     override fun setUp() {
-        adapter = HomeAdapter(lists)
-        val homePresenter = HomePresenter(this)
+        adapter = HomeAdapter(lists, ::onClickTeamTodo, ::onClickPersonalTodo)
         homePresenter.getAllTodos()
         binding.recyclerViewHome.adapter = adapter
 
     }
 
+    private fun onClickTeamTodo(teamTodo: TeamTodo) {
+
+    }
+
+    private fun onClickPersonalTodo(personalTodo: PersonalTodo) {
+        homePresenter.navigateToPersonalTodoDetails(personalTodo)
+    }
+
     override fun addCallBacks() {
     }
 
-    override fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
+    override fun showPersonalTodos(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
         requireActivity().runOnUiThread {
             adapter.setPersonalCount(getAllPersonalTodosResponse.value.size)
             lists.add(
@@ -48,11 +59,11 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
         }
     }
 
-    override fun onGetAllPersonalTodosFailure(exception: IOException) {
+    override fun showErrorOnPersonalTodoFailure(exception: IOException) {
         Log.i("mah", "personal ${exception.message}")
     }
 
-    override fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
+    override fun showTeamTodos(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
         lists.add(HomeItems("Team Task", HomeItemType.ITEM_TODOS_SECTION_TITLE))
         requireActivity().runOnUiThread {
             adapter.setTeamCount(getAllTeamTodosResponse.value.size)
@@ -68,8 +79,16 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
 
     }
 
-    override fun onGetAllTeamTodosFailure(exception: IOException) {
+    override fun showErrorOnTeamTodoFailure(exception: IOException) {
         Log.i("mah", "team ${exception.message}")
+    }
+
+    override fun navigateToTeamTodoDetails(teamTodo: TeamTodo) {
+//        requireActivity().navigateTo()
+    }
+
+    override fun navigateToPersonalTodoDetails(personalTodo: PersonalTodo) {
+
     }
 }
 
