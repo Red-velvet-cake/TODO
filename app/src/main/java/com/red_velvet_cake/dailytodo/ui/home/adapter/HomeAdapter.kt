@@ -11,13 +11,17 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.databinding.ItemStatisticsTasksPersonHasDoneBinding
 import com.red_velvet_cake.dailytodo.databinding.ItemTodosSectionTitleBinding
 import com.red_velvet_cake.dailytodo.databinding.ListPersonalTodosBinding
 import com.red_velvet_cake.dailytodo.databinding.ListTeamTodosBinding
+import com.red_velvet_cake.dailytodo.ui.home.Statistics
 
-class HomeAdapter(private val list: List<HomeItems<Any>>) :
+class HomeAdapter(
+    private val list: List<HomeItems<Any>>,
+    private var teamPendingTodosCount: Int = 0,
+    private var personalPendingTodosCount: Int = 0
+) :
     RecyclerView.Adapter<HomeAdapter.BaseHomeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHomeHolder {
@@ -58,6 +62,15 @@ class HomeAdapter(private val list: List<HomeItems<Any>>) :
         }
     }
 
+    fun setTeamCount(newTeamPendingTodosCount: Int) {
+        teamPendingTodosCount = newTeamPendingTodosCount
+        notifyDataSetChanged()
+    }
+
+    fun setPersonalCount(newPersonalPendingTodosCount: Int) {
+        personalPendingTodosCount = newPersonalPendingTodosCount
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: BaseHomeHolder, position: Int) {
         when (holder) {
@@ -87,7 +100,7 @@ class HomeAdapter(private val list: List<HomeItems<Any>>) :
     inner class StaticsTasksPersonHasDoneHolder(viewItem: View) : BaseHomeHolder(viewItem) {
         private val binding = ItemStatisticsTasksPersonHasDoneBinding.bind(viewItem)
         override fun bind(item: HomeItems<Any>) {
-            val personal = (item.data as GetAllPersonalTodosResponse)
+            val statistics = (item.data as Statistics)
             val list = ArrayList<PieEntry>()
             list.add(PieEntry(6f, "personal"))
             list.add(PieEntry(40f, "team"))
@@ -100,13 +113,13 @@ class HomeAdapter(private val list: List<HomeItems<Any>>) :
             binding.radarChartStatistic.animateY(20000)
 
             binding.textViewPersonalResult.text =
-                (item.data as GetAllPersonalTodosResponse).value.size.toString()
+                personalPendingTodosCount.toString()
             binding.textViewTeamResult.text =
-                (item.data as GetAllPersonalTodosResponse).value.size.toString()
-            binding.textViewCompletedTodoResult.text =
-                (item.data as GetAllPersonalTodosResponse).value.size.toString()
+                teamPendingTodosCount.toString()
+//            binding.textViewCompletedTodoResult.text =
+//                (item.data as GetAllPersonalTodosResponse).value.size.toString()
             binding.textViewPendingTodoResult.text =
-                (item.data as GetAllPersonalTodosResponse).value.size.toString()
+                statistics.personal.value.size.toString()
         }
 
     }
@@ -131,10 +144,10 @@ class HomeAdapter(private val list: List<HomeItems<Any>>) :
     inner class TeamTodosHolder(viewItem: View) : BaseHomeHolder(viewItem) {
         private val binding = ListTeamTodosBinding.bind(viewItem)
         override fun bind(item: HomeItems<Any>) {
-            val adapter = GetAllTeamTodosAdapter(item.data as GetAllTeamTodosResponse)
+            val statistics = item.data as Statistics
+            val adapter = GetAllTeamTodosAdapter(statistics.team)
             binding.recyclerViewTeamTodos.adapter = adapter
         }
 
     }
-
 }

@@ -35,9 +35,10 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
 
     override fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
         requireActivity().runOnUiThread {
+            adapter.setPersonalCount(getAllPersonalTodosResponse.value.size)
             lists.add(
                 HomeItems(
-                    getAllPersonalTodosResponse,
+                    Statistics(personal = getAllPersonalTodosResponse),
                     HomeItemType.ITEM_STATISTICS_TASKS_HAS_DONE
                 )
             )
@@ -54,7 +55,13 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
     override fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
         lists.add(HomeItems("Team Task", HomeItemType.ITEM_TODOS_SECTION_TITLE))
         requireActivity().runOnUiThread {
-            lists.add(HomeItems(getAllTeamTodosResponse, HomeItemType.LIST_TEAM_TASKS))
+            adapter.setTeamCount(getAllTeamTodosResponse.value.size)
+            lists.add(
+                HomeItems(
+                    Statistics(team = getAllTeamTodosResponse),
+                    HomeItemType.LIST_TEAM_TASKS
+                )
+            )
             adapter.notifyDataSetChanged()
         }
 
@@ -65,3 +72,8 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
         Log.i("mah", "team ${exception.message}")
     }
 }
+
+data class Statistics(
+    val personal: GetAllPersonalTodosResponse = GetAllPersonalTodosResponse(emptyList(), "", true),
+    val team: GetAllTeamTodosResponse = GetAllTeamTodosResponse(emptyList(), "", true)
+)
