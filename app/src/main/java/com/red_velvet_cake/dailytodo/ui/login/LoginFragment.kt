@@ -14,13 +14,15 @@ import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.databinding.FragmentLoginBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.ui.register.RegisterFragment
+import com.red_velvet_cake.dailytodo.utils.navigateExclusive
 import okio.IOException
 
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
         get() = FragmentLoginBinding::inflate
-     val LOG_TAG: String = LoginFragment::class.simpleName!!
+    val LOG_TAG: String = LoginFragment::class.simpleName!!
 
     private val loginPresenter = LoginPresenter(this)
     override fun setUp() {
@@ -32,6 +34,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
             val username = binding.userNameTextField.text.toString()
             val password = binding.passwordTextField.text.toString()
             loginPresenter.loginUser(username, password)
+        }
+        binding.signUpTextView.setOnClickListener {
+            requireActivity().navigateExclusive(RegisterFragment.newInstance())
         }
     }
 
