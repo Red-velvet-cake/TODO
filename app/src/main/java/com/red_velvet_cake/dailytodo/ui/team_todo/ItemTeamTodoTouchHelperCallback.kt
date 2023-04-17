@@ -56,8 +56,10 @@ class ItemTeamTodoTouchHelperCallback(
                 "To Do"
             } else if (teamTodoAdapter.selectedChipAdapter == 0) {
                 "Done"
-            } else {
+            } else if (teamTodoAdapter.selectedChipAdapter == 2) {
                 "In progress"
+            } else {
+                ""
             }
             background = ColorDrawable(Color.parseColor("#7B61FF"))
             drawTextAndBackground(c, itemView, background, text, dX, backgroundCornerOffset)
@@ -67,8 +69,10 @@ class ItemTeamTodoTouchHelperCallback(
                 "Done"
             } else if (teamTodoAdapter.selectedChipAdapter == 0) {
                 "In progress"
-            } else {
+            } else if (teamTodoAdapter.selectedChipAdapter == 2) {
                 "To do"
+            } else {
+                ""
             }
             background = ColorDrawable(Color.parseColor("#7B61FF"))
             drawTextAndBackground(c, itemView, background, text, dX, backgroundCornerOffset)

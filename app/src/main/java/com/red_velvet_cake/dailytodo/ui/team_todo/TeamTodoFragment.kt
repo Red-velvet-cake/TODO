@@ -13,7 +13,7 @@ import okio.IOException
 class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
     private lateinit var teamToDoAdapter: TeamToDoAdapter
     private lateinit var teamTodoPresenter: TeamTodoPresenter
-    private var selectedChip = CHIP_ALL_VALUE
+    private var selectedChip = CHIP_TODO_VALUE
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTeamTodoBinding =
         FragmentTeamTodoBinding::inflate
 
@@ -24,11 +24,11 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
 
     override fun addCallBacks() {
 
-        binding.chipAll.setOnClickListener {
-            selectedChip = CHIP_ALL_VALUE
-            refreshTeamTodoList()
-            teamToDoAdapter.setSelectedChip(selectedChip)
-        }
+//        binding.chipAll.setOnClickListener {
+//            selectedChip = CHIP_ALL_VALUE
+//            refreshTeamTodoList()
+//            teamToDoAdapter.setSelectedChip(selectedChip)
+//        }
         binding.chipTodo.setOnClickListener {
             selectedChip = CHIP_TODO_VALUE
             refreshTeamTodoList()
@@ -78,10 +78,9 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
         selectedChip: Int,
         teamTodoResponseList: List<TeamTodoResponse>
     ): List<TeamTodoResponse> =
-        if (selectedChip == CHIP_ALL_VALUE) teamTodoResponseList else teamTodoResponseList.filter { it.status == selectedChip }
+        teamTodoResponseList.filter { it.status == selectedChip }
 
     companion object {
-        private const val CHIP_ALL_VALUE = 3
         private const val CHIP_TODO_VALUE = 0
         private const val CHIP_IN_PROGRESS_VALUE = 1
         private const val CHIP_DONE_VALUE = 2
