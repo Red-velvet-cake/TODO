@@ -27,13 +27,19 @@ import okio.IOException
 
 class TodoServiceImpl : TodoService {
 
-    private val authOkHttpClient = AuthOkHttpClient.getInstance()
-
     private val loggingInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    private val client = OkHttpClient().newBuilder().addInterceptor(TodoServiceInterceptor())
-        .addInterceptor(loggingInterceptor).build()
+    private val authOkHttpClient = OkHttpClient()
+        .newBuilder()
+        .addInterceptor(loggingInterceptor)
+        .build()
+
+    private val client = OkHttpClient()
+        .newBuilder()
+        .addInterceptor(TodoServiceInterceptor())
+        .addInterceptor(loggingInterceptor)
+        .build()
 
     private val gson = Gson()
 
@@ -50,7 +56,7 @@ class TodoServiceImpl : TodoService {
         val request =
             Request.Builder().url(url).header(HEADER_AUTHORIZATION, authHeaderValue).build()
 
-        authOkHttpClient.client.newCall(request).enqueue(object : Callback {
+        authOkHttpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onLoginUserFailure(e)
             }
@@ -265,7 +271,7 @@ class TodoServiceImpl : TodoService {
             .post(formBody)
             .build()
 
-        authOkHttpClient.client.newCall(request)
+        authOkHttpClient.newCall(request)
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     onRegisterAccountFailure(e)
