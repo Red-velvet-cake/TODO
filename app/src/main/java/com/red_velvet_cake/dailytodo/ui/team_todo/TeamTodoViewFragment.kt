@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.google.android.material.chip.Chip
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoBinding
@@ -30,36 +31,15 @@ class TeamTodoViewFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoVi
 
     override fun addCallBacks() {
         binding.chipTodo.setOnClickListener {
-            selectedChip = CHIP_TODO_VALUE
-            refreshTeamTodoList()
-            teamToDoAdapter.setSelectedChip(selectedChip)
-            binding.chipDone.isChecked = false
-            binding.chipInProgress.isChecked = false
-            binding.chipDone.setChipBackgroundColorResource(R.color.white)
-            binding.chipInProgress.setChipBackgroundColorResource(R.color.white)
-            binding.chipTodo.setChipBackgroundColorResource(R.color.chip_background_color)
+            setChipSelected(CHIP_TODO_VALUE, binding.chipTodo)
         }
+
         binding.chipDone.setOnClickListener {
-            selectedChip = CHIP_DONE_VALUE
-            refreshTeamTodoList()
-            teamToDoAdapter.setSelectedChip(selectedChip)
-            binding.chipTodo.isChecked = false
-            binding.chipInProgress.isChecked = false
-            binding.chipTodo.setChipBackgroundColorResource(R.color.white)
-            binding.chipInProgress.setChipBackgroundColorResource(R.color.white)
-            binding.chipDone.setChipBackgroundColorResource(R.color.chip_background_color)
-
+            setChipSelected(CHIP_DONE_VALUE, binding.chipDone)
         }
-        binding.chipInProgress.setOnClickListener {
-            selectedChip = CHIP_IN_PROGRESS_VALUE
-            refreshTeamTodoList()
-            teamToDoAdapter.setSelectedChip(selectedChip)
-            binding.chipTodo.isChecked = false
-            binding.chipDone.isChecked = false
-            binding.chipDone.setChipBackgroundColorResource(R.color.white)
-            binding.chipTodo.setChipBackgroundColorResource(R.color.white)
-            binding.chipInProgress.setChipBackgroundColorResource(R.color.chip_background_color)
 
+        binding.chipInProgress.setOnClickListener {
+            setChipSelected(CHIP_IN_PROGRESS_VALUE, binding.chipInProgress)
         }
     }
 
@@ -114,6 +94,20 @@ class TeamTodoViewFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoVi
             binding.teamTodoRecycler.adapter = teamToDoAdapter
             itemTouchHelper.attachToRecyclerView(binding.teamTodoRecycler)
         }
+    }
+
+    private fun setChipSelected(chipValue: Int, chipToSelect: Chip) {
+        selectedChip = chipValue
+        refreshTeamTodoList()
+        teamToDoAdapter.setSelectedChip(selectedChip)
+        binding.chipTodo.isChecked = false
+        binding.chipDone.isChecked = false
+        binding.chipInProgress.isChecked = false
+        binding.chipTodo.setChipBackgroundColorResource(R.color.white)
+        binding.chipDone.setChipBackgroundColorResource(R.color.white)
+        binding.chipInProgress.setChipBackgroundColorResource(R.color.white)
+        chipToSelect.isChecked = true
+        chipToSelect.setChipBackgroundColorResource(R.color.chip_background_color)
     }
 
     companion object {
