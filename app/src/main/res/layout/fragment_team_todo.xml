@@ -34,21 +34,21 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_todo"
-            style="@style/ChipUnselected"
+            style="@style/CustomChipChoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/todo" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_in_progress"
-            style="@style/ChipUnselected"
+            style="@style/CustomChipChoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/in_progress" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_done"
-            style="@style/ChipUnselected"
+            style="@style/CustomChipChoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/done" />

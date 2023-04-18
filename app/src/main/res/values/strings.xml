@@ -21,8 +21,8 @@
     <string name="hint_descriptions">Task description</string>
     <string name="cancel">Cancel</string>
     <string name="create">Create</string>
-    <string name="done">Done</string>
-    <string name="in_progress">In Progress</string>
+    <string name="done">Done Task</string>
+    <string name="in_progress">In Progress Task</string>
     <string name="all">TODO</string>
     <string name="details">Details</string>
     <string name="search">Search</string>
@@ -46,7 +46,7 @@
     <string name="_24_08_2023">24-08-2023</string>
     <string name="todo_description">This is my description amet consectetur. Nec sed ut venenatis. Nulla amet amet...</string>
     <string name="all_">All</string>
-    <string name="todo">TODO</string>
+    <string name="todo">Todo Task</string>
     <string name="update_todo_success">Todo updated successfully</string>
     <string name="todo_update_failed">Todo update failed</string>
 

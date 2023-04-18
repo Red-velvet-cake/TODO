@@ -46,17 +46,12 @@
         <item name="titleTextAppearance">@style/ToolbarTextStyle</item>
     </style>
 
-    <style name="ChipSelected" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="chipBackgroundColor">@color/chip_background_color</item>
-        <item name="android:textColor">@color/primary</item>
+    <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="background">@drawable/background_color_chip_state_list</item>
+        <item name="android:textColor">@drawable/text_color_chip_state</item>
         <item name="android:textSize">@dimen/_12sp</item>
-        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
     </style>
 
-    <style name="ChipUnselected" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="chipBackgroundColor">@color/card_background</item>
-        <item name="android:textColor">@color/light_grey_color</item>
-        <item name="android:textSize">@dimen/_12sp</item>
-        <item name="android:fontFamily">@font/poppins_semibold</item>
-    </style>
+
 </resources>
