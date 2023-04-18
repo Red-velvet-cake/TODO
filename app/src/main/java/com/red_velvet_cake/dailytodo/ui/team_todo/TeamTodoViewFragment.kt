@@ -77,6 +77,33 @@ class TeamTodoViewFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoVi
         teamTodoPresenter.updateTeamTodoStatus(todoId, status)
     }
 
+    private fun refreshTeamTodoList() {
+        teamTodoPresenter.getAllTeamTodos()
+    }
+
+    private fun filterTodosList(
+        selectedChip: Int,
+        teamTodoList: List<TeamTodo>
+    ): List<TeamTodo> =
+        teamTodoList.filter { it.status == selectedChip }
+
+    override fun showLoadTodosFailed() {
+
+    }
+
+    override fun showTodoUpdateFailMessage(errorMessage: String) {
+        requireActivity().runOnUiThread {
+            Toast.makeText(
+                requireActivity(),
+                errorMessage, Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    override fun showEmptyTodoListState() {
+
+    }
+
     override fun showTodoList(todoList: List<TeamTodo>) {
         val itemTouchHelperCallback = ItemTeamTodoTouchHelperCallback(teamToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
@@ -89,56 +116,10 @@ class TeamTodoViewFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoVi
         }
     }
 
-
-    private fun refreshTeamTodoList() {
-        teamTodoPresenter.getAllTeamTodos()
-    }
-
-    private fun filterTodosList(
-        selectedChip: Int,
-        teamTodoList: List<TeamTodo>
-    ): List<TeamTodo> =
-        teamTodoList.filter { it.status == selectedChip }
-
-
-    override fun showLoadingTodoListFailed() {
-    }
-
-    override fun showToast(toastMessage: ToastMessage) {
-        requireActivity().runOnUiThread {
-            when (toastMessage) {
-                ToastMessage.TODO_UPDATED_SUCCESSFULLY -> {
-                    Toast.makeText(
-                        requireActivity(),
-                        getString(R.string.update_todo_success), Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                ToastMessage.TODO_UPDATE_FAILED -> {
-                    Toast.makeText(
-                        requireActivity(),
-                        getString(R.string.todo_update_failed), Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-        }
-
-    }
-
-    override fun showupdateTodoStatusFailed(errorMessage: String) {
-
-    }
-
-    override fun showEmptyTodoList() {
-
-    }
-
     companion object {
         private const val CHIP_TODO_VALUE = 0
         private const val CHIP_IN_PROGRESS_VALUE = 1
         private const val CHIP_DONE_VALUE = 2
-
     }
 }
 

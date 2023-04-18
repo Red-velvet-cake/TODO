@@ -3,10 +3,23 @@ package com.red_velvet_cake.dailytodo.data.remote
 import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.data.model.*
+import com.red_velvet_cake.dailytodo.data.model.ApiResponse
+import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
+import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
+import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.LoginResponse
+import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
+import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
-import okhttp3.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.FormBody
+import okhttp3.HttpUrl
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.IOException
 import org.json.JSONObject
@@ -144,7 +157,6 @@ class TodoServiceImpl : TodoService {
     override fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdateTeamTodoStatusSuccess: (updateTeamStatusResponse: UpdateTeamTodoStatusResponse) -> Unit,
         onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
     ) {
 
@@ -163,9 +175,6 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body?.string().toString()
-                val result = gson.fromJson(body, UpdateTeamTodoStatusResponse::class.java)
-                onUpdateTeamTodoStatusSuccess(result)
             }
 
         })
