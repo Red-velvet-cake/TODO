@@ -35,39 +35,40 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
 
         binding.spinnerTodoStatus.apply {
             adapter = spinnerAdapter
-        }
+            onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        when (position) {
+                            Constants.TODO -> {
+                                presenter.setTodoStatus(TodoStatus.Todo, "details.id")
+                            }
 
+                            Constants.IN_PROGRESS -> {
+                                presenter.setTodoStatus(TodoStatus.InProgress, "details.id")
+                            }
+
+                            Constants.DONE -> {
+                                presenter.setTodoStatus(TodoStatus.Done, "details.id")
+                            }
+                        }
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        Toast.makeText(requireContext(), "Nothing Selected ", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
+                }
+        }
     }
 
     override fun addCallBacks() {
-        binding.spinnerTodoStatus.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    when (position) {
-                        Constants.TODO -> {
-                            presenter.setTodoStatus(TodoStatus.Todo, "details.id")
-                        }
 
-                        Constants.IN_PROGRESS -> {
-                            presenter.setTodoStatus(TodoStatus.InProgress, "details.id")
-                        }
-
-                        Constants.DONE -> {
-                            presenter.setTodoStatus(TodoStatus.Done, "details.id")
-                        }
-                    }
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    Toast.makeText(requireContext(), "Nothing Selected ", Toast.LENGTH_SHORT).show()
-                }
-
-            }
     }
 
     private fun setArgs() {
