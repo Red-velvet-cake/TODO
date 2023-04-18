@@ -3,6 +3,7 @@ package com.red_velvet_cake.dailytodo.ui.register
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import com.red_velvet_cake.dailytodo.BuildConfig
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.databinding.FragmentRegisterBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
@@ -21,7 +22,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
         setupLoginButtonClickListener()
     }
 
-    override fun showRegisterButtonLoadingState() {
+    override fun disableView() {
         runOnUiThread {
             binding.buttonRegister.apply {
                 isEnabled = false
@@ -30,7 +31,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
         }
     }
 
-    override fun showRegisterButtonEnabledState() {
+    override fun enableView() {
         runOnUiThread {
             binding.buttonRegister.apply {
                 isEnabled = true
@@ -71,7 +72,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
             presenter.clickRegisterButton(
                 binding.editTextUsername.text.toString(),
                 binding.editTextPassword.text.toString(),
-                binding.editTextConfirmPassword.text.toString()
+                binding.editTextConfirmPassword.text.toString(),
+                BuildConfig.TEAM_ID,
             )
         }
     }

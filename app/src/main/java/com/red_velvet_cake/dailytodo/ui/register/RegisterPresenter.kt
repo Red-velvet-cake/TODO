@@ -1,6 +1,5 @@
 package com.red_velvet_cake.dailytodo.ui.register
 
-import com.red_velvet_cake.dailytodo.BuildConfig
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
@@ -12,24 +11,24 @@ class RegisterPresenter(
     private val view: RegisterView,
 ) {
 
-    private val service: TodoService = TodoServiceImpl()
+    private val todoService: TodoService = TodoServiceImpl()
 
-    private fun registerAccount(username: String, password: String) {
-        service.registerAccount(
+    private fun registerAccount(username: String, password: String, teamId: String) {
+        todoService.registerAccount(
             username,
             password,
-            BuildConfig.TEAM_ID,
-            { response -> handleRegisterAccountSuccess(response, username, password) },
-            ::handleRegisterAccountFailure
+            teamId,
+            { response -> onRegisterAccountSuccess(response, username, password) },
+            ::onRegisterAccountFailure
         )
     }
 
-    private fun handleRegisterAccountSuccess(
+    private fun onRegisterAccountSuccess(
         registerAccountResponse: RegisterAccountResponse,
         username: String,
         password: String
     ) {
-        view.showRegisterButtonEnabledState()
+        view.enableView()
         if (registerAccountResponse.isSuccess) {
             view.showToast("Account created successfully.")
             loginUsingCredentials(username, password)
@@ -38,34 +37,35 @@ class RegisterPresenter(
         }
     }
 
-    private fun handleRegisterAccountFailure(exception: IOException) {
+    private fun onRegisterAccountFailure(exception: IOException) {
         view.showToast(exception.message.toString())
     }
 
-    fun clickRegisterButton(username: String, password: String, confirmPassword: String) {
+    fun clickRegisterButton(
+        username: String,
+        password: String,
+        confirmPassword: String,
+        teamId: String
+    ) {
         if (validateForm(username, password, confirmPassword)) {
-            view.showRegisterButtonLoadingState()
-            registerAccount(username.trim(), password.trim())
+            view.disableView()
+            registerAccount(username.trim(), password.trim(), teamId)
         }
     }
 
     private fun validateForm(username: String, password: String, confirmPassword: String): Boolean {
-        val trimmedUsername = username.trim()
-        val trimmedPassword = password.trim()
-        val trimmedConfirmPassword = confirmPassword.trim()
-
         return when {
-            !validateUsername(trimmedUsername) -> {
+            !validateUsername(username) -> {
                 view.showValidationError(RegisterFormError.USERNAME_INVALID)
                 false
             }
 
-            !validatePassword(trimmedPassword) -> {
+            !validatePassword(password) -> {
                 view.showValidationError(RegisterFormError.PASSWORD_INVALID)
                 false
             }
 
-            !validateConfirmPassword(trimmedPassword, trimmedConfirmPassword) -> {
+            !validateConfirmPassword(password, confirmPassword) -> {
                 view.showValidationError(RegisterFormError.CONFIRM_PASSWORD_NOT_MATCHING)
                 false
             }
@@ -87,16 +87,16 @@ class RegisterPresenter(
     }
 
     private fun loginUsingCredentials(username: String, password: String) {
-        service.loginUser(
+        todoService.loginUser(
             username,
             password,
-            ::handleLoginSuccess,
-            ::handleLoginFailure
+            ::onLoginAccountSuccess,
+            ::onLoginAccountFailure
         )
     }
 
-    private fun handleLoginSuccess(loginResponse: LoginResponse) {
-        view.showRegisterButtonEnabledState()
+    private fun onLoginAccountSuccess(loginResponse: LoginResponse) {
+        view.enableView()
         if (loginResponse.isSuccess) {
             view.navigateToHome()
         } else {
@@ -104,7 +104,7 @@ class RegisterPresenter(
         }
     }
 
-    private fun handleLoginFailure(exception: IOException) {
+    private fun onLoginAccountFailure(exception: IOException) {
         view.showToast(exception.message.toString())
     }
 

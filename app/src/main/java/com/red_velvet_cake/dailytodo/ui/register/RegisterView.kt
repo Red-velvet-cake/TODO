@@ -12,8 +12,8 @@ interface RegisterView {
 
     fun showValidationError(error: RegisterFormError)
 
-    fun showRegisterButtonLoadingState()
+    fun disableView()
 
-    fun showRegisterButtonEnabledState()
+    fun enableView()
 
 }
