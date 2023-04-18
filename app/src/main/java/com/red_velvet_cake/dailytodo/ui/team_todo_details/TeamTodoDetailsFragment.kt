@@ -28,6 +28,8 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
     }
 
     private fun initSpinner() {
+        val teamTodoDetails: TeamTodo? = arguments?.getParcelable(KEY_DETAILS_PARAM)
+
         val status = listOf("Todo", "In progress", "Done")
         val spinnerAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, status)
@@ -45,15 +47,15 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
                     ) {
                         when (position) {
                             Constants.TODO -> {
-                                presenter.setTodoStatus(TodoStatus.Todo, "details.id")
+                                presenter.setTodoStatus(TodoStatus.Todo, teamTodoDetails?.id!!)
                             }
 
                             Constants.IN_PROGRESS -> {
-                                presenter.setTodoStatus(TodoStatus.InProgress, "details.id")
+                                presenter.setTodoStatus(TodoStatus.InProgress, teamTodoDetails?.id!!)
                             }
 
                             Constants.DONE -> {
-                                presenter.setTodoStatus(TodoStatus.Done, "details.id")
+                                presenter.setTodoStatus(TodoStatus.Done, teamTodoDetails?.id!!)
                             }
                         }
                     }
