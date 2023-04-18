@@ -2,12 +2,14 @@ package com.red_velvet_cake.dailytodo.ui.personal_todo_details
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.isVisible
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
@@ -15,7 +17,9 @@ import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoDetailsBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 import com.red_velvet_cake.dailytodo.utils.Constants
+import com.red_velvet_cake.dailytodo.utils.RequestStatus
 import com.red_velvet_cake.dailytodo.utils.TodoStatus
+import kotlin.math.log
 
 
 class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBinding>(),
@@ -61,12 +65,8 @@ class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         }
     }
 
-    override fun showLoading(status: Boolean) {
-
-    }
-
-    override fun showError(errorMessage: String) {
-        makeToast(errorMessage)
+    private fun makeToast(errorMessage: String) {
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
 
@@ -91,9 +91,22 @@ class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         }
     }
 
-    private fun makeToast(message: String) {
+    override fun handleRequestStatus(status: RequestStatus) {
+        when (status) {
+            is RequestStatus.Loading -> handleProgress(true)
+            is RequestStatus.Success -> handleProgress(false)
+            is RequestStatus.Error -> {
+                handleProgress(false)
+                requireActivity().runOnUiThread {
+                    makeToast(status.message)
+                }
+            }
+        }
+    }
+
+    private fun handleProgress(visibility: Boolean) {
         requireActivity().runOnUiThread {
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            binding.progress.isVisible = visibility
         }
     }
 
@@ -106,4 +119,5 @@ class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
                 }
             }
     }
+
 }

@@ -1,6 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.personal_todo_details
 
+import com.red_velvet_cake.dailytodo.utils.RequestStatus
+
 interface PersonalTodoStatus {
-    fun showLoading(status: Boolean)
-    fun showError(errorMessage: String)
+    fun handleRequestStatus(status: RequestStatus)
 }
