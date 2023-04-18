@@ -34,7 +34,6 @@ class ItemTeamTodoTouchHelperCallback(
             ItemTouchHelper.LEFT -> teamTodoAdapter.swipedLeft(position)
             ItemTouchHelper.RIGHT -> teamTodoAdapter.swipedRight(position)
         }
-
     }
 
     override fun onChildDraw(
@@ -49,15 +48,40 @@ class ItemTeamTodoTouchHelperCallback(
 
         val itemView = viewHolder.itemView
         var background: ColorDrawable
-        val backgroundCornerOffset =
-            itemView.width
+        val backgroundCornerOffset = itemView.width
         if (dX > 0) {
-            val text = "In Progress"
+            val text = when (teamTodoAdapter.selectedChipAdapter) {
+                1 -> {
+                    "To Do"
+                }
+                0 -> {
+                    "Done"
+                }
+                2 -> {
+                    "In progress"
+                }
+                else -> {
+                    ""
+                }
+            }
             background = ColorDrawable(Color.parseColor("#7B61FF"))
             drawTextAndBackground(c, itemView, background, text, dX, backgroundCornerOffset)
         } else if (dX < 0) {
+            val text = when (teamTodoAdapter.selectedChipAdapter) {
+                1 -> {
+                    "Done"
+                }
+                0 -> {
+                    "In progress"
+                }
+                2 -> {
+                    "To do"
+                }
+                else -> {
+                    ""
+                }
+            }
             background = ColorDrawable(Color.parseColor("#7B61FF"))
-            val text = "Done"
             drawTextAndBackground(c, itemView, background, text, dX, backgroundCornerOffset)
         }
 
@@ -77,10 +101,7 @@ class ItemTeamTodoTouchHelperCallback(
         background.setColor(Color.parseColor("#E5DFFF"))
         val radius = 16f
         background.cornerRadii = floatArrayOf(
-            radius, radius,
-            radius, radius,
-            radius, radius,
-            radius, radius
+            radius, radius, radius, radius, radius, radius, radius, radius
         )
         background.setBounds(itemView.left, itemView.top, itemView.right, itemView.bottom)
         background.draw(c)
