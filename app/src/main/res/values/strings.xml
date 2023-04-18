@@ -47,5 +47,7 @@
     <string name="todo_description">This is my description amet consectetur. Nec sed ut venenatis. Nulla amet amet...</string>
     <string name="all_">All</string>
     <string name="todo">TODO</string>
+    <string name="update_todo_success">Todo updated successfully</string>
+    <string name="todo_update_failed">Todo update failed</string>
 
 </resources>

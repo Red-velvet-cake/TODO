@@ -51,28 +51,36 @@ class ItemTeamTodoTouchHelperCallback(
         var background: ColorDrawable
         val backgroundCornerOffset = itemView.width
         if (dX > 0) {
-            var text = ""
-            text = if (teamTodoAdapter.selectedChipAdapter == 1) {
-                "To Do"
-            } else if (teamTodoAdapter.selectedChipAdapter == 0) {
-                "Done"
-            } else if (teamTodoAdapter.selectedChipAdapter == 2) {
-                "In progress"
-            } else {
-                ""
+            var text = when (teamTodoAdapter.selectedChipAdapter) {
+                1 -> {
+                    "To Do"
+                }
+                0 -> {
+                    "Done"
+                }
+                2 -> {
+                    "In progress"
+                }
+                else -> {
+                    ""
+                }
             }
             background = ColorDrawable(Color.parseColor("#7B61FF"))
             drawTextAndBackground(c, itemView, background, text, dX, backgroundCornerOffset)
         } else if (dX < 0) {
-            var text = ""
-            text = if (teamTodoAdapter.selectedChipAdapter == 1) {
-                "Done"
-            } else if (teamTodoAdapter.selectedChipAdapter == 0) {
-                "In progress"
-            } else if (teamTodoAdapter.selectedChipAdapter == 2) {
-                "To do"
-            } else {
-                ""
+            var text = when (teamTodoAdapter.selectedChipAdapter) {
+                1 -> {
+                    "Done"
+                }
+                0 -> {
+                    "In progress"
+                }
+                2 -> {
+                    "To do"
+                }
+                else -> {
+                    ""
+                }
             }
             background = ColorDrawable(Color.parseColor("#7B61FF"))
             drawTextAndBackground(c, itemView, background, text, dX, backgroundCornerOffset)

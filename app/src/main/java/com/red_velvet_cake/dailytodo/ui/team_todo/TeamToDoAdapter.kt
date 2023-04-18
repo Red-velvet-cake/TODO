@@ -2,19 +2,20 @@ package com.red_velvet_cake.dailytodo.ui.team_todo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.red_velvet_cake.dailytodo.data.model.TeamTodoResponse
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.LayoutTeamTodoItemBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseAdapter
 
-class TeamToDoAdapter :
-    BaseAdapter<TeamTodoResponse, LayoutTeamTodoItemBinding>() {
+class TeamToDoAdapter(
+    private val onUpdatedStatus: (String, Int) -> Unit
+) :
+    BaseAdapter<TeamTodo, LayoutTeamTodoItemBinding>() {
 
     var selectedChipAdapter = -1
-    var onUpdatedStatus: (String, Int) -> Unit = { id, status -> }
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> LayoutTeamTodoItemBinding =
         LayoutTeamTodoItemBinding::inflate
 
-    override fun bindItem(binding: LayoutTeamTodoItemBinding, item: TeamTodoResponse) {
+    override fun bindItem(binding: LayoutTeamTodoItemBinding, item: TeamTodo) {
         val (date, time) = extractDateAndTime(item.creationTime)
         with(binding) {
             textviewTodoAssigneeName.text = item.assignee.toString()
@@ -34,34 +35,45 @@ class TeamToDoAdapter :
     }
 
     fun swipedLeft(position: Int) {
-        notifyItemRemoved(position)
         when (selectedChipAdapter) {
             0 -> {
                 onUpdatedStatus(getOldItems()[position].id, 1)
+                getOldItems()[position].status = 1
             }
+
             1 -> {
                 onUpdatedStatus(getOldItems()[position].id, 2)
+                getOldItems()[position].status = 2
             }
+
             2 -> {
                 onUpdatedStatus(getOldItems()[position].id, 0)
+                getOldItems()[position].status = 0
             }
         }
+        submitList(getOldItems().filter { it.status == selectedChipAdapter })
     }
 
     fun swipedRight(position: Int) {
-        notifyItemRemoved(position)
         when (selectedChipAdapter) {
             0 -> {
                 onUpdatedStatus(getOldItems()[position].id, 2)
+                getOldItems()[position].status = 2
             }
+
             1 -> {
                 onUpdatedStatus(getOldItems()[position].id, 0)
+                getOldItems()[position].status = 0
             }
+
             2 -> {
                 onUpdatedStatus(getOldItems()[position].id, 1)
+                getOldItems()[position].status = 1
             }
         }
+        submitList(getOldItems().filter { it.status == selectedChipAdapter })
     }
+
 
     private fun extractDateAndTime(dateTimeString: String): Pair<String, String> {
         val parts = dateTimeString.split("T")

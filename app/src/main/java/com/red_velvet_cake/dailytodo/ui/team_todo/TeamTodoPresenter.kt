@@ -5,7 +5,7 @@ import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import java.io.IOException
 
-class TeamTodoPresenter(private val view: TeamTodo) {
+class TeamTodoPresenter(private val view: TeamTodoView) {
 
     private val todoServiceImpl = TodoServiceImpl()
 
@@ -28,20 +28,22 @@ class TeamTodoPresenter(private val view: TeamTodo) {
         )
     }
 
-
     private fun onUpdateTeamTodoStatusSuccess(updateTeamTodoStatusResponse: UpdateTeamTodoStatusResponse) {
-        view.onUpdateTeamTodoStatusSuccess(updateTeamTodoStatusResponse)
+        view.showToast(ToastMessage.TODO_UPDATED_SUCCESSFULLY)
     }
 
     private fun onUpdateTeamTodoStatusFailure(exception: IOException) {
-        view.onUpdateTeamTodoStatusFailure(exception)
+        view.showupdateTodoStatusFailed(exception.message.toString())
     }
 
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
-        view.onGetAllTeamTodosSuccess(getAllTeamTodosResponse)
+        if (getAllTeamTodosResponse.value.isEmpty()) {
+            view.showEmptyTodoList()
+        }
+        view.showTodoList(getAllTeamTodosResponse.value)
     }
 
     private fun onGetAllTeamTodosFailure(exception: IOException) {
-        view.onGetAllTeamTodosFailure(exception)
+        view.showLoadingTodoListFailed()
     }
 }

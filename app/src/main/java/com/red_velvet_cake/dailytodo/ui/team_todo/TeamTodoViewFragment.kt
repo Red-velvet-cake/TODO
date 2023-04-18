@@ -2,15 +2,14 @@ package com.red_velvet_cake.dailytodo.ui.team_todo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.TeamTodoResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
+import com.red_velvet_cake.dailytodo.R
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
-import okio.IOException
 
-class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
+class TeamTodoViewFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
     private lateinit var teamToDoAdapter: TeamToDoAdapter
     private lateinit var teamTodoPresenter: TeamTodoPresenter
     private var selectedChip = CHIP_TODO_VALUE
@@ -23,12 +22,6 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
     }
 
     override fun addCallBacks() {
-
-//        binding.chipAll.setOnClickListener {
-//            selectedChip = CHIP_ALL_VALUE
-//            refreshTeamTodoList()
-//            teamToDoAdapter.setSelectedChip(selectedChip)
-//        }
         binding.chipTodo.setOnClickListener {
             selectedChip = CHIP_TODO_VALUE
             refreshTeamTodoList()
@@ -52,48 +45,79 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodo {
     }
 
     private fun initializeAdapter() {
-        teamToDoAdapter = TeamToDoAdapter()
-        teamToDoAdapter.onUpdatedStatus = { id, updatedStatus ->
-            teamTodoPresenter.updateTeamTodoStatus(id, updatedStatus)
-        }
+        teamToDoAdapter = TeamToDoAdapter(::onUpdateStatus)
     }
 
-    override fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
+    private fun onUpdateStatus(todoId: String, status: Int) {
+        teamTodoPresenter.updateTeamTodoStatus(todoId, status)
+    }
+
+    override fun showTodoList(todoList: List<TeamTodo>) {
         val itemTouchHelperCallback = ItemTeamTodoTouchHelperCallback(teamToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        val list =
-            setTeamTodoListBasedOnSelectedChip(selectedChip, getAllTeamTodosResponse.value)
+        val filteredList =
+            filterTodosList(selectedChip, todoList)
         requireActivity().runOnUiThread {
-            teamToDoAdapter.submitList(list)
+            teamToDoAdapter.submitList(filteredList)
             binding.teamTodoRecycler.adapter = teamToDoAdapter
             itemTouchHelper.attachToRecyclerView(binding.teamTodoRecycler)
         }
     }
 
+
     private fun refreshTeamTodoList() {
         teamTodoPresenter.getAllTeamTodos()
     }
 
-    private fun setTeamTodoListBasedOnSelectedChip(
+    private fun filterTodosList(
         selectedChip: Int,
-        teamTodoResponseList: List<TeamTodoResponse>
-    ): List<TeamTodoResponse> =
-        teamTodoResponseList.filter { it.status == selectedChip }
+        teamTodoList: List<TeamTodo>
+    ): List<TeamTodo> =
+        teamTodoList.filter { it.status == selectedChip }
+
+
+    override fun showLoadingTodoListFailed() {
+    }
+
+    override fun showToast(toastMessage: ToastMessage) {
+        requireActivity().runOnUiThread {
+            when (toastMessage) {
+                ToastMessage.TODO_UPDATED_SUCCESSFULLY -> {
+                    Toast.makeText(
+                        requireActivity(),
+                        getString(R.string.update_todo_success), Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                ToastMessage.TODO_UPDATE_FAILED -> {
+                    Toast.makeText(
+                        requireActivity(),
+                        getString(R.string.todo_update_failed), Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+        }
+
+    }
+
+    override fun showupdateTodoStatusFailed(errorMessage: String) {
+
+    }
+
+    override fun showEmptyTodoList() {
+
+    }
 
     companion object {
         private const val CHIP_TODO_VALUE = 0
         private const val CHIP_IN_PROGRESS_VALUE = 1
         private const val CHIP_DONE_VALUE = 2
     }
-
-
-    override fun onGetAllTeamTodosFailure(exception: IOException) {
-    }
-
-    override fun onUpdateTeamTodoStatusSuccess(updateTeamTodoStatusResponse: UpdateTeamTodoStatusResponse) {
-    }
-
-    override fun onUpdateTeamTodoStatusFailure(exception: IOException) {
-    }
-
 }
+
+
+
+
+
+
