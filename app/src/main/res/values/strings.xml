@@ -45,5 +45,8 @@
     <string name="todo_description">This is my description amet consectetur. Nec sed ut venenatis. Nulla amet amet...</string>
     <string name="all_">All</string>
     <string name="todo">TODO</string>
+    <string name="username_empty">Username cannot be empty</string>
+    <string name="password_empty">Password cannot be empty</string>
+    <string name="dont_have_account">Don’t have an account? sign up</string>
 
 </resources>

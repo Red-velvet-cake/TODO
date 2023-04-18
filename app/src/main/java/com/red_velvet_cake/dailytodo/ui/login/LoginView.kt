@@ -6,4 +6,5 @@ import okio.IOException
 interface LoginView {
     fun onSuccess(loginResponse: LoginResponse)
     fun onFailure(exception: IOException)
+    fun showLoadingIndicator(show: Boolean)
 }

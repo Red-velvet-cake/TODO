@@ -21,7 +21,7 @@ import okio.IOException
 class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
         get() = FragmentLoginBinding::inflate
-     private val LOG_TAG: String = LoginFragment::class.simpleName!!
+    private val LOG_TAG: String = LoginFragment::class.simpleName!!
 
     private val loginPresenter = LoginPresenter(this)
     override fun setUp() {
@@ -46,18 +46,22 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
         Toast.makeText(requireContext(), exception.message, Toast.LENGTH_LONG).show()
     }
 
+    override fun showLoadingIndicator(show: Boolean) {
+        binding.loginProgressBar.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
     private fun validateInputFields(username: String, password: String): Boolean {
         var isValid = true
 
         if (username.isBlank()) {
-            binding.editTextUsername.error = "Username cannot be empty"
+            binding.editTextUsername.error = getString(R.string.username_empty)
             isValid = false
         } else {
             binding.editTextUsername.error = null
         }
 
         if (password.isBlank()) {
-            binding.editTextPassword.error = "Password cannot be empty"
+            binding.editTextPassword.error = getString(R.string.password_empty)
             isValid = false
         } else {
             binding.editTextPassword.error = null
@@ -67,10 +71,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
     }
 
     private fun setupSignUpTextView() {
-        val text = "Don’t have an account? sign up"
+        val text = getString(R.string.dont_have_account)
         val spannableString = SpannableString(text)
-        val startIndex = text.indexOf("sign up")
-        val endIndex = startIndex + "sign up".length
+        val startIndex = text.indexOf(getString(R.string.sign_up))
+        val endIndex = startIndex + getString(R.string.sign_up).length
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
 

@@ -8,6 +8,7 @@ class LoginPresenter(private val view: LoginView) {
     private val todoServiceImpl = TodoServiceImpl()
 
     fun loginUser(username: String, password: String) {
+        view.showLoadingIndicator(true)
         todoServiceImpl.loginUser(
             username,
             password,
@@ -17,10 +18,12 @@ class LoginPresenter(private val view: LoginView) {
     }
 
     private fun onSuccess(loginResponse: LoginResponse) {
+        view.showLoadingIndicator(false)
         view.onSuccess(loginResponse)
     }
 
     private fun onFailure(exception: IOException) {
+        view.showLoadingIndicator(false)
         view.onFailure(exception)
     }
 }
