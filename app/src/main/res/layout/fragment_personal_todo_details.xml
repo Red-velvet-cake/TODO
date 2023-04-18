@@ -39,7 +39,7 @@
         tools:text="UX UI Studio Meeting " />
 
     <ImageButton
-        android:id="@+id/image_button_show_menu"
+        android:id="@+id/image_button_show_filter_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16dp"
@@ -57,11 +57,12 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_12dp"
         android:layout_marginStart="@dimen/_16dp"
-        android:layout_marginTop="@dimen/_26dp"
         android:drawablePadding="@dimen/_6dp"
+        android:layout_marginTop="@dimen/_12dp"
         app:drawableStartCompat="@drawable/ic_calender_small"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_todo_description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text_view_todo_title"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_todo_title"
         tools:text="24-08-2023" />
 
 
@@ -87,15 +88,5 @@
         app:layout_constraintTop_toBottomOf="@id/text_view_creation_date"
         tools:text="@string/details_todos" />
 
-
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

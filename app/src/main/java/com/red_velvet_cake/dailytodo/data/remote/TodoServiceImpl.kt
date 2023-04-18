@@ -1,6 +1,5 @@
 package com.red_velvet_cake.dailytodo.data.remote
 
-import android.annotation.SuppressLint
 import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
@@ -12,7 +11,6 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
@@ -188,12 +186,11 @@ class TodoServiceImpl : TodoService {
     override fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
         onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
     ) {
 
         val requestBody =
-            FormBody.Builder().add(PARAM_STATUS, todoId).add(PARAM_ID, newTodoStatus.toString())
+            FormBody.Builder().add(PARAM_ID, todoId).add(PARAM_STATUS, newTodoStatus.toString())
                 .build()
 
         val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(TO_DO_PATH_SEGMENT)
@@ -207,9 +204,6 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body?.string().toString()
-                val result = gson.fromJson(body, UpdatePersonalStatusResponse::class.java)
-                    onUpdatePersonalTodoStatusSuccess(result)
             }
         })
     }
