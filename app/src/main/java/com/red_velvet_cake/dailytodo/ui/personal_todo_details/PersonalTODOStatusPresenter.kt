@@ -1,5 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.personal_todo_details
 
+import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
+import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
 import com.red_velvet_cake.dailytodo.utils.Constants
 import com.red_velvet_cake.dailytodo.utils.ResponseStatus
@@ -27,16 +29,16 @@ class PersonalTODOStatusPresenter(
         todoService.updatePersonalTodoStatus(
             todoId,
             newTodoStatus,
-            ::onSuccess,
-            ::onFailure
+            ::onUpdatePersonalTodoStatusSuccess,
+            ::onUpdatePersonalTodoStatusFailure
         )
     }
 
-    private fun onSuccess(isSuccess: Boolean) {
-        view.handleResponseStatus(ResponseStatus.Success(isSuccess))
+    private fun onUpdatePersonalTodoStatusSuccess(updatePersonalStatusResponse: UpdatePersonalStatusResponse) {
+        view.handleResponseStatus(ResponseStatus.Success(updatePersonalStatusResponse))
     }
 
-    private fun onFailure(e: IOException) {
-        view.handleResponseStatus(ResponseStatus.Error(e.message.toString()))
+    private fun onUpdatePersonalTodoStatusFailure(exception: IOException) {
+        view.handleResponseStatus(ResponseStatus.Error(exception.message.toString()))
     }
 }

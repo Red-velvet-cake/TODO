@@ -62,13 +62,6 @@ class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         }
     }
 
-    private fun makeToast(errorMessage: String) {
-        requireActivity().runOnUiThread {
-            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.todo -> {
@@ -91,20 +84,24 @@ class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
     }
 
     override fun handleResponseStatus(status: ResponseStatus) {
-        when (status) {
-            is ResponseStatus.Loading -> handleProgressBarVisibility(true)
-            is ResponseStatus.Success -> handleProgressBarVisibility(false)
-            is ResponseStatus.Error -> {
-                handleProgressBarVisibility(false)
-                makeToast(status.message)
+        requireActivity().runOnUiThread {
+            when (status) {
+                is ResponseStatus.Loading -> handleProgressBarVisibility(true)
+                is ResponseStatus.Success -> handleProgressBarVisibility(false)
+                is ResponseStatus.Error -> {
+                    handleProgressBarVisibility(false)
+                    makeToast(status.message)
+                }
             }
         }
     }
 
     private fun handleProgressBarVisibility(visibility: Boolean) {
-        requireActivity().runOnUiThread {
-            binding.progress.isVisible = visibility
-        }
+        binding.progress.isVisible = visibility
+    }
+
+    private fun makeToast(errorMessage: String) {
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
     private companion object {
