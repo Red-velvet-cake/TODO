@@ -4,6 +4,8 @@ package com.red_velvet_cake.dailytodo.ui.home
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
@@ -30,6 +32,19 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
         adapter = HomeAdapter(lists, ::onClickTeamTodo, ::onClickPersonalTodo)
         homePresenter.getAllTodos()
         binding.recyclerViewHome.adapter = adapter
+
+        binding.buttonAddTeamTodo.setOnClickListener {
+            val seetDialog =
+                BottomSheetDialog(requireContext().applicationContext, R.style.bottomSheetStyle)
+
+            val sheetView = LayoutInflater.from(requireContext().applicationContext)
+
+        }
+
+//        BottomSheetBehavior.from(binding.sheet).apply {
+//            maxHeight=0
+//            this.state=BottomSheetBehavior.STATE_HIDDEN
+//        }
 
     }
 
