@@ -20,17 +20,6 @@
             app:title="@string/details" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/text_view_assigne_name"
-        style="@style/TextViewInTodoDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_12dp"
-        android:layout_marginStart="@dimen/_16dp"
-        android:layout_marginTop="@dimen/_12dp"
-        android:fontFamily="@font/poppins"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_todo_title"
-        tools:text="Yaseen Zaqut" />
 
     <TextView
         android:id="@+id/text_view_todo_title"
@@ -46,7 +35,29 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appbar"
+        tools:ignore="RtlSymmetry"
         tools:text="UX UI Studio Meeting " />
+    <TextView
+        android:id="@+id/text_view_assigne_name"
+        style="@style/TextViewInTodoDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_12dp"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_12dp"
+        android:fontFamily="@font/poppins"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_todo_title"
+        tools:text="Yaseen Zaqut" />
+
+    <Spinner
+        android:id="@+id/spinner_todo_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_view_todo_title"
+        tools:ignore="RtlSymmetry" />
+
 
     <TextView
         android:id="@+id/text_view_creation_date"
@@ -74,14 +85,25 @@
         tools:text="21:30" />
 
     <TextView
-        android:id="@+id/text_view_todo_details"
+        android:id="@+id/text_view_todo_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16dp"
         android:layout_marginVertical="@dimen/_18dp"
         android:fontFamily="@font/poppins"
-        android:paddingHorizontal="@dimen/_16dp"
         android:textColor="@color/secondary_text"
         app:layout_constraintTop_toBottomOf="@id/text_view_creation_date"
         tools:text="@string/details_todos" />
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
