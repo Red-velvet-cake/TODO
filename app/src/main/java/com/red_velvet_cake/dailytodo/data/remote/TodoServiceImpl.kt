@@ -12,7 +12,6 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
@@ -157,7 +156,6 @@ class TodoServiceImpl : TodoService {
     override fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdateTeamTodoStatusSuccess: (updateTeamStatusResponse: UpdateTeamTodoStatusResponse) -> Unit,
         onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
     ) {
 
@@ -176,9 +174,6 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body?.string().toString()
-                val result = gson.fromJson(body, UpdateTeamTodoStatusResponse::class.java)
-                onUpdateTeamTodoStatusSuccess(result)
             }
 
         })
