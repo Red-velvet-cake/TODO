@@ -10,7 +10,6 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import com.orhanobut.hawk.Hawk
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
@@ -189,12 +188,11 @@ class TodoServiceImpl : TodoService {
     override fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
-        onUpdatePersonalTodoStatusFailure: (exception: IOException) -> Unit
+        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
     ) {
 
         val requestBody =
-            FormBody.Builder().add(PARAM_STATUS, todoId).add(PARAM_ID, newTodoStatus.toString())
+            FormBody.Builder().add(PARAM_ID, todoId).add(PARAM_STATUS, newTodoStatus.toString())
                 .build()
 
         val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(TO_DO_PATH_SEGMENT)
@@ -208,10 +206,6 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                response.body?.string().let {
-                    val result = gson.fromJson(it, UpdatePersonalStatusResponse::class.java)
-                    onUpdatePersonalTodoStatusSuccess(result)
-                }
             }
         })
     }

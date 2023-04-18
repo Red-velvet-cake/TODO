@@ -18,7 +18,7 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
     TeamTodoDetailsView {
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTeamTodoDetailsBinding
         get() = FragmentTeamTodoDetailsBinding::inflate
-    private lateinit var presenter: TeamTODOStatusPresenter
+    private lateinit var presenter: TeamTodoStatusPresenter
 
     override fun setUp() {
         initSpinner()
