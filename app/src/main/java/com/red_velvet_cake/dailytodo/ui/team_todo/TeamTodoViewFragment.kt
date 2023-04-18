@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.google.android.material.chip.Chip
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoBinding
@@ -14,7 +13,7 @@ class TeamTodoViewFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoVi
 
     private lateinit var teamToDoAdapter: TeamToDoAdapter
     private lateinit var teamTodoPresenter: TeamTodoPresenter
-    private var selectedChip = CHIP_TODO_VALUE
+    private var selectedChip = -1
 
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTeamTodoBinding =
         FragmentTeamTodoBinding::inflate
@@ -22,6 +21,8 @@ class TeamTodoViewFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoVi
     override fun setUp() {
         initializePresenter()
         initializeAdapter()
+        selectedChip = CHIP_TODO_VALUE
+        teamToDoAdapter.setSelectedChip(selectedChip)
         binding.chipTodo.isChecked = true
         binding.chipDone.setChipBackgroundColorResource(R.color.white)
         binding.chipInProgress.setChipBackgroundColorResource(R.color.white)
@@ -29,15 +30,36 @@ class TeamTodoViewFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoVi
 
     override fun addCallBacks() {
         binding.chipTodo.setOnClickListener {
-            setChipSelectedAndRefreshList(CHIP_TODO_VALUE, binding.chipTodo)
+            selectedChip = CHIP_TODO_VALUE
+            refreshTeamTodoList()
+            teamToDoAdapter.setSelectedChip(selectedChip)
+            binding.chipDone.isChecked = false
+            binding.chipInProgress.isChecked = false
+            binding.chipDone.setChipBackgroundColorResource(R.color.white)
+            binding.chipInProgress.setChipBackgroundColorResource(R.color.white)
+            binding.chipTodo.setChipBackgroundColorResource(R.color.chip_background_color)
         }
-
         binding.chipDone.setOnClickListener {
-            setChipSelectedAndRefreshList(CHIP_DONE_VALUE, binding.chipDone)
-        }
+            selectedChip = CHIP_DONE_VALUE
+            refreshTeamTodoList()
+            teamToDoAdapter.setSelectedChip(selectedChip)
+            binding.chipTodo.isChecked = false
+            binding.chipInProgress.isChecked = false
+            binding.chipTodo.setChipBackgroundColorResource(R.color.white)
+            binding.chipInProgress.setChipBackgroundColorResource(R.color.white)
+            binding.chipDone.setChipBackgroundColorResource(R.color.chip_background_color)
 
+        }
         binding.chipInProgress.setOnClickListener {
-            setChipSelectedAndRefreshList(CHIP_IN_PROGRESS_VALUE, binding.chipInProgress)
+            selectedChip = CHIP_IN_PROGRESS_VALUE
+            refreshTeamTodoList()
+            teamToDoAdapter.setSelectedChip(selectedChip)
+            binding.chipTodo.isChecked = false
+            binding.chipDone.isChecked = false
+            binding.chipDone.setChipBackgroundColorResource(R.color.white)
+            binding.chipTodo.setChipBackgroundColorResource(R.color.white)
+            binding.chipInProgress.setChipBackgroundColorResource(R.color.chip_background_color)
+
         }
     }
 
@@ -46,19 +68,6 @@ class TeamTodoViewFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoVi
         teamTodoPresenter.getAllTeamTodos()
     }
 
-    private fun setChipSelectedAndRefreshList(chipValue: Int, chipToSelect: Chip) {
-        selectedChip = chipValue
-        refreshTeamTodoList()
-        teamToDoAdapter.setSelectedChip(selectedChip)
-        binding.chipTodo.isChecked = false
-        binding.chipDone.isChecked = false
-        binding.chipInProgress.isChecked = false
-        binding.chipTodo.setChipBackgroundColorResource(R.color.white)
-        binding.chipDone.setChipBackgroundColorResource(R.color.white)
-        binding.chipInProgress.setChipBackgroundColorResource(R.color.white)
-        chipToSelect.isChecked = true
-        chipToSelect.setChipBackgroundColorResource(R.color.chip_background_color)
-    }
 
     private fun initializeAdapter() {
         teamToDoAdapter = TeamToDoAdapter(::onUpdateStatus)

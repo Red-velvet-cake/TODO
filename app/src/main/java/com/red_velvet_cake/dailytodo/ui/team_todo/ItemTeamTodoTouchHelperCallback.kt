@@ -34,7 +34,6 @@ class ItemTeamTodoTouchHelperCallback(
             ItemTouchHelper.LEFT -> teamTodoAdapter.swipedLeft(position)
             ItemTouchHelper.RIGHT -> teamTodoAdapter.swipedRight(position)
         }
-
     }
 
     override fun onChildDraw(
@@ -51,7 +50,7 @@ class ItemTeamTodoTouchHelperCallback(
         var background: ColorDrawable
         val backgroundCornerOffset = itemView.width
         if (dX > 0) {
-            var text = when (teamTodoAdapter.selectedChipAdapter) {
+            val text = when (teamTodoAdapter.selectedChipAdapter) {
                 1 -> {
                     "To Do"
                 }
@@ -68,7 +67,7 @@ class ItemTeamTodoTouchHelperCallback(
             background = ColorDrawable(Color.parseColor("#7B61FF"))
             drawTextAndBackground(c, itemView, background, text, dX, backgroundCornerOffset)
         } else if (dX < 0) {
-            var text = when (teamTodoAdapter.selectedChipAdapter) {
+            val text = when (teamTodoAdapter.selectedChipAdapter) {
                 1 -> {
                     "Done"
                 }
