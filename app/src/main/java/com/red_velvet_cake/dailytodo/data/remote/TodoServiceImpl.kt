@@ -1,5 +1,6 @@
 package com.red_velvet_cake.dailytodo.data.remote
 
+import android.annotation.SuppressLint
 import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
@@ -29,8 +30,7 @@ class TodoServiceImpl : TodoService {
 
     private val authOkHttpClient = AuthOkHttpClient.getInstance()
 
-    private val loggingInterceptor =
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     private val client = OkHttpClient().newBuilder().addInterceptor(TodoServiceInterceptor())
         .addInterceptor(loggingInterceptor).build()
