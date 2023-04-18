@@ -6,6 +6,6 @@ data class PersonalTodo(
     @SerializedName("id") val id: String,
     @SerializedName("title") val title: String,
     @SerializedName("description") val description: String,
-    @SerializedName("status") val status: Int,
+    @SerializedName("status") var status: Int,
     @SerializedName("creationTime") val creationTime: String
 )

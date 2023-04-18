@@ -184,10 +184,8 @@ class TodoServiceImpl : TodoService {
     override fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
-        onUpdatePersonalTodoStatusFailure: (exception: IOException) -> Unit
-    ) {
-
+        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit    ) {
+/*
         val requestBody =
             FormBody.Builder().add(PARAM_STATUS, todoId).add(PARAM_ID, newTodoStatus.toString())
                 .build()
@@ -208,6 +206,24 @@ class TodoServiceImpl : TodoService {
                     onUpdatePersonalTodoStatusSuccess(result)
                 }
             }
+        })*/
+        val requestBody =
+            FormBody.Builder().add(PARAM_ID, todoId).add(PARAM_STATUS, newTodoStatus.toString())
+                .build()
+
+        val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(TO_DO_PATH_SEGMENT)
+            .addPathSegment(PERSONAL_PATH_SEGMENT).build()
+
+        val request = Request.Builder().url(url).put(requestBody).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                onUpdatePersonalTodoStatusFailure(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+            }
+
         })
     }
 
@@ -282,6 +298,7 @@ class TodoServiceImpl : TodoService {
         private const val HEADER_AUTHORIZATION = "Authorization"
         private const val TO_DO_PATH_SEGMENT = "todo"
         private const val TEAM_PATH_SEGMENT = "team"
+        private const val PERSONAL_PATH_SEGMENT = "personal"
         private const val REGISTER_PATH = "signup"
         private const val USERNAME = "username"
         private const val PASSWORD = "password"
