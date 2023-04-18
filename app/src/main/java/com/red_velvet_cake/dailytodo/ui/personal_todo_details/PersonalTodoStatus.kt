@@ -1,7 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.personal_todo_details
 
-import com.red_velvet_cake.dailytodo.utils.RequestStatus
+import com.red_velvet_cake.dailytodo.utils.ResponseStatus
 
 interface PersonalTodoStatus {
-    fun handleRequestStatus(status: RequestStatus)
+    fun handleResponseStatus(status: ResponseStatus)
 }

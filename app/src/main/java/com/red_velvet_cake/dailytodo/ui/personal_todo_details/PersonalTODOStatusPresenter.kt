@@ -2,7 +2,7 @@ package com.red_velvet_cake.dailytodo.ui.personal_todo_details
 
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
 import com.red_velvet_cake.dailytodo.utils.Constants
-import com.red_velvet_cake.dailytodo.utils.RequestStatus
+import com.red_velvet_cake.dailytodo.utils.ResponseStatus
 import com.red_velvet_cake.dailytodo.utils.TodoStatus
 import java.io.IOException
 
@@ -17,7 +17,7 @@ class PersonalTODOStatusPresenter(
             TodoStatus.InProgress -> updatePersonalTODOStatus(Constants.IN_PROGRESS, todoId)
             TodoStatus.Done -> updatePersonalTODOStatus(Constants.DONE, todoId)
         }
-        view.handleRequestStatus(RequestStatus.Loading)
+        view.handleResponseStatus(ResponseStatus.Loading)
     }
 
     private fun updatePersonalTODOStatus(
@@ -33,10 +33,10 @@ class PersonalTODOStatusPresenter(
     }
 
     private fun onSuccess(isSuccess: Boolean) {
-        view.handleRequestStatus(RequestStatus.Success(isSuccess))
+        view.handleResponseStatus(ResponseStatus.Success(isSuccess))
     }
 
     private fun onFailure(e: IOException) {
-        view.handleRequestStatus(RequestStatus.Error(e.message.toString()))
+        view.handleResponseStatus(ResponseStatus.Error(e.message.toString()))
     }
 }

@@ -2,7 +2,6 @@ package com.red_velvet_cake.dailytodo.ui.personal_todo_details
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.ViewGroup
@@ -16,10 +15,8 @@ import com.red_velvet_cake.dailytodo.data.remote.TodoService
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoDetailsBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
-import com.red_velvet_cake.dailytodo.utils.Constants
-import com.red_velvet_cake.dailytodo.utils.RequestStatus
+import com.red_velvet_cake.dailytodo.utils.ResponseStatus
 import com.red_velvet_cake.dailytodo.utils.TodoStatus
-import kotlin.math.log
 
 
 class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBinding>(),
@@ -91,12 +88,12 @@ class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         }
     }
 
-    override fun handleRequestStatus(status: RequestStatus) {
+    override fun handleResponseStatus(status: ResponseStatus) {
         when (status) {
-            is RequestStatus.Loading -> handleProgress(true)
-            is RequestStatus.Success -> handleProgress(false)
-            is RequestStatus.Error -> {
-                handleProgress(false)
+            is ResponseStatus.Loading -> handleProgressBarVisibility(true)
+            is ResponseStatus.Success -> handleProgressBarVisibility(!status.isSuccess)
+            is ResponseStatus.Error -> {
+                handleProgressBarVisibility(false)
                 requireActivity().runOnUiThread {
                     makeToast(status.message)
                 }
@@ -104,7 +101,7 @@ class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         }
     }
 
-    private fun handleProgress(visibility: Boolean) {
+    private fun handleProgressBarVisibility(visibility: Boolean) {
         requireActivity().runOnUiThread {
             binding.progress.isVisible = visibility
         }
