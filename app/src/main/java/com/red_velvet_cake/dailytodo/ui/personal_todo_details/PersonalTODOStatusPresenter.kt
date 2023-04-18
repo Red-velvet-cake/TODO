@@ -12,12 +12,12 @@ class PersonalTODOStatusPresenter(
 ) {
 
     fun setTodoStatus(status: TodoStatus, todoId: String) {
+        view.handleResponseStatus(ResponseStatus.Loading)
         when (status) {
             TodoStatus.Todo -> updatePersonalTODOStatus(Constants.TODO, todoId)
             TodoStatus.InProgress -> updatePersonalTODOStatus(Constants.IN_PROGRESS, todoId)
             TodoStatus.Done -> updatePersonalTODOStatus(Constants.DONE, todoId)
         }
-        view.handleResponseStatus(ResponseStatus.Loading)
     }
 
     private fun updatePersonalTODOStatus(

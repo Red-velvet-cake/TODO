@@ -63,7 +63,9 @@ class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
     }
 
     private fun makeToast(errorMessage: String) {
-        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        requireActivity().runOnUiThread {
+            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        }
     }
 
 
@@ -91,12 +93,10 @@ class PersonalTODODetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
     override fun handleResponseStatus(status: ResponseStatus) {
         when (status) {
             is ResponseStatus.Loading -> handleProgressBarVisibility(true)
-            is ResponseStatus.Success -> handleProgressBarVisibility(!status.isSuccess)
+            is ResponseStatus.Success -> handleProgressBarVisibility(false)
             is ResponseStatus.Error -> {
                 handleProgressBarVisibility(false)
-                requireActivity().runOnUiThread {
-                    makeToast(status.message)
-                }
+                makeToast(status.message)
             }
         }
     }
