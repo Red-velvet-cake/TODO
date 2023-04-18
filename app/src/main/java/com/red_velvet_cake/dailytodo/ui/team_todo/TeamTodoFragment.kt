@@ -10,7 +10,7 @@ import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 
-class TeamTodoViewFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
+class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
 
     private lateinit var teamToDoAdapter: TeamToDoAdapter
     private lateinit var teamTodoPresenter: TeamTodoPresenter
