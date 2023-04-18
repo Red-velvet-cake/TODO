@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.viewbinding.ViewBinding
 import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
 
@@ -26,6 +27,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         _binding = bindingInflater(layoutInflater)
         checkConnectionStatus()
         setUp()
@@ -65,6 +67,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         super.onPause()
         connectivityManager.unregisterNetworkCallback(networkCallback)
     }
+
     override fun onDestroy() {
         super.onDestroy()
         connectivityManager.unregisterNetworkCallback(networkCallback)
