@@ -37,4 +37,6 @@
     <string name="password_validation_error">الحد الأدنى لكلمة المرور هو 8 مراتب</string>
     <string name="confirm_password_validation_error">كلمة المرور غير متطابقة</string>
     <string name="loading">جار التحميل</string>
+    <string name="update_failed">Update failed</string>
+    <string name="update_succeeded">Update succeeded</string>
 </resources>
