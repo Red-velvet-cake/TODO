@@ -4,7 +4,6 @@ import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
-import com.red_velvet_cake.dailytodo.utils.RegisterFormError
 import java.io.IOException
 
 class RegisterPresenter(
@@ -28,17 +27,17 @@ class RegisterPresenter(
         username: String,
         password: String
     ) {
-        view.enableView()
+        view.enableRegisterButton()
         if (registerAccountResponse.isSuccess) {
-            view.showToast("Account created successfully.")
+            view.showRegisterSuccessMessage()
             loginUsingCredentials(username, password)
         } else {
-            view.showToast(registerAccountResponse.message)
+            view.showRegisterFailedMessage(registerAccountResponse.message)
         }
     }
 
     private fun onRegisterAccountFailure(exception: IOException) {
-        view.showToast(exception.message.toString())
+        exception.message?.let { view.showRegisterFailedMessage(it) }
     }
 
     fun clickRegisterButton(
@@ -48,7 +47,7 @@ class RegisterPresenter(
         teamId: String
     ) {
         if (validateForm(username, password, confirmPassword)) {
-            view.disableView()
+            view.disableRegisterButtonWithLoading()
             registerAccount(username.trim(), password.trim(), teamId)
         }
     }
@@ -56,17 +55,17 @@ class RegisterPresenter(
     private fun validateForm(username: String, password: String, confirmPassword: String): Boolean {
         return when {
             !validateUsername(username) -> {
-                view.showValidationError(RegisterFormError.USERNAME_INVALID)
+                view.showUsernameValidationError()
                 false
             }
 
             !validatePassword(password) -> {
-                view.showValidationError(RegisterFormError.PASSWORD_INVALID)
+                view.showPasswordValidationError()
                 false
             }
 
             !validateConfirmPassword(password, confirmPassword) -> {
-                view.showValidationError(RegisterFormError.CONFIRM_PASSWORD_NOT_MATCHING)
+                view.showConfirmPasswordValidationError()
                 false
             }
 
@@ -96,16 +95,16 @@ class RegisterPresenter(
     }
 
     private fun onLoginAccountSuccess(loginResponse: LoginResponse) {
-        view.enableView()
+        view.enableRegisterButton()
         if (loginResponse.isSuccess) {
             view.navigateToHome()
         } else {
-            view.showToast(loginResponse.message)
+            view.showLoginFailedMessage(loginResponse.message)
         }
     }
 
     private fun onLoginAccountFailure(exception: IOException) {
-        view.showToast(exception.message.toString())
+        view.showLoginFailedMessage(exception.message.toString())
     }
 
 }

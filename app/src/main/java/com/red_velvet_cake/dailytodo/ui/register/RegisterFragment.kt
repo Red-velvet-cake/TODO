@@ -7,7 +7,6 @@ import com.red_velvet_cake.dailytodo.BuildConfig
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.databinding.FragmentRegisterBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
-import com.red_velvet_cake.dailytodo.utils.RegisterFormError
 
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
     private val presenter = RegisterPresenter(this)
@@ -22,7 +21,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
         setupLoginButtonClickListener()
     }
 
-    override fun disableView() {
+    override fun disableRegisterButtonWithLoading() {
         runOnUiThread {
             binding.buttonRegister.apply {
                 isEnabled = false
@@ -31,7 +30,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
         }
     }
 
-    override fun enableView() {
+    override fun enableRegisterButton() {
         runOnUiThread {
             binding.buttonRegister.apply {
                 isEnabled = true
@@ -40,31 +39,32 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
         }
     }
 
-    override fun showToast(message: String) {
-        runOnUiThread {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
     override fun navigateToHome() {}
 
     override fun navigateToLogin() {}
+    override fun showUsernameValidationError() {
+        binding.editTextUsername.error = getString(R.string.username_validation_error)
+    }
 
-    override fun showValidationError(error: RegisterFormError) {
-        when (error) {
-            RegisterFormError.USERNAME_INVALID -> {
-                binding.editTextUsername.error = getString(R.string.username_validation_error)
-            }
+    override fun showPasswordValidationError() {
+        binding.editTextPassword.error = getString(R.string.password_validation_error)
+    }
 
-            RegisterFormError.PASSWORD_INVALID -> {
-                binding.editTextPassword.error = getString(R.string.password_validation_error)
-            }
+    override fun showConfirmPasswordValidationError() {
+        binding.editTextConfirmPassword.error =
+            getString(R.string.confirm_password_validation_error)
+    }
 
-            RegisterFormError.CONFIRM_PASSWORD_NOT_MATCHING -> {
-                binding.editTextConfirmPassword.error =
-                    getString(R.string.confirm_password_validation_error)
-            }
-        }
+    override fun showRegisterSuccessMessage() {
+        showToast(getString(R.string.register_success))
+    }
+
+    override fun showRegisterFailedMessage(message: String) {
+        showToast(message)
+    }
+
+    override fun showLoginFailedMessage(message: String) {
+        showToast(message)
     }
 
     private fun setupRegisterButtonClickListener() {
@@ -81,6 +81,12 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
     private fun setupLoginButtonClickListener() {
         binding.textViewLogin.setOnClickListener {
             navigateToLogin()
+        }
+    }
+
+    private fun showToast(message: String) {
+        runOnUiThread {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -1,19 +1,25 @@
 package com.red_velvet_cake.dailytodo.ui.register
 
-import com.red_velvet_cake.dailytodo.utils.RegisterFormError
-
 interface RegisterView {
-
-    fun showToast(message: String)
 
     fun navigateToHome()
 
     fun navigateToLogin()
 
-    fun showValidationError(error: RegisterFormError)
+    fun showUsernameValidationError()
 
-    fun disableView()
+    fun showPasswordValidationError()
 
-    fun enableView()
+    fun showConfirmPasswordValidationError()
+
+    fun showRegisterSuccessMessage()
+
+    fun showRegisterFailedMessage(message: String)
+
+    fun showLoginFailedMessage(message: String)
+
+    fun disableRegisterButtonWithLoading()
+
+    fun enableRegisterButton()
 
 }
