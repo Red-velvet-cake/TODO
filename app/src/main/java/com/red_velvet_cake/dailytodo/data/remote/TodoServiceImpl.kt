@@ -11,6 +11,7 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
+import com.orhanobut.hawk.Hawk
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
@@ -22,7 +23,6 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.IOException
-import org.json.JSONObject
 
 class TodoServiceImpl : TodoService {
 
@@ -59,9 +59,8 @@ class TodoServiceImpl : TodoService {
 
                     val apiResponse = Gson().fromJson(responseBody, ApiResponse::class.java)
                     if (apiResponse.isSuccess) {
-                        val valueJson = JSONObject(responseBody).getJSONObject("value")
-                        val loginResponse = Gson().fromJson(valueJson.toString(), LoginResponse::class.java)
-//                        Hawk.put(LocalData[HEADER_AUTHORIZATION], loginResponse.loginResponseBody.token)
+                        val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
+                        Hawk.put(HEADER_AUTHORIZATION, loginResponse.loginResponseBody.token)
                         onLoginUserSuccess(loginResponse)
                     } else {
                         val message = apiResponse.message
