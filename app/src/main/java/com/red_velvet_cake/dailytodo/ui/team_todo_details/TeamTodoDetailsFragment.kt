@@ -3,18 +3,16 @@ package com.red_velvet_cake.dailytodo.ui.team_todo_details
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.view.isVisible
 import com.red_velvet_cake.dailytodo.R
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoDetailsBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 import com.red_velvet_cake.dailytodo.utils.Constants
 import com.red_velvet_cake.dailytodo.utils.TodoStatus
-import java.io.IOException
 
 class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
     TeamTodoDetailsView {
@@ -24,13 +22,17 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
 
     override fun setUp() {
         initSpinner()
-        setArgs()
+        getTeamTodoFromArguments()
     }
 
     private fun initSpinner() {
         val teamTodoDetails: TeamTodo? = arguments?.getParcelable(KEY_DETAILS_PARAM)
 
-        val status = listOf("Todo", "In progress", "Done")
+        val status = listOf(
+            getString(R.string.todo_status),
+            getString(R.string.in_progress_status),
+            getString(R.string.done_status)
+        )
         val spinnerAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, status)
         spinnerAdapter.setDropDownViewResource(android.R.layout.select_dialog_multichoice)
@@ -51,7 +53,10 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
                             }
 
                             Constants.IN_PROGRESS -> {
-                                presenter.setTodoStatus(TodoStatus.InProgress, teamTodoDetails?.id!!)
+                                presenter.setTodoStatus(
+                                    TodoStatus.InProgress,
+                                    teamTodoDetails?.id!!
+                                )
                             }
 
                             Constants.DONE -> {
@@ -73,7 +78,7 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
 
     }
 
-    private fun setArgs() {
+    private fun getTeamTodoFromArguments() {
         val teamTodoDetails: TeamTodo? = arguments?.getParcelable(KEY_DETAILS_PARAM)
         with(binding) {
             textViewTodoTitle.text = teamTodoDetails?.title
@@ -88,26 +93,10 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
-    private fun setProgressBarVisibility(visibility: Boolean) {
-        binding.progress.isVisible = visibility
-    }
 
-    override fun showTodoStatusUpdatedLoading(isLoading: Boolean) {
+    override fun showTodoStatusUpdatedFailure(errorMessage: String) {
         requireActivity().runOnUiThread {
-            setProgressBarVisibility(isLoading)
-        }
-    }
-
-    override fun showTodoStatusUpdatedSuccessfully() {
-
-        requireActivity().runOnUiThread {
-            makeToast(getString(R.string.update_succeeded))
-        }
-    }
-
-    override fun showTodoStatusUpdatedFailure(exception: IOException) {
-        requireActivity().runOnUiThread {
-            makeToast(exception.message.toString())
+            makeToast(errorMessage)
         }
     }
 

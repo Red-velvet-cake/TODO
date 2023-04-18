@@ -48,6 +48,9 @@
     <string name="all_">All</string>
     <string name="todo">TODO</string>
     <string name="update_succeeded">Update succeeded</string>
+    <string name="todo_status">Todo</string>
+    <string name="in_progress_status">In progress</string>
+    <string name="done_status">Done</string>
 
 
 </resources>
