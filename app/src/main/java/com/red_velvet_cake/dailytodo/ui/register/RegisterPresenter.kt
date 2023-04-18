@@ -48,40 +48,38 @@ class RegisterPresenter(
     ) {
         if (validateForm(username, password, confirmPassword)) {
             view.disableRegisterButtonWithLoading()
-            registerAccount(username.trim(), password.trim(), teamId)
+            registerAccount(username, password, teamId)
         }
     }
 
     private fun validateForm(username: String, password: String, confirmPassword: String): Boolean {
-        return when {
-            !validateUsername(username) -> {
-                view.showUsernameValidationError()
-                false
-            }
-
-            !validatePassword(password) -> {
-                view.showPasswordValidationError()
-                false
-            }
-
-            !validateConfirmPassword(password, confirmPassword) -> {
-                view.showConfirmPasswordValidationError()
-                false
-            }
-
-            else -> true
+        if (!isValidUsername(username)) {
+            view.showUsernameValidationError()
+            return false
         }
+
+        if (!isValidPassword(password)) {
+            view.showPasswordValidationError()
+            return false
+        }
+
+        if (!isValidConfirmPassword(password, confirmPassword)) {
+            view.showConfirmPasswordValidationError()
+            return false
+        }
+
+        return true
     }
 
-    private fun validateUsername(username: String): Boolean {
+    private fun isValidUsername(username: String): Boolean {
         return username.isNotEmpty() && username.length >= 4
     }
 
-    private fun validatePassword(password: String): Boolean {
+    private fun isValidPassword(password: String): Boolean {
         return password.isNotEmpty() && password.length >= 8
     }
 
-    private fun validateConfirmPassword(password: String, confirmPassword: String): Boolean {
+    private fun isValidConfirmPassword(password: String, confirmPassword: String): Boolean {
         return password == confirmPassword
     }
 
