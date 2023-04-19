@@ -1,60 +1,99 @@
 package com.red_velvet_cake.dailytodo.ui.home
 
-import android.os.Bundle
+
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.red_velvet_cake.dailytodo.R
+import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
+import com.red_velvet_cake.dailytodo.data.model.Statistics
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
+import com.red_velvet_cake.dailytodo.databinding.FragmentHomeBinding
+import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeAdapter
+import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItemType
+import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItems
+import com.red_velvet_cake.dailytodo.ui.home.adapter.IHomeView
+import java.io.IOException
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
+    override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
+        get() = FragmentHomeBinding::inflate
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var lists = mutableListOf<HomeItems<Any>>()
+    private lateinit var adapter: HomeAdapter
+    private val homePresenter = HomePresenter(this)
+
+
+    override fun setUp() {
+        adapter = HomeAdapter(lists, ::onClickTeamTodo, ::onClickPersonalTodo)
+        homePresenter.getAllTodos()
+        binding.recyclerViewHome.adapter = adapter
+
+        binding.buttonAddTeamTodo.setOnClickListener {
+            val dialog = CreateTeamTodoDialogFragment()
+
+            dialog.show(parentFragmentManager, "create")
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    private fun onClickTeamTodo(teamTodo: TeamTodo) {
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun onClickPersonalTodo(personalTodo: PersonalTodo) {
+        homePresenter.navigateToPersonalTodoDetails(personalTodo)
+    }
+
+    override fun addCallBacks() {
+    }
+
+    override fun showPersonalTodos(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
+        requireActivity().runOnUiThread {
+            adapter.setPersonalCount(getAllPersonalTodosResponse.value.size)
+            lists.add(
+                HomeItems(
+                    Statistics(personal = getAllPersonalTodosResponse),
+                    HomeItemType.ITEM_STATISTICS_TASKS_HAS_DONE
+                )
+            )
+            lists.add(HomeItems("Personal Task", HomeItemType.ITEM_TODOS_SECTION_TITLE))
+            lists.add(HomeItems(getAllPersonalTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+    override fun showErrorOnPersonalTodoFailure(exception: IOException) {
+        Log.i("mah", "personal ${exception.message}")
+    }
+
+    override fun showTeamTodos(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
+        lists.add(HomeItems("Team Task", HomeItemType.ITEM_TODOS_SECTION_TITLE))
+        requireActivity().runOnUiThread {
+            adapter.setTeamCount(getAllTeamTodosResponse.value.size)
+            lists.add(
+                HomeItems(
+                    Statistics(team = getAllTeamTodosResponse),
+                    HomeItemType.LIST_TEAM_TASKS
+                )
+            )
+            adapter.notifyDataSetChanged()
+        }
+
+
+    }
+
+    override fun showErrorOnTeamTodoFailure(exception: IOException) {
+        Log.i("mah", "team ${exception.message}")
+    }
+
+    override fun navigateToTeamTodoDetails(teamTodo: TeamTodo) {
+//        requireActivity().navigateTo()
+    }
+
+    override fun navigateToPersonalTodoDetails(personalTodo: PersonalTodo) {
+
     }
 }

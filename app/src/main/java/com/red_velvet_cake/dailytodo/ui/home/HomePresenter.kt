@@ -2,6 +2,8 @@ package com.red_velvet_cake.dailytodo.ui.home
 
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.ui.home.adapter.IHomeView
 import java.io.IOException
@@ -20,21 +22,28 @@ class HomePresenter(val view: IHomeView) {
         )
     }
 
+    fun navigateToTeamTodoDetails(teamTodo: TeamTodo) {
+        view.navigateToTeamTodoDetails(teamTodo)
+    }
+
+    fun navigateToPersonalTodoDetails(personalTodo: PersonalTodo) {
+        view.navigateToPersonalTodoDetails(personalTodo)
+    }
 
     private fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
-        view.onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse)
+        view.showPersonalTodos(getAllPersonalTodosResponse)
     }
 
     private fun onGetAllPersonalTodosFailure(exception: IOException) {
-        view.onGetAllPersonalTodosFailure(exception)
+        view.showErrorOnPersonalTodoFailure(exception)
     }
 
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
-        view.onGetAllTeamTodosSuccess(getAllTeamTodosResponse)
+        view.showTeamTodos(getAllTeamTodosResponse)
     }
 
     private fun onGetAllTeamTodosFailure(exception: IOException) {
-        view.onGetAllTeamTodosFailure(exception)
+        view.showErrorOnTeamTodoFailure(exception)
     }
 
 

@@ -16,4 +16,13 @@
         <item name="android:background">@color/background</item>
     </style>
 
+
+    <style name="bottomSheetStyle" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetDialogTheme</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Widget.Design.BottomNavigationView">
+        <item name="background">@android:color/transparent</item>
+    </style>
+
 </resources>

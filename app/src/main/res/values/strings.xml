@@ -56,5 +56,15 @@
     <string name="update_todo_success">Todo updated successfully</string>
     <string name="todo_update_failed">Todo update failed</string>
     <string name="update_failed">Update failed</string>
+    <string name="name">Name</string>
+    <string name="_name">Name</string>
+    <string name="title">Title</string>
+    <string name="_task_title">Task title</string>
+    <string name="type">Type</string>
+    <string name="personalButton">Personal</string>
+    <string name="teamButton">Team</string>
+    <string name="_description">Description</string>
+    <string name="task_description">Task description</string>
+    <string name="_create">Create</string>
 
 </resources>

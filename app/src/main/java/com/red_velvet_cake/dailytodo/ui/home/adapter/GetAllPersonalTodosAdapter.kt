@@ -8,14 +8,17 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
-import com.red_velvet_cake.dailytodo.databinding.ItemPersonalAndTeamTasksBinding
+import com.red_velvet_cake.dailytodo.databinding.ItemPersonalTodoBinding
 
-class GetAllPersonalTodosAdapter(private val allTodos: GetAllPersonalTodosResponse) :
+class GetAllPersonalTodosAdapter(
+    private val todos: GetAllPersonalTodosResponse,
+    private val onClickPersonalTodo: (PersonalTodo) -> Unit,
+) :
     RecyclerView.Adapter<GetAllPersonalTodosAdapter.GetAllPersonalTodosHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GetAllPersonalTodosHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_personal_and_team_tasks, parent, false
+            R.layout.item_personal_todo, parent, false
         )
 
         return GetAllPersonalTodosHolder(view)
@@ -23,14 +26,17 @@ class GetAllPersonalTodosAdapter(private val allTodos: GetAllPersonalTodosRespon
 
 
     override fun onBindViewHolder(holder: GetAllPersonalTodosHolder, position: Int) {
-        val todo = allTodos.value[position]
+        val todo = todos.value[position]
         holder.bind(todo)
+        holder.binding.root.setOnClickListener {
+            onClickPersonalTodo(todo)
+        }
     }
 
-    override fun getItemCount() = allTodos.value.size
+    override fun getItemCount() = todos.value.size
 
     inner class GetAllPersonalTodosHolder(itemView: View) : ViewHolder(itemView) {
-        private val binding = ItemPersonalAndTeamTasksBinding.bind(itemView)
+        val binding = ItemPersonalTodoBinding.bind(itemView)
 
         fun bind(personalTodo: PersonalTodo) {
             val creationTime = personalTodo.creationTime.split('T')
