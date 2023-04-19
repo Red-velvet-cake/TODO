@@ -3,7 +3,6 @@ package com.red_velvet_cake.dailytodo.ui.team_todo
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
-import java.io.IOException
 
 class TeamTodoPresenter(private val view: TeamTodoView) {
 
@@ -27,8 +26,8 @@ class TeamTodoPresenter(private val view: TeamTodoView) {
         )
     }
 
-    private fun onUpdateTeamTodoStatusFailure(exception: IOException) {
-        view.showTodoUpdateFailMessage(exception.message.toString())
+    private fun onUpdateTeamTodoStatusFailure(errorMessage: String) {
+        view.showTodoUpdateFailMessage(errorMessage)
     }
 
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
@@ -38,7 +37,7 @@ class TeamTodoPresenter(private val view: TeamTodoView) {
         view.showTodoList(getAllTeamTodosResponse.value)
     }
 
-    private fun onGetAllTeamTodosFailure(exception: IOException) {
+    private fun onGetAllTeamTodosFailure(errorMessage: String) {
         view.showLoadTodosFailed()
     }
 

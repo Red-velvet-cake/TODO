@@ -14,7 +14,6 @@ import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoDetailsBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 import com.red_velvet_cake.dailytodo.utils.navigateBack
-import java.io.IOException
 
 
 class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBinding>(),
@@ -87,9 +86,10 @@ class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         }
     }
 
-    override fun showTodoStatusUpdatedFailure(exception: IOException) {
+
+    override fun showTodoStatusUpdatedFailure(errorMessage: String) {
         requireActivity().runOnUiThread {
-            makeToast(exception.message.toString())
+            makeToast(errorMessage)
         }
     }
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_marginBottom="@dimen/_56dp">
 
     <TextView
         android:id="@+id/text_view_todo_section_title"
@@ -13,6 +13,7 @@
         android:layout_marginStart="@dimen/_16dp"
         android:layout_marginTop="@dimen/_16dp"
         android:fontFamily="@font/poppins_medium"
+        android:text="@string/team_task"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/_16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,5 +33,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/text_view_todo_section_title" />
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_team_todos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_todo_section_title"
+        tools:listitem="@layout/item_team_todo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
