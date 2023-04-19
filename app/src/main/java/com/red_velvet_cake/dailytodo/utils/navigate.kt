@@ -29,7 +29,7 @@ private fun changeNavigation(activity: FragmentActivity, state: NavigationState,
 
     when (state) {
         NavigationState.ADD -> {
-            transaction.add(R.id.fragment_container_view, to!!)
+            transaction.add(R.id.fragment_container_view_auth, to!!)
             transaction.addToBackStack("fragment")
         }
 
@@ -38,7 +38,7 @@ private fun changeNavigation(activity: FragmentActivity, state: NavigationState,
         }
 
         NavigationState.REPLACE -> {
-            transaction.replace(R.id.fragment_container_view, to!!)
+            transaction.replace(R.id.fragment_container_view_auth, to!!)
         }
     }
     transaction.commit()

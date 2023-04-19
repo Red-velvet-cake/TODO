@@ -3,16 +3,12 @@ package com.red_velvet_cake.dailytodo.data.remote
 import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
-import com.orhanobut.hawk.Hawk
-import com.red_velvet_cake.dailytodo.data.model.ApiResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdateTeamTodoStatusResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
@@ -27,13 +23,19 @@ import okio.IOException
 
 class TodoServiceImpl : TodoService {
 
-    private val authOkHttpClient = AuthOkHttpClient.getInstance()
-
     private val loggingInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    private val client = OkHttpClient().newBuilder().addInterceptor(TodoServiceInterceptor())
-        .addInterceptor(loggingInterceptor).build()
+    private val authOkHttpClient = OkHttpClient()
+        .newBuilder()
+        .addInterceptor(loggingInterceptor)
+        .build()
+
+    private val client = OkHttpClient()
+        .newBuilder()
+        .addInterceptor(TodoServiceInterceptor())
+        .addInterceptor(loggingInterceptor)
+        .build()
 
     private val gson = Gson()
 
@@ -50,23 +52,14 @@ class TodoServiceImpl : TodoService {
         val request =
             Request.Builder().url(url).header(HEADER_AUTHORIZATION, authHeaderValue).build()
 
-        authOkHttpClient.client.newCall(request).enqueue(object : Callback {
+        authOkHttpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onLoginUserFailure(e)
             }
-
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
-
-                    val apiResponse = Gson().fromJson(responseBody, ApiResponse::class.java)
-                    if (apiResponse.isSuccess) {
-                        val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
-                        Hawk.put(HEADER_AUTHORIZATION, loginResponse.loginResponseBody.token)
-                        onLoginUserSuccess(loginResponse)
-                    } else {
-                        val message = apiResponse.message
-                        onLoginUserFailure(IOException(message))
-                    }
+                    val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
+                    onLoginUserSuccess(loginResponse)
                 }
             }
         })
@@ -157,7 +150,6 @@ class TodoServiceImpl : TodoService {
     override fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdateTeamTodoStatusSuccess: (updateTeamStatusResponse: UpdateTeamTodoStatusResponse) -> Unit,
         onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
     ) {
 
@@ -176,9 +168,6 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body?.string().toString()
-                val result = gson.fromJson(body, UpdateTeamTodoStatusResponse::class.java)
-                onUpdateTeamTodoStatusSuccess(result)
             }
 
         })
@@ -188,12 +177,10 @@ class TodoServiceImpl : TodoService {
     override fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
-        onUpdatePersonalTodoStatusFailure: (exception: IOException) -> Unit
-    ) {
-
+        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit    ) {
+/*
         val requestBody =
-            FormBody.Builder().add(PARAM_STATUS, todoId).add(PARAM_ID, newTodoStatus.toString())
+            FormBody.Builder().add(PARAM_ID, todoId).add(PARAM_STATUS, newTodoStatus.toString())
                 .build()
 
         val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(TO_DO_PATH_SEGMENT)
@@ -207,11 +194,25 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                response.body?.string().let {
-                    val result = gson.fromJson(it, UpdatePersonalStatusResponse::class.java)
-                    onUpdatePersonalTodoStatusSuccess(result)
-                }
             }
+        })*/
+        val requestBody =
+            FormBody.Builder().add(PARAM_ID, todoId).add(PARAM_STATUS, newTodoStatus.toString())
+                .build()
+
+        val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(TO_DO_PATH_SEGMENT)
+            .addPathSegment(PERSONAL_PATH_SEGMENT).build()
+
+        val request = Request.Builder().url(url).put(requestBody).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                onUpdatePersonalTodoStatusFailure(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+            }
+
         })
     }
 
@@ -265,7 +266,7 @@ class TodoServiceImpl : TodoService {
             .post(formBody)
             .build()
 
-        authOkHttpClient.client.newCall(request)
+        authOkHttpClient.newCall(request)
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     onRegisterAccountFailure(e)
@@ -286,6 +287,7 @@ class TodoServiceImpl : TodoService {
         private const val HEADER_AUTHORIZATION = "Authorization"
         private const val TO_DO_PATH_SEGMENT = "todo"
         private const val TEAM_PATH_SEGMENT = "team"
+        private const val PERSONAL_PATH_SEGMENT = "personal"
         private const val REGISTER_PATH = "signup"
         private const val USERNAME = "username"
         private const val PASSWORD = "password"

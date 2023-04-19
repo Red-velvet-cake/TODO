@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.ui.team_todo
+package com.red_velvet_cake.dailytodo.ui.personal_todo
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
-class ItemTeamTodoTouchHelperCallback(
-    private val teamTodoAdapter: TeamToDoAdapter,
+class ItemPersonalTodoTouchHelperCallback(
+    private val personalTodoAdapter: PersonalToDoAdapter,
 ) : ItemTouchHelper.SimpleCallback(
     0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
 ) {
@@ -23,16 +23,16 @@ class ItemTeamTodoTouchHelperCallback(
     ): Boolean {
         val fromPosition = viewHolder.layoutPosition
         val toPosition = target.layoutPosition
-        Collections.swap(teamTodoAdapter.getOldItems(), fromPosition, toPosition)
-        teamTodoAdapter.notifyItemMoved(fromPosition, toPosition)
+        Collections.swap(personalTodoAdapter.getOldItems(), fromPosition, toPosition)
+        personalTodoAdapter.notifyItemMoved(fromPosition, toPosition)
         return true
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.layoutPosition
         when (direction) {
-            ItemTouchHelper.LEFT -> teamTodoAdapter.swipedLeft(position)
-            ItemTouchHelper.RIGHT -> teamTodoAdapter.swipedRight(position)
+            ItemTouchHelper.LEFT -> personalTodoAdapter.swipedLeft(position)
+            ItemTouchHelper.RIGHT -> personalTodoAdapter.swipedRight(position)
         }
     }
 
@@ -50,7 +50,7 @@ class ItemTeamTodoTouchHelperCallback(
         var background: ColorDrawable
         val backgroundCornerOffset = itemView.width
         if (dX > 0) {
-            val text = when (teamTodoAdapter.selectedChipAdapter) {
+            val text = when (personalTodoAdapter.selectedChipAdapter) {
                 1 -> {
                     "To Do"
                 }
@@ -67,7 +67,7 @@ class ItemTeamTodoTouchHelperCallback(
             background = ColorDrawable(Color.parseColor("#7B61FF"))
             drawTextAndBackground(c, itemView, background, text, dX, backgroundCornerOffset)
         } else if (dX < 0) {
-            val text = when (teamTodoAdapter.selectedChipAdapter) {
+            val text = when (personalTodoAdapter.selectedChipAdapter) {
                 1 -> {
                     "Done"
                 }

@@ -1,9 +1,11 @@
 package com.red_velvet_cake.dailytodo.ui.login
 
-import com.red_velvet_cake.dailytodo.data.model.LoginResponse
-import okio.IOException
-
 interface LoginView {
-    fun onLoginSuccess(loginResponse: LoginResponse)
-    fun onLoginFailure(exception: IOException)
+
+    fun hideLoadingState()
+    fun showLoginFailedMessage(errorMessage: String)
+    fun showLoadingState()
+    fun showUsernameError(show: Boolean)
+    fun showPasswordError(show: Boolean)
+    fun navigateToHome()
 }

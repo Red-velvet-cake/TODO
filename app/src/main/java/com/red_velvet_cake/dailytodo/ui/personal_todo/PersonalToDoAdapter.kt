@@ -1,24 +1,24 @@
-package com.red_velvet_cake.dailytodo.ui.team_todo
+package com.red_velvet_cake.dailytodo.ui.personal_todo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
-import com.red_velvet_cake.dailytodo.databinding.LayoutTeamTodoItemBinding
+import com.red_velvet_cake.dailytodo.databinding.LayoutPersonalTodoItemBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseAdapter
 
-class TeamToDoAdapter(
+class PersonalToDoAdapter(
     private val onUpdatedStatus: (String, Int) -> Unit
 ) :
-    BaseAdapter<TeamTodo, LayoutTeamTodoItemBinding>() {
+    BaseAdapter<PersonalTodo, LayoutPersonalTodoItemBinding>() {
 
     var selectedChipAdapter = -1
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> LayoutTeamTodoItemBinding =
-        LayoutTeamTodoItemBinding::inflate
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> LayoutPersonalTodoItemBinding =
+        LayoutPersonalTodoItemBinding::inflate
 
-    override fun bindItem(binding: LayoutTeamTodoItemBinding, item: TeamTodo) {
+    override fun bindItem(binding: LayoutPersonalTodoItemBinding, item: PersonalTodo) {
         val (date, time) = extractDateAndTime(item.creationTime)
         with(binding) {
-            textviewTodoAssigneeName.text = item.assignee.toString()
             todoTitleTextview.text = item.title
             todoDescriptionTextview.text = item.description
             textviewTodoCreationDate.text = date
