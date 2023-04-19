@@ -94,12 +94,12 @@
         app:layout_constraintTop_toBottomOf="@id/text_input_layout_confirm_password" />
 
     <TextView
-        android:id="@+id/text_view_dont_have_account"
+        android:id="@+id/text_view_already_have_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_32dp"
         android:fontFamily="@font/poppins_semibold"
-        android:text="@string/have_account"
+        android:text="@string/already_have_account"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/_12sp"
         app:layout_constraintEnd_toStartOf="@+id/text_view_login"
@@ -119,7 +119,7 @@
         android:textColor="@color/primary"
         android:textSize="@dimen/_12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_view_dont_have_account"
+        app:layout_constraintStart_toEndOf="@+id/text_view_already_have_account"
         app:layout_constraintTop_toBottomOf="@id/button_register" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

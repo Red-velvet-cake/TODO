@@ -56,5 +56,6 @@
     <string name="update_todo_success">Todo updated successfully</string>
     <string name="todo_update_failed">Todo update failed</string>
     <string name="update_failed">Update failed</string>
+    <string name="already_have_account">Already have an account?</string>
 
 </resources>
