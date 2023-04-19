@@ -12,22 +12,22 @@ class RegisterPresenter(
 ) {
 
     private val todoService: TodoService = TodoServiceImpl()
+    private var username: String = ""
+    private var password: String = ""
 
     private fun registerAccount(username: String, password: String, teamId: String) {
+        this.username = username
+        this.password = password
         todoService.registerAccount(
             username,
             password,
             teamId,
-            { response -> onRegisterAccountSuccess(response, username, password) },
+            ::onRegisterAccountSuccess,
             ::onRegisterAccountFailure
         )
     }
 
-    private fun onRegisterAccountSuccess(
-        registerAccountResponse: RegisterAccountResponse,
-        username: String,
-        password: String
-    ) {
+    private fun onRegisterAccountSuccess(registerAccountResponse: RegisterAccountResponse) {
         view.enableRegisterButton()
         if (registerAccountResponse.isSuccess) {
             view.showRegisterSuccessMessage()
