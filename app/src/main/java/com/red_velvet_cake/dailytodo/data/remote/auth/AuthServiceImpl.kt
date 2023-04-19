@@ -1,18 +1,15 @@
 package com.red_velvet_cake.dailytodo.data.remote.auth
 
+
 import com.google.gson.Gson
+import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.FormBody
-import okhttp3.HttpUrl
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 class AuthServiceImpl : AuthService {
     private val gson = Gson()
@@ -24,7 +21,44 @@ class AuthServiceImpl : AuthService {
     private val client = OkHttpClient()
         .newBuilder()
         .addInterceptor(loggingInterceptor)
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
         .build()
+
+    override fun loginAccount(
+        username: String,
+        password: String,
+        onSuccess: (response: LoginResponse) -> Unit,
+        onFailure: (exception: IOException) -> Unit
+    ) {
+        val url = HttpUrl.Builder()
+            .scheme(SCHEME)
+            .host(HOST)
+            .addPathSegment(PATH_LOGIN)
+            .build()
+
+        val authHeaderValue = Credentials.basic(username, password)
+        val request =
+            Request
+                .Builder()
+                .url(url)
+                .header(HEADER_AUTHORIZATION, authHeaderValue)
+                .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                onFailure(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.body?.string()?.let { responseBody ->
+                    val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
+                    onSuccess(loginResponse)
+                }
+            }
+        })
+    }
 
     override fun registerAccount(
         username: String,

@@ -30,32 +30,7 @@ class ApiServiceImpl : ApiService {
         .build()
 
 
-//    override fun loginUser(
-//        username: String,
-//        password: String,
-//        onLoginUserSuccess: (loginResponse: LoginResponse) -> Unit,
-//        onLoginUserFailure: (exception: IOException) -> Unit
-//    ) {
-//        val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(PATH_LOGIN).build()
-//        val credentials = "${username}:${password}"
-//        val encodedCredentials = Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
-//        val authHeaderValue = "Basic $encodedCredentials"
-//        val request =
-//            Request.Builder().url(url).header(HEADER_AUTHORIZATION, authHeaderValue).build()
-//
-//        authOkHttpClient.newCall(request).enqueue(object : Callback {
-//            override fun onFailure(call: Call, e: IOException) {
-//                onLoginUserFailure(e)
-//            }
-//
-//            override fun onResponse(call: Call, response: Response) {
-//                response.body?.string()?.let { responseBody ->
-//                    val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
-//                    onLoginUserSuccess(loginResponse)
-//                }
-//            }
-//        })
-//    }
+
 
     override fun createTeamTodo(
         title: String,
