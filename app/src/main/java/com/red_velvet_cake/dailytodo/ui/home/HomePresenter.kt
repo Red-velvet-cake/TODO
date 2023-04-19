@@ -30,6 +30,14 @@ class HomePresenter(val view: IHomeView) {
         view.navigateToPersonalTodoDetails(personalTodo)
     }
 
+    fun navigateToAllTeamTodos() {
+        view.navigateToAllTeamTodos()
+    }
+
+    fun navigateToAllPersonalTodos() {
+        view.navigateToAllPersonalTodos()
+    }
+
     private fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
         view.showPersonalTodos(getAllPersonalTodosResponse)
     }

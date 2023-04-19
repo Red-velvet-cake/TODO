@@ -9,6 +9,9 @@ import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.ui.team_todo_details.TeamTodoDetailsFragment
+import com.red_velvet_cake.dailytodo.utils.navigateBack
+import com.red_velvet_cake.dailytodo.utils.navigateTo
 
 class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
 
@@ -41,6 +44,10 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
         binding.chipInProgress.setOnClickListener {
             setChipSelected(CHIP_IN_PROGRESS_VALUE, binding.chipInProgress)
         }
+
+        binding.appBar.setNavigationOnClickListener {
+            requireActivity().navigateBack()
+        }
     }
 
     private fun initializePresenter() {
@@ -50,7 +57,7 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
 
 
     private fun initializeAdapter() {
-        teamToDoAdapter = TeamToDoAdapter(::onUpdateStatus)
+        teamToDoAdapter = TeamToDoAdapter(::onUpdateStatus, ::onTodoClicked)
     }
 
     private fun onUpdateStatus(todoId: String, status: Int) {
@@ -84,6 +91,10 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
 
     }
 
+    override fun navigateToTodoDetails(todo: TeamTodo) {
+        requireActivity().navigateTo(TeamTodoDetailsFragment.newInstance(todo))
+    }
+
     override fun showTodoList(todoList: List<TeamTodo>) {
         val itemTouchHelperCallback = ItemTeamTodoTouchHelperCallback(teamToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
@@ -110,10 +121,16 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
         chipToSelect.setChipBackgroundColorResource(R.color.chip_background_color)
     }
 
+    private fun onTodoClicked(todo: TeamTodo) {
+        teamTodoPresenter.navigateToTodoDetails(todo)
+    }
+
     companion object {
         private const val CHIP_TODO_VALUE = 0
         private const val CHIP_IN_PROGRESS_VALUE = 1
         private const val CHIP_DONE_VALUE = 2
+
+        fun newInstance() = TeamTodoFragment()
     }
 }
 

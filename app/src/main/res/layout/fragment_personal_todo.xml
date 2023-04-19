@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_left"
-            app:title="@string/team" />
+            app:title="@string/personal" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.chip.ChipGroup

@@ -1,5 +1,6 @@
 package com.red_velvet_cake.dailytodo.ui.team_todo
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
@@ -7,9 +8,9 @@ import com.red_velvet_cake.dailytodo.databinding.LayoutTeamTodoItemBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseAdapter
 
 class TeamToDoAdapter(
-    private val onUpdatedStatus: (String, Int) -> Unit
-) :
-    BaseAdapter<TeamTodo, LayoutTeamTodoItemBinding>() {
+    private val onUpdatedStatus: (String, Int) -> Unit,
+    private val onClickTodo: (TeamTodo) -> Unit
+) : BaseAdapter<TeamTodo, LayoutTeamTodoItemBinding>() {
 
     var selectedChipAdapter = -1
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> LayoutTeamTodoItemBinding =
@@ -23,6 +24,10 @@ class TeamToDoAdapter(
             todoDescriptionTextview.text = item.description
             textviewTodoCreationDate.text = date
             textviewTodoCreationTime.text = time
+            root.setOnClickListener {
+                Log.d("sadeq", "clicked")
+                onClickTodo(item)
+            }
         }
     }
 

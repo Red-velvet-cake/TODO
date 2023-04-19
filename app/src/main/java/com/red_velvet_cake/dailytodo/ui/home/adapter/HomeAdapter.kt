@@ -23,10 +23,11 @@ class HomeAdapter(
     private val list: List<HomeItems<Any>>,
     private val onClickTeamTodo: (TeamTodo) -> Unit,
     private val onClickPersonalTodo: (PersonalTodo) -> Unit,
+    private val onClickAllTeamTodos: () -> Unit,
+    private val onClickAllPersonalTodos: () -> Unit,
     private var teamPendingTodosCount: Int = 0,
     private var personalPendingTodosCount: Int = 0
-) :
-    RecyclerView.Adapter<HomeAdapter.BaseHomeHolder>() {
+) : RecyclerView.Adapter<HomeAdapter.BaseHomeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHomeHolder {
         return when (viewType) {
@@ -132,6 +133,13 @@ class HomeAdapter(
         private val binding = ItemTodosSectionTitleBinding.bind(viewItem)
         override fun bind(item: HomeItems<Any>) {
             binding.textViewTodoType.text = item.data as String
+            binding.textViewShowViewAll.setOnClickListener {
+                if (item.data == "Personal Task") {
+                    onClickAllPersonalTodos()
+                } else {
+                    onClickAllTeamTodos()
+                }
+            }
         }
 
     }
@@ -154,6 +162,7 @@ class HomeAdapter(
             val statistics = item.data as Statistics
             val adapter = GetAllTeamTodosAdapter(statistics.team, onClickTeamTodo)
             binding.recyclerViewTeamTodos.adapter = adapter
+
         }
 
     }

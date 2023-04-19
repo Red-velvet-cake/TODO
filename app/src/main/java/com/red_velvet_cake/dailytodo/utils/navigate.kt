@@ -10,26 +10,36 @@ enum class NavigationState {
     REMOVE,
 }
 
-
-fun FragmentActivity.navigateTo(to: Fragment) {
-    changeNavigation(this, NavigationState.ADD, to)
+fun FragmentActivity.navigateTo(
+    to: Fragment,
+    containerId: Int = R.id.fragment_container_view_home
+) {
+    changeNavigation(this, NavigationState.ADD, to, containerId)
 }
 
-fun FragmentActivity.navigateExclusive(to: Fragment) {
-    changeNavigation(this, NavigationState.REPLACE, to)
+fun FragmentActivity.navigateExclusive(
+    to: Fragment,
+    containerId: Int = R.id.fragment_container_view_home
+) {
+    changeNavigation(this, NavigationState.REPLACE, to, containerId)
 }
 
-fun FragmentActivity.navigateBack() {
-    changeNavigation(this, NavigationState.REMOVE, null)
+fun FragmentActivity.navigateBack(containerId: Int = R.id.fragment_container_view_home) {
+    changeNavigation(this, NavigationState.REMOVE, null, containerId)
 }
 
-private fun changeNavigation(activity: FragmentActivity, state: NavigationState, to: Fragment?) {
+private fun changeNavigation(
+    activity: FragmentActivity,
+    state: NavigationState,
+    to: Fragment?,
+    containerId: Int
+) {
     val fragmentManager = activity.supportFragmentManager
     val transaction = fragmentManager.beginTransaction()
 
     when (state) {
         NavigationState.ADD -> {
-            transaction.add(R.id.fragment_container_view_auth, to!!)
+            transaction.add(containerId, to!!)
             transaction.addToBackStack("fragment")
         }
 
@@ -38,7 +48,7 @@ private fun changeNavigation(activity: FragmentActivity, state: NavigationState,
         }
 
         NavigationState.REPLACE -> {
-            transaction.replace(R.id.fragment_container_view_auth, to!!)
+            transaction.replace(containerId, to!!)
         }
     }
     transaction.commit()

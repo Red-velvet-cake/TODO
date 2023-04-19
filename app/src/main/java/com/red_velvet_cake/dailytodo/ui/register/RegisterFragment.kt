@@ -1,12 +1,15 @@
 package com.red_velvet_cake.dailytodo.ui.register
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import com.red_velvet_cake.dailytodo.BuildConfig
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.databinding.FragmentRegisterBinding
+import com.red_velvet_cake.dailytodo.ui.activity.HomeActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.utils.navigateBack
 
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
     private val presenter = RegisterPresenter(this)
@@ -39,9 +42,18 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
         }
     }
 
-    override fun navigateToHome() {}
+    override fun navigateToHome() {
+        runOnUiThread {
+            val intent = Intent(context, HomeActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+    }
 
-    override fun navigateToLogin() {}
+    override fun navigateToLogin() {
+        requireActivity().navigateBack(R.id.fragment_container_view_auth)
+    }
+
     override fun showUsernameValidationError() {
         binding.editTextUsername.error = getString(R.string.username_validation_error)
     }
@@ -80,7 +92,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
 
     private fun setupLoginButtonClickListener() {
         binding.textViewLogin.setOnClickListener {
-            navigateToLogin()
+            presenter.navigateToLogin()
         }
     }
 
