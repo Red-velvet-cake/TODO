@@ -6,7 +6,14 @@ import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
-import okhttp3.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Credentials
+import okhttp3.FormBody
+import okhttp3.HttpUrl
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -39,12 +46,11 @@ class AuthServiceImpl : AuthService {
             .build()
 
         val authHeaderValue = Credentials.basic(username, password)
-        val request =
-            Request
-                .Builder()
-                .url(url)
-                .header(HEADER_AUTHORIZATION, authHeaderValue)
-                .build()
+
+        val request = Request.Builder()
+            .url(url)
+            .header(HEADER_AUTHORIZATION, authHeaderValue)
+            .build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
