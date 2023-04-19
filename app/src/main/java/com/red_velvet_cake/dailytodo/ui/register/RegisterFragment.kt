@@ -1,11 +1,13 @@
 package com.red_velvet_cake.dailytodo.ui.register
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import com.red_velvet_cake.dailytodo.BuildConfig
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.databinding.FragmentRegisterBinding
+import com.red_velvet_cake.dailytodo.ui.activity.DashboardActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 import com.red_velvet_cake.dailytodo.utils.navigateBack
 
@@ -40,7 +42,13 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
         }
     }
 
-    override fun navigateToHome() {}
+    override fun navigateToHome() {
+        runOnUiThread {
+            val intent = Intent(context, DashboardActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+    }
 
     override fun navigateToLogin() {
         requireActivity().navigateBack(R.id.fragment_container_view_auth)

@@ -1,5 +1,6 @@
 package com.red_velvet_cake.dailytodo.ui.login
 
+import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 
@@ -19,7 +20,8 @@ class LoginPresenter(private val view: LoginView) {
     private fun onSuccess(loginResponse: LoginResponse) {
         view.hideLoadingState()
         if (loginResponse.isSuccess) {
-            navigateToHome()
+            SharedPrefs.token = loginResponse.loginResponseBody.token
+            view.navigateToHome()
         } else {
             view.showLoginFailedMessage(loginResponse.message.toString())
         }
@@ -28,10 +30,6 @@ class LoginPresenter(private val view: LoginView) {
     private fun onFailure(exception: Exception) {
         view.hideLoadingState()
         view.showLoginFailedMessage(exception.message.toString())
-    }
-
-    private fun navigateToHome() {
-        view.navigateToHome()
     }
 
     fun validateInputFields(username: String, password: String): Boolean {

@@ -1,13 +1,14 @@
 package com.red_velvet_cake.dailytodo.ui.login
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.databinding.FragmentLoginBinding
+import com.red_velvet_cake.dailytodo.ui.activity.DashboardActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
-import com.red_velvet_cake.dailytodo.ui.home.HomeFragment
 import com.red_velvet_cake.dailytodo.ui.register.RegisterFragment
 import com.red_velvet_cake.dailytodo.utils.navigateTo
 
@@ -26,7 +27,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
     }
 
     override fun hideLoadingState() {
-        binding.loginProgressBar.visibility = View.GONE
+        runOnUiThread {
+            binding.loginProgressBar.visibility = View.GONE
+        }
     }
 
     override fun showLoginFailedMessage(errorMessage: String) {
@@ -46,7 +49,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
     }
 
     override fun navigateToHome() {
-        requireActivity().navigateTo(HomeFragment())
+        runOnUiThread {
+            val intent = Intent(context, DashboardActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
     }
 
     override fun navigateToRegister() {
@@ -70,5 +77,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
         binding.textViewSignup.setOnClickListener {
             loginPresenter.navigateToRegister()
         }
+    }
+
+    private fun runOnUiThread(runnable: Runnable) {
+        requireActivity().runOnUiThread(runnable)
     }
 }
