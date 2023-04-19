@@ -1,20 +1,18 @@
 package com.red_velvet_cake.dailytodo.ui.personal_todo
 
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
-import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.api.ApiServiceImpl
 import java.io.IOException
 
 class PersonalTodoPresenter(private val view: PersonalTodoView) {
 
-    private val todoServiceImpl = TodoServiceImpl()
+    private val apiService = ApiServiceImpl()
 
     fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
     ) {
-        todoServiceImpl.updatePersonalTodoStatus(
+        apiService.updatePersonalTodoStatus(
             todoId,
             newTodoStatus,
             ::onUpdatePersonalTodoStatusFailure
@@ -22,7 +20,7 @@ class PersonalTodoPresenter(private val view: PersonalTodoView) {
     }
 
     fun getAllTeamTodos() {
-        todoServiceImpl.getAllPersonalTodos(
+        apiService.getAllPersonalTodos(
             ::onGetAllPersonalTodosSuccess,
             ::onGetAllTeamTodosFailure
         )

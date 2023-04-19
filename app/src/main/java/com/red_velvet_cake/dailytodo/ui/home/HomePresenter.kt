@@ -4,19 +4,20 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
-import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.api.ApiServiceImpl
 import com.red_velvet_cake.dailytodo.ui.home.adapter.IHomeView
 import java.io.IOException
 
 class HomePresenter(val view: IHomeView) {
-    private val todoServiceImpl = TodoServiceImpl()
+    private val apiService = ApiServiceImpl()
+
     fun getAllTodos() {
-        todoServiceImpl.getAllPersonalTodos(
+        apiService.getAllPersonalTodos(
             ::onGetAllPersonalTodosSuccess,
             ::onGetAllPersonalTodosFailure
         )
 
-        todoServiceImpl.getAllTeamTodos(
+        apiService.getAllTeamTodos(
             ::onGetAllTeamTodosSuccess,
             ::onGetAllTeamTodosFailure
         )

@@ -1,25 +1,25 @@
-package com.red_velvet_cake.dailytodo.data.remote
+package com.red_velvet_cake.dailytodo.data.remote.api
 
 import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
-class TodoServiceInterceptor : Interceptor {
+class ApiServiceInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
         val token = SharedPrefs.token
-        val authHeaderValue = "Bearer $token"
+        val authHeaderValue = "$BEARER $token"
         val newRequest: Request = request.newBuilder()
             .addHeader(HEADER_AUTHORIZATION, authHeaderValue)
             .build()
 
         return chain.proceed(newRequest)
-
     }
 
     companion object {
         private const val HEADER_AUTHORIZATION = "Authorization"
+        private const val BEARER = "Bearer"
     }
 }

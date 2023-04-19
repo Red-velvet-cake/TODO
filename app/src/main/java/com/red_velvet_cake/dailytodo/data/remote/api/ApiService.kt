@@ -1,14 +1,12 @@
-package com.red_velvet_cake.dailytodo.data.remote
+package com.red_velvet_cake.dailytodo.data.remote.api
 
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.LoginResponse
-import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import okio.IOException
 
-interface TodoService {
+interface ApiService {
 
     fun createPersonalTodo(
         title: String,
@@ -23,13 +21,6 @@ interface TodoService {
         assignee: String,
         onCreateTeamTodoSuccess: (CreateTodoTeamResponse) -> Unit,
         onCreateTeamTodoFailure: (IOException) -> Unit
-    )
-
-    fun loginUser(
-        username: String,
-        password: String,
-        onLoginUserSuccess: (loginResponse: LoginResponse) -> Unit,
-        onLoginUserFailure: (exception: IOException) -> Unit
     )
 
     fun updatePersonalTodoStatus(
@@ -52,14 +43,6 @@ interface TodoService {
     fun getAllTeamTodos(
         onGetAllTeamTodosSuccess: (getAllTeamTodosResponse: GetAllTeamTodosResponse) -> Unit,
         onGetAllTeamTodosFailure: (exception: IOException) -> Unit,
-    )
-
-    fun registerAccount(
-        userName: String,
-        password: String,
-        teamId: String,
-        onRegisterAccountSuccess: (registerAccountResponse: RegisterAccountResponse) -> Unit,
-        onRegisterAccountFailure: (e: IOException) -> Unit
     )
 
     fun checkUserLoggedIn(
