@@ -12,13 +12,13 @@ class TeamTodoStatusPresenter(
 
     fun setTodoStatus(status: TodoStatus, todoId: String) {
         when (status) {
-            TodoStatus.Todo -> updateTeamTODOStatus(Constants.TODO, todoId)
-            TodoStatus.InProgress -> updateTeamTODOStatus(Constants.IN_PROGRESS, todoId)
-            TodoStatus.Done -> updateTeamTODOStatus(Constants.DONE, todoId)
+            TodoStatus.Todo -> updateTeamTodoStatus(Constants.TODO, todoId)
+            TodoStatus.InProgress -> updateTeamTodoStatus(Constants.IN_PROGRESS, todoId)
+            TodoStatus.Done -> updateTeamTodoStatus(Constants.DONE, todoId)
         }
     }
 
-    private fun updateTeamTODOStatus(
+    private fun updateTeamTodoStatus(
         newTodoStatus: Int,
         todoId: String,
     ) {
