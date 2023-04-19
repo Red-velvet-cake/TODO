@@ -3,7 +3,6 @@ package com.red_velvet_cake.dailytodo.ui.createTodo
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
-import okio.IOException
 
 class CreateTodoPresenter(val view: CreateTodoView) {
 
@@ -56,17 +55,15 @@ class CreateTodoPresenter(val view: CreateTodoView) {
         }
     }
 
-    private fun onCreateTeamTodoFailure(e: IOException) {
-        view.onCreateTeamTodoFailure(e)
+    private fun onCreateTeamTodoFailure(errorMessage: String) {
+        view.onCreateTeamTodoFailure(errorMessage)
     }
 
     private fun onCreatePersonalTodoSuccess(createTodoPersonalResponse: CreateTodoPersonalResponse) {
         view.onCreatePersonalTodoSuccess(createTodoPersonalResponse)
     }
 
-    private fun onCreatePersonalTodoFailure(e: IOException) {
-        view.onCreateTeamTodoFailure(e)
-
+    private fun onCreatePersonalTodoFailure(errorMessage: String) {
+        view.onCreateTeamTodoFailure(errorMessage)
     }
-
 }

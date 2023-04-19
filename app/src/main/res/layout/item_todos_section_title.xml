@@ -20,7 +20,7 @@
         tools:text="Personal Tasks" />
 
     <TextView
-        android:id="@+id/text_view_show_view_all"
+        android:id="@+id/text_view_show_show_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16dp"

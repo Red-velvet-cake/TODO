@@ -6,7 +6,6 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import okio.IOException
 
 interface TodoService {
 
@@ -14,7 +13,7 @@ interface TodoService {
         title: String,
         description: String,
         onCreatePersonalTodoSuccess: (CreateTodoPersonalResponse) -> Unit,
-        onCreatePersonalTodoFailure: (e: IOException) -> Unit
+        onCreatePersonalTodoFailure: (errorMessage: String) -> Unit
     )
 
     fun createTeamTodo(
@@ -22,36 +21,36 @@ interface TodoService {
         description: String,
         assignee: String,
         onCreateTeamTodoSuccess: (CreateTodoTeamResponse) -> Unit,
-        onCreateTeamTodoFailure: (IOException) -> Unit
+        onCreateTeamTodoFailure: (errorMessage: String) -> Unit
     )
 
     fun loginUser(
         username: String,
         password: String,
         onLoginUserSuccess: (loginResponse: LoginResponse) -> Unit,
-        onLoginUserFailure: (exception: IOException) -> Unit
+        onLoginUserFailure: (errorMessage: String) -> Unit
     )
 
     fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
+        onUpdatePersonalTodoStatusFailure: (errorMessage: String) -> Unit
     )
 
     fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
+        onUpdateTeamTodoStatusFailure: (errorMessage: String) -> Unit
     )
 
     fun getAllPersonalTodos(
         onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
-        onGetAllPersonalTodoFailure: (e: IOException) -> Unit
+        onGetAllPersonalTodoFailure: (errorMessage: String) -> Unit
     )
 
     fun getAllTeamTodos(
         onGetAllTeamTodosSuccess: (getAllTeamTodosResponse: GetAllTeamTodosResponse) -> Unit,
-        onGetAllTeamTodosFailure: (exception: IOException) -> Unit,
+        onGetAllTeamTodosFailure: (errorMessage: String) -> Unit,
     )
 
     fun registerAccount(
@@ -59,10 +58,6 @@ interface TodoService {
         password: String,
         teamId: String,
         onRegisterAccountSuccess: (registerAccountResponse: RegisterAccountResponse) -> Unit,
-        onRegisterAccountFailure: (e: IOException) -> Unit
-    )
-
-    fun checkUserLoggedIn(
-        onUserNotLoggedIn: () -> Unit
+        onRegisterAccountFailure: (errorMessage: String) -> Unit
     )
 }

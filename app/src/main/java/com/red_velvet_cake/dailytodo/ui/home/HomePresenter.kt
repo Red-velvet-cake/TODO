@@ -5,10 +5,9 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
-import com.red_velvet_cake.dailytodo.ui.home.adapter.IHomeView
-import java.io.IOException
+import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeView
 
-class HomePresenter(val view: IHomeView) {
+class HomePresenter(val view: HomeView) {
     private val todoServiceImpl = TodoServiceImpl()
     fun getAllTodos() {
         todoServiceImpl.getAllPersonalTodos(
@@ -42,17 +41,18 @@ class HomePresenter(val view: IHomeView) {
         view.showPersonalTodos(getAllPersonalTodosResponse)
     }
 
-    private fun onGetAllPersonalTodosFailure(exception: IOException) {
-        view.showErrorOnPersonalTodoFailure(exception)
+    private fun onGetAllPersonalTodosFailure(errorMessage: String) {
+        view.showErrorOnPersonalTodoFailure(errorMessage)
     }
 
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
         view.showTeamTodos(getAllTeamTodosResponse)
     }
 
-    private fun onGetAllTeamTodosFailure(exception: IOException) {
-        view.showErrorOnTeamTodoFailure(exception)
+    private fun onGetAllTeamTodosFailure(errorMessage: String) {
+        if (errorMessage == "401") {
+            view.navigateToLogin()
+        }
+        view.showErrorOnTeamTodoFailure(errorMessage)
     }
-
-
 }

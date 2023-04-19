@@ -27,9 +27,9 @@ class LoginPresenter(private val view: LoginView) {
         }
     }
 
-    private fun onFailure(exception: Exception) {
+    private fun onFailure(errorMessage: String) {
         view.hideLoadingState()
-        view.showLoginFailedMessage(exception.message.toString())
+        view.showLoginFailedMessage(errorMessage)
     }
 
     fun validateInputFields(username: String, password: String): Boolean {

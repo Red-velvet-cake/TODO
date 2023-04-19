@@ -20,7 +20,6 @@ class GetAllPersonalTodosAdapter(
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.item_personal_todo, parent, false
         )
-
         return GetAllPersonalTodosHolder(view)
     }
 

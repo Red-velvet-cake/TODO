@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
 import com.red_velvet_cake.dailytodo.databinding.FragmentCreateTeamTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
-import okio.IOException
 
 class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), CreateTodoView {
     private val presenter = CreateTodoPresenter(this)
@@ -17,7 +16,7 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
     override fun addCallBacks() {
     }
 
-    override fun onCreateTeamTodoFailure(e: IOException) {
+    override fun onCreateTeamTodoFailure(errorMessage: String) {
         TODO("Not yet implemented")
     }
 
@@ -25,7 +24,7 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
         TODO("Not yet implemented")
     }
 
-    override fun onCreatePersonalTodoFailure(e: IOException) {
+    override fun onCreatePersonalTodoFailure(errorMessage: String) {
         TODO("Not yet implemented")
     }
 

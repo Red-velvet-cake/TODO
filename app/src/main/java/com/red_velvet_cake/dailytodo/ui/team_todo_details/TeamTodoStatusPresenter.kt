@@ -3,7 +3,6 @@ package com.red_velvet_cake.dailytodo.ui.team_todo_details
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.utils.Constants
 import com.red_velvet_cake.dailytodo.utils.TodoStatus
-import java.io.IOException
 
 class TeamTodoStatusPresenter(
     private val view: TeamTodoDetailsView,
@@ -29,7 +28,7 @@ class TeamTodoStatusPresenter(
         )
     }
 
-    private fun onUpdateTeamTodoStatusFailure(exception: IOException) {
-        view.showTodoStatusUpdatedFailure(exception.message.toString())
+    private fun onUpdateTeamTodoStatusFailure(errorMessage: String) {
+        view.showTodoStatusUpdatedFailure(errorMessage)
     }
 }

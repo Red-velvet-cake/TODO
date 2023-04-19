@@ -1,21 +1,20 @@
 package com.red_velvet_cake.dailytodo.ui.createTodo
 
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
-import okio.IOException
 
 interface CreateTodoView {
 
-    fun onCreateTeamTodoFailure(e: IOException)
+    fun onCreateTeamTodoFailure(errorMessage: String)
 
     fun onCreatePersonalTodoSuccess(createTodoPersonalResponse: CreateTodoPersonalResponse)
 
-    fun onCreatePersonalTodoFailure(e: IOException)
+    fun onCreatePersonalTodoFailure(errorMessage: String)
 
     fun showCreateSuccessMessage()
 
     fun enableCreateButton()
 
-    fun showCreateFailedMessage(message: String)
+    fun showCreateFailedMessage(errorMessage: String)
 
 
 }

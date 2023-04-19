@@ -12,7 +12,7 @@
         android:layout_marginStart="@dimen/_16dp"
         android:layout_marginTop="@dimen/_16dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="@string/team_task"
+        android:text="@string/personal_task"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/_16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +20,7 @@
         tools:text="Personal Tasks" />
 
     <TextView
-        android:id="@+id/text_view_show_view_all"
+        android:id="@+id/text_view_show_show_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16dp"
@@ -34,7 +34,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_team_todos"
+        android:id="@+id/recycler_view_personal_todos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
@@ -43,6 +43,6 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_todo_section_title"
-        tools:listitem="@layout/item_team_todo" />
+        tools:listitem="@layout/item_personal_todo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

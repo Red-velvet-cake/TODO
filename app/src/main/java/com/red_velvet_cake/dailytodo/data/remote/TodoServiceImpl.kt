@@ -43,7 +43,7 @@ class TodoServiceImpl : TodoService {
         username: String,
         password: String,
         onLoginUserSuccess: (loginResponse: LoginResponse) -> Unit,
-        onLoginUserFailure: (exception: IOException) -> Unit
+        onLoginUserFailure: (errorMessage: String) -> Unit
     ) {
         val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(PATH_LOGIN).build()
         val credentials = "${username}:${password}"
@@ -54,7 +54,7 @@ class TodoServiceImpl : TodoService {
 
         authOkHttpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onLoginUserFailure(e)
+                onLoginUserFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -71,7 +71,7 @@ class TodoServiceImpl : TodoService {
         description: String,
         assignee: String,
         onCreateTeamTodoSuccess: (CreateTodoTeamResponse) -> Unit,
-        onCreateTeamTodoFailure: (IOException) -> Unit
+        onCreateTeamTodoFailure: (errorMessage: String) -> Unit
     ) {
         val requestBody = FormBody.Builder().add(TITLE, title).add(DESCRIPTION, description)
             .add(ASSIGNEE, assignee).build()
@@ -83,7 +83,7 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onCreateTeamTodoFailure(e)
+                onCreateTeamTodoFailure(e.message.toString())
 
             }
 
@@ -100,7 +100,7 @@ class TodoServiceImpl : TodoService {
         title: String,
         description: String,
         onCreatePersonalTodoSuccess: (CreateTodoPersonalResponse) -> Unit,
-        onCreatePersonalTodoFailure: (e: IOException) -> Unit
+        onCreatePersonalTodoFailure: (errorMessage: String) -> Unit
     ) {
 
         val requestBody = FormBody.Builder().add(TITLE, title).add(DESCRIPTION, description).build()
@@ -112,7 +112,7 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onCreatePersonalTodoFailure(e)
+                onCreatePersonalTodoFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -127,7 +127,7 @@ class TodoServiceImpl : TodoService {
 
     override fun getAllPersonalTodos(
         onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
-        onGetAllPersonalTodoFailure: (e: IOException) -> Unit
+        onGetAllPersonalTodoFailure: (errorMessage: String) -> Unit
     ) {
         val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(TO_DO_PATH_SEGMENT)
             .addPathSegment(PATH_PERSONAL).build()
@@ -136,10 +136,14 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onGetAllPersonalTodoFailure(e)
+                onGetAllPersonalTodoFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
+                if (response.code == 401) {
+                    onGetAllPersonalTodoFailure(response.message)
+                    return
+                }
                 response.body?.string().let {
                     val result = gson.fromJson(it, GetAllPersonalTodosResponse::class.java)
                     onGetAllPersonalTodosSuccess(result)
@@ -151,7 +155,7 @@ class TodoServiceImpl : TodoService {
     override fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
+        onUpdateTeamTodoStatusFailure: (errorMessage: String) -> Unit
     ) {
 
         val requestBody =
@@ -165,7 +169,7 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onUpdateTeamTodoStatusFailure(e)
+                onUpdateTeamTodoStatusFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -178,7 +182,7 @@ class TodoServiceImpl : TodoService {
     override fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
+        onUpdatePersonalTodoStatusFailure: (errorMessage: String) -> Unit
     ) {
         /*
                 val requestBody =
@@ -209,7 +213,7 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onUpdatePersonalTodoStatusFailure(e)
+                onUpdatePersonalTodoStatusFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -220,7 +224,7 @@ class TodoServiceImpl : TodoService {
 
     override fun getAllTeamTodos(
         onGetAllTeamTodosSuccess: (GetAllTeamTodosResponse) -> Unit,
-        onGetAllTeamTodosFailure: (IOException) -> Unit,
+        onGetAllTeamTodosFailure: (errorMessage: String) -> Unit,
     ) {
         val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(TO_DO_PATH_SEGMENT)
             .addPathSegment(TEAM_PATH_SEGMENT).build()
@@ -229,10 +233,14 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onGetAllTeamTodosFailure(e)
+                onGetAllTeamTodosFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
+                if (response.code == 401) {
+                    onGetAllTeamTodosFailure(response.message)
+                    return
+                }
                 val result = gson.fromJson(
                     response.body?.string().toString(), GetAllTeamTodosResponse::class.java
                 )
@@ -247,7 +255,7 @@ class TodoServiceImpl : TodoService {
         password: String,
         teamId: String,
         onRegisterAccountSuccess: (registerAccountResponse: RegisterAccountResponse) -> Unit,
-        onRegisterAccountFailure: (e: IOException) -> Unit
+        onRegisterAccountFailure: (errorMessage: String) -> Unit
     ) {
         val formBody =
             FormBody.Builder()
@@ -271,7 +279,7 @@ class TodoServiceImpl : TodoService {
         authOkHttpClient.newCall(request)
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    onRegisterAccountFailure(e)
+                    onRegisterAccountFailure(e.message.toString())
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -280,31 +288,6 @@ class TodoServiceImpl : TodoService {
                     onRegisterAccountSuccess(result)
                 }
             })
-    }
-
-    override fun checkUserLoggedIn(onUserNotLoggedIn: () -> Unit) {
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(PATH_PERSONAL)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onUserNotLoggedIn()
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                if (response.code == 401) {
-                    onUserNotLoggedIn()
-                }
-            }
-        })
     }
 
     companion object {
