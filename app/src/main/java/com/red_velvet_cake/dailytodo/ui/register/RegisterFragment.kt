@@ -92,7 +92,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
 
     private fun setupLoginButtonClickListener() {
         binding.textViewLogin.setOnClickListener {
-            navigateToLogin()
+            presenter.navigateToLogin()
         }
     }
 
