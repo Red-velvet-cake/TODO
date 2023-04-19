@@ -61,4 +61,8 @@ interface TodoService {
         onRegisterAccountSuccess: (registerAccountResponse: RegisterAccountResponse) -> Unit,
         onRegisterAccountFailure: (e: IOException) -> Unit
     )
+
+    fun checkUserLoggedIn(
+        onUserNotLoggedIn: () -> Unit
+    )
 }

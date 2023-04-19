@@ -15,7 +15,7 @@
         android:theme="@style/Theme.DailyTODO"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.DashboardActivity"
+            android:name=".ui.activity.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.DailyTODO.Splash">
             <intent-filter>

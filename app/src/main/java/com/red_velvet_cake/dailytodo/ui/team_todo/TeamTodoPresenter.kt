@@ -1,6 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.team_todo
 
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import java.io.IOException
 
@@ -39,5 +40,9 @@ class TeamTodoPresenter(private val view: TeamTodoView) {
 
     private fun onGetAllTeamTodosFailure(exception: IOException) {
         view.showLoadTodosFailed()
+    }
+
+    fun navigateToTodoDetails(todo: TeamTodo) {
+        view.navigateToTodoDetails(todo)
     }
 }

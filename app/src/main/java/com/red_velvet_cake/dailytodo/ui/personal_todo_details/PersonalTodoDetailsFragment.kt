@@ -13,6 +13,7 @@ import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoDetailsBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.utils.navigateBack
 import java.io.IOException
 
 
@@ -56,6 +57,8 @@ class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         binding.imageButtonShowFilterOptions.setOnClickListener {
             popupMenu.show()
         }
+
+        binding.toolbar.setNavigationOnClickListener { requireActivity().navigateBack() }
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
@@ -94,7 +97,7 @@ class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
-    private companion object {
+    companion object {
         private const val DETAILS_PARAM = "personal todo details"
         private const val TODO_STATUS = 0
         private const val IN_PROGRESS_STATUS = 1

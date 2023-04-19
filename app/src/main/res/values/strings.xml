@@ -66,5 +66,6 @@
     <string name="_description">Description</string>
     <string name="task_description">Task description</string>
     <string name="_create">Create</string>
+    <string name="already_have_account">Already have an account?</string>
 
 </resources>

@@ -107,4 +107,8 @@ class RegisterPresenter(
         view.showLoginFailedMessage(exception.message.toString())
     }
 
+    fun navigateToLogin() {
+        view.navigateToLogin()
+    }
+
 }

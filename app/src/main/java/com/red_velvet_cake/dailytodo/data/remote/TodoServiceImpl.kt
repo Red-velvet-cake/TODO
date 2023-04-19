@@ -56,6 +56,7 @@ class TodoServiceImpl : TodoService {
             override fun onFailure(call: Call, e: IOException) {
                 onLoginUserFailure(e)
             }
+
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
@@ -177,25 +178,26 @@ class TodoServiceImpl : TodoService {
     override fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit    ) {
-/*
-        val requestBody =
-            FormBody.Builder().add(PARAM_ID, todoId).add(PARAM_STATUS, newTodoStatus.toString())
-                .build()
+        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
+    ) {
+        /*
+                val requestBody =
+                    FormBody.Builder().add(PARAM_ID, todoId).add(PARAM_STATUS, newTodoStatus.toString())
+                        .build()
 
-        val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(PATH_PERSONAL).build()
+                val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(TO_DO_PATH_SEGMENT)
+                    .addPathSegment(PATH_PERSONAL).build()
 
-        val request = Request.Builder().url(url).put(requestBody).build()
+                val request = Request.Builder().url(url).put(requestBody).build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onUpdatePersonalTodoStatusFailure(e)
-            }
+                client.newCall(request).enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        onUpdatePersonalTodoStatusFailure(e)
+                    }
 
-            override fun onResponse(call: Call, response: Response) {
-            }
-        })*/
+                    override fun onResponse(call: Call, response: Response) {
+                    }
+                })*/
         val requestBody =
             FormBody.Builder().add(PARAM_ID, todoId).add(PARAM_STATUS, newTodoStatus.toString())
                 .build()
@@ -278,6 +280,31 @@ class TodoServiceImpl : TodoService {
                     onRegisterAccountSuccess(result)
                 }
             })
+    }
+
+    override fun checkUserLoggedIn(onUserNotLoggedIn: () -> Unit) {
+        val url = HttpUrl.Builder()
+            .scheme(SCHEME)
+            .host(HOST)
+            .addPathSegment(TO_DO_PATH_SEGMENT)
+            .addPathSegment(PATH_PERSONAL)
+            .build()
+
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                onUserNotLoggedIn()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.code == 401) {
+                    onUserNotLoggedIn()
+                }
+            }
+        })
     }
 
     companion object {

@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.model.Statistics
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.ItemStatisticsTasksPersonHasDoneBinding
+import com.red_velvet_cake.dailytodo.databinding.ItemTodosSectionTitleBinding
 import com.red_velvet_cake.dailytodo.databinding.ListPersonalTodosBinding
 import com.red_velvet_cake.dailytodo.databinding.ListTeamTodosBinding
 
@@ -21,10 +23,11 @@ class HomeAdapter(
     private val list: List<HomeItems<Any>>,
     private val onClickTeamTodo: (TeamTodo) -> Unit,
     private val onClickPersonalTodo: (PersonalTodo) -> Unit,
+    private val onClickAllTeamTodos: () -> Unit,
+    private val onClickAllPersonalTodos: () -> Unit,
     private var teamPendingTodosCount: Int = 0,
     private var personalPendingTodosCount: Int = 0
-) :
-    RecyclerView.Adapter<HomeAdapter.BaseHomeHolder>() {
+) : RecyclerView.Adapter<HomeAdapter.BaseHomeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHomeHolder {
         return when (viewType) {
@@ -128,6 +131,21 @@ class HomeAdapter(
 
     }
 
+    inner class TodosSectionTitleHolder(viewItem: View) : BaseHomeHolder(viewItem) {
+        private val binding = ItemTodosSectionTitleBinding.bind(viewItem)
+        override fun bind(item: HomeItems<Any>) {
+            binding.textViewTodoType.text = item.data as String
+            binding.textViewShowViewAll.setOnClickListener {
+                if (item.data == "Personal Task") {
+                    onClickAllPersonalTodos()
+                } else {
+                    onClickAllTeamTodos()
+                }
+            }
+        }
+
+    }
+
     inner class PersonalTodosHolder(viewItem: View) : BaseHomeHolder(viewItem) {
         private val binding = ListPersonalTodosBinding.bind(viewItem)
         override fun bind(item: HomeItems<Any>) {
@@ -146,6 +164,7 @@ class HomeAdapter(
             val statistics = item.data as Statistics
             val adapter = GetAllTeamTodosAdapter(statistics.team, onClickTeamTodo)
             binding.recyclerViewTeamTodos.adapter = adapter
+
         }
 
     }

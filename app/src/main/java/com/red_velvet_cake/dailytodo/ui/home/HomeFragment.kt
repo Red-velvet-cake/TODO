@@ -13,6 +13,11 @@ import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeAdapter
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItemType
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItems
 import com.red_velvet_cake.dailytodo.ui.home.adapter.IHomeView
+import com.red_velvet_cake.dailytodo.ui.personal_todo.PersonalTodoViewFragment
+import com.red_velvet_cake.dailytodo.ui.personal_todo_details.PersonalTodoDetailsFragment
+import com.red_velvet_cake.dailytodo.ui.team_todo.TeamTodoFragment
+import com.red_velvet_cake.dailytodo.ui.team_todo_details.TeamTodoDetailsFragment
+import com.red_velvet_cake.dailytodo.utils.navigateTo
 import java.io.IOException
 
 
@@ -26,7 +31,13 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
 
 
     override fun setUp() {
-        adapter = HomeAdapter(lists, ::onClickTeamTodo, ::onClickPersonalTodo)
+        adapter = HomeAdapter(
+            lists,
+            ::onClickTeamTodo,
+            ::onClickPersonalTodo,
+            ::onClickAllTeamTodos,
+            ::onClickAllPersonalTodos
+        )
         homePresenter.getAllTodos()
         binding.recyclerViewHome.adapter = adapter
 
@@ -41,11 +52,19 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
     }
 
     private fun onClickTeamTodo(teamTodo: TeamTodo) {
-
+        homePresenter.navigateToTeamTodoDetails(teamTodo)
     }
 
     private fun onClickPersonalTodo(personalTodo: PersonalTodo) {
         homePresenter.navigateToPersonalTodoDetails(personalTodo)
+    }
+
+    private fun onClickAllTeamTodos() {
+        homePresenter.navigateToAllTeamTodos()
+    }
+
+    private fun onClickAllPersonalTodos() {
+        homePresenter.navigateToAllPersonalTodos()
     }
 
     override fun addCallBacks() {
@@ -89,10 +108,22 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
     }
 
     override fun navigateToTeamTodoDetails(teamTodo: TeamTodo) {
-//        requireActivity().navigateTo()
+        requireActivity().navigateTo(
+            TeamTodoDetailsFragment.newInstance(teamTodo),
+        )
     }
 
     override fun navigateToPersonalTodoDetails(personalTodo: PersonalTodo) {
+        requireActivity().navigateTo(
+            PersonalTodoDetailsFragment.newInstance(personalTodo),
+        )
+    }
 
+    override fun navigateToAllTeamTodos() {
+        requireActivity().navigateTo(TeamTodoFragment.newInstance())
+    }
+
+    override fun navigateToAllPersonalTodos() {
+        requireActivity().navigateTo(PersonalTodoViewFragment.newInstance())
     }
 }

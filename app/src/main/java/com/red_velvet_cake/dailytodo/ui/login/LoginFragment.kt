@@ -1,13 +1,15 @@
 package com.red_velvet_cake.dailytodo.ui.login
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.databinding.FragmentLoginBinding
+import com.red_velvet_cake.dailytodo.ui.activity.HomeActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
-import com.red_velvet_cake.dailytodo.ui.home.HomeFragment
+import com.red_velvet_cake.dailytodo.ui.register.RegisterFragment
 import com.red_velvet_cake.dailytodo.utils.navigateTo
 
 
@@ -20,17 +22,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
     override fun setUp() {}
 
     override fun addCallBacks() {
-        binding.buttonLogin.setOnClickListener {
-            val username = binding.editTextUsername.text.toString()
-            val password = binding.editTextPassword.text.toString()
-            if (loginPresenter.validateInputFields(username, password)) {
-                loginPresenter.loginUser(username, password)
-            }
-        }
+        setupLoginButtonClickListener()
+        setupRegisterTextClickListener()
     }
 
     override fun hideLoadingState() {
-        binding.loginProgressBar.visibility = View.GONE
+        runOnUiThread {
+            binding.loginProgressBar.visibility = View.GONE
+        }
     }
 
     override fun showLoginFailedMessage(errorMessage: String) {
@@ -50,6 +49,37 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
     }
 
     override fun navigateToHome() {
-        requireActivity().navigateTo(HomeFragment())
+        runOnUiThread {
+            val intent = Intent(context, HomeActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+    }
+
+    override fun navigateToRegister() {
+        requireActivity().navigateTo(
+            RegisterFragment.newInstance(),
+            R.id.fragment_container_view_auth
+        )
+    }
+
+    private fun setupLoginButtonClickListener() {
+        binding.buttonLogin.setOnClickListener {
+            val username = binding.editTextUsername.text.toString()
+            val password = binding.editTextPassword.text.toString()
+            if (loginPresenter.validateInputFields(username, password)) {
+                loginPresenter.loginUser(username, password)
+            }
+        }
+    }
+
+    private fun setupRegisterTextClickListener() {
+        binding.textViewSignup.setOnClickListener {
+            loginPresenter.navigateToRegister()
+        }
+    }
+
+    private fun runOnUiThread(runnable: Runnable) {
+        requireActivity().runOnUiThread(runnable)
     }
 }
