@@ -11,16 +11,13 @@ class TodoServiceInterceptor : Interceptor {
         val request = chain.request()
 
         val token = SharedPrefs.token
-        if (token != null) {
             val authHeaderValue = "Bearer $token"
             val newRequest: Request = request.newBuilder()
                 .addHeader(HEADER_AUTHORIZATION, authHeaderValue)
                 .build()
 
             return chain.proceed(newRequest)
-        } else {
-            throw IOException("Token not found")
-        }
+
     }
 
     companion object {

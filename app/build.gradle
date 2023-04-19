@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -28,19 +29,6 @@ android {
         buildConfigField "String", "TEAM_ID", localProperties.getProperty("TEAM_ID")
     }
 
-    buildTypes {
-        debug {
-            // Other configurations specific to debug build type
-            def teamId = project.findProperty("TEAM_ID") ?: "default_team_id"
-            buildConfigField "String", "TEAM_ID", "\"${teamId}\""
-        }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            def teamId = project.findProperty("TEAM_ID") ?: "default_team_id"
-            buildConfigField "String", "TEAM_ID", "\"${teamId}\""
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -78,4 +66,8 @@ dependencies {
 
     //mpchart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //Splash
+    implementation "androidx.core:core-splashscreen:1.0.0"
+
 }

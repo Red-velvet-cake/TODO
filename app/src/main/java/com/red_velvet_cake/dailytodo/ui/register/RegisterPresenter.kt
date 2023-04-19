@@ -1,5 +1,6 @@
 package com.red_velvet_cake.dailytodo.ui.register
 
+import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
@@ -9,63 +10,99 @@ class RegisterPresenter(
     private val view: RegisterView,
 ) {
 
-    private val service: TodoService = TodoServiceImpl()
+    private val todoService: TodoService = TodoServiceImpl()
 
-    fun registerAccount(username: String, password: String, teamId: String) {
-        service.registerAccount(
+    private fun registerAccount(username: String, password: String, teamId: String) {
+        todoService.registerAccount(
             username,
             password,
             teamId,
-            ::handleRegisterAccountSuccess,
-            ::handleRegisterAccountFailure
+            { response -> onRegisterAccountSuccess(response, username, password) },
+            ::onRegisterAccountFailure
         )
     }
 
-    private fun handleRegisterAccountSuccess(registerAccountResponse: RegisterAccountResponse) {
-        view.handleRegisterAccountSuccess(registerAccountResponse)
+    private fun onRegisterAccountSuccess(
+        registerAccountResponse: RegisterAccountResponse,
+        username: String,
+        password: String
+    ) {
+        view.enableRegisterButton()
+        if (registerAccountResponse.isSuccess) {
+            view.showRegisterSuccessMessage()
+            loginUsingCredentials(username, password)
+        } else {
+            view.showRegisterFailedMessage(registerAccountResponse.message)
+        }
     }
 
-    private fun handleRegisterAccountFailure(exception: IOException) {
-        view.handleRegisterAccountFailure(exception)
+    private fun onRegisterAccountFailure(exception: IOException) {
+        exception.message?.let { view.showRegisterFailedMessage(it) }
     }
 
-    fun handleRegisterButtonClick() {
-        view.handleRegisterButtonClick()
+    fun clickRegisterButton(
+        username: String,
+        password: String,
+        confirmPassword: String,
+        teamId: String
+    ) {
+        if (validateForm(username, password, confirmPassword)) {
+            view.disableRegisterButtonWithLoading()
+            registerAccount(username, password, teamId)
+        }
     }
 
-    fun handleLoginButtonClick() {
-        view.handleLoginButtonClick()
+    private fun validateForm(username: String, password: String, confirmPassword: String): Boolean {
+        if (!isValidUsername(username)) {
+            view.showUsernameValidationError()
+            return false
+        }
+
+        if (!isValidPassword(password)) {
+            view.showPasswordValidationError()
+            return false
+        }
+
+        if (!isValidConfirmPassword(password, confirmPassword)) {
+            view.showConfirmPasswordValidationError()
+            return false
+        }
+
+        return true
     }
 
-    fun validateUsername(username: String): Boolean {
-        return view.validateUsername(username)
+    private fun isValidUsername(username: String): Boolean {
+        return username.isNotEmpty() && username.length >= 4
     }
 
-    fun validatePassword(password: String): Boolean {
-        return view.validatePassword(password)
+    private fun isValidPassword(password: String): Boolean {
+        return password.isNotEmpty() && password.length >= 8
     }
 
-    fun validateConfirmPassword(password: String, confirmPassword: String): Boolean {
-        return view.validateConfirmPassword(password, confirmPassword)
+    private fun isValidConfirmPassword(password: String, confirmPassword: String): Boolean {
+        return password == confirmPassword
     }
 
-    fun showUsernameValidationError(message: String) {
-        view.showUsernameValidationError(message)
+    private fun loginUsingCredentials(username: String, password: String) {
+        todoService.loginUser(
+            username,
+            password,
+            ::onLoginAccountSuccess,
+            ::onLoginAccountFailure
+        )
     }
 
-    fun showPasswordValidationError(message: String) {
-        view.showPasswordValidationError(message)
+    private fun onLoginAccountSuccess(loginResponse: LoginResponse) {
+        view.enableRegisterButton()
+        if (loginResponse.isSuccess) {
+            view.navigateToHome()
+        } else {
+            view.showLoginFailedMessage(loginResponse.message)
+        }
     }
 
-    fun showConfirmPasswordValidationError(message: String) {
-        view.showConfirmPasswordValidationError(message)
+    private fun onLoginAccountFailure(exception: IOException) {
+        view.showLoginFailedMessage(exception.message.toString())
     }
 
-    fun showLoading() {
-        view.showLoading()
-    }
-
-    fun hideLoading() {
-        view.hideLoading()
-    }
 }

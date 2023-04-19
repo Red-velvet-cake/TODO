@@ -3,6 +3,13 @@ package com.red_velvet_cake.dailytodo.data.remote
 import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
+import com.red_velvet_cake.dailytodo.data.model.ApiResponse
+import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
+import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
+import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.LoginResponse
+import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.orhanobut.hawk.Hawk
 import com.red_velvet_cake.dailytodo.data.local.LocalData
 import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
@@ -18,17 +25,22 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.IOException
-import org.json.JSONObject
 
 class TodoServiceImpl : TodoService {
-
-    private val authOkHttpClient = AuthOkHttpClient.getInstance()
 
     private val loggingInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    private val client = OkHttpClient().newBuilder().addInterceptor(TodoServiceInterceptor())
-        .addInterceptor(loggingInterceptor).build()
+    private val authOkHttpClient = OkHttpClient()
+        .newBuilder()
+        .addInterceptor(loggingInterceptor)
+        .build()
+
+    private val client = OkHttpClient()
+        .newBuilder()
+        .addInterceptor(TodoServiceInterceptor())
+        .addInterceptor(loggingInterceptor)
+        .build()
 
     private val gson = Gson()
 
@@ -45,7 +57,7 @@ class TodoServiceImpl : TodoService {
         val request =
             Request.Builder().url(url).header(HEADER_AUTHORIZATION, authHeaderValue).build()
 
-        authOkHttpClient.client.newCall(request).enqueue(object : Callback {
+        authOkHttpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onLoginUserFailure(e)
             }
@@ -144,7 +156,6 @@ class TodoServiceImpl : TodoService {
     override fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdateTeamTodoStatusSuccess: (updateTeamStatusResponse: UpdateTeamTodoStatusResponse) -> Unit,
         onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
     ) {
 
@@ -163,9 +174,6 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body?.string().toString()
-                val result = gson.fromJson(body, UpdateTeamTodoStatusResponse::class.java)
-                onUpdateTeamTodoStatusSuccess(result)
             }
 
         })
@@ -175,12 +183,11 @@ class TodoServiceImpl : TodoService {
     override fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusSuccess: (updatePersonalStatusResponse: UpdatePersonalStatusResponse) -> Unit,
-        onUpdatePersonalTodoStatusFailure: (exception: IOException) -> Unit
+        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
     ) {
 
         val requestBody =
-            FormBody.Builder().add(PARAM_STATUS, todoId).add(PARAM_ID, newTodoStatus.toString())
+            FormBody.Builder().add(PARAM_ID, todoId).add(PARAM_STATUS, newTodoStatus.toString())
                 .build()
 
         val url = HttpUrl.Builder().scheme(SCHEME).host(HOST).addPathSegment(TO_DO_PATH_SEGMENT)
@@ -194,10 +201,6 @@ class TodoServiceImpl : TodoService {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                response.body?.string().let {
-                    val result = gson.fromJson(it, UpdatePersonalStatusResponse::class.java)
-                    onUpdatePersonalTodoStatusSuccess(result)
-                }
             }
         })
     }
@@ -252,7 +255,7 @@ class TodoServiceImpl : TodoService {
             .post(formBody)
             .build()
 
-        authOkHttpClient.client.newCall(request)
+        authOkHttpClient.newCall(request)
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     onRegisterAccountFailure(e)
