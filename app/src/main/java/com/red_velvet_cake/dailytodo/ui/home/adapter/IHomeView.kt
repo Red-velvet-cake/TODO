@@ -13,8 +13,14 @@ interface IHomeView {
     fun showErrorOnPersonalTodoFailure(e: IOException)
 
     fun showTeamTodos(getAllTeamTodosResponse: GetAllTeamTodosResponse)
+
     fun showErrorOnTeamTodoFailure(exception: IOException)
 
     fun navigateToTeamTodoDetails(teamTodo: TeamTodo)
+
     fun navigateToPersonalTodoDetails(personalTodo: PersonalTodo)
+
+    fun navigateToAllTeamTodos()
+
+    fun navigateToAllPersonalTodos()
 }
