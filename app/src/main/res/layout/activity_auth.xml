@@ -3,16 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.activity.AuthActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view_auth"
-        android:name="com.red_velvet_cake.dailytodo.ui.team_todo.TeamTodoViewFragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:name="com.red_velvet_cake.dailytodo.ui.login.LoginFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

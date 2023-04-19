@@ -2,25 +2,54 @@ package com.red_velvet_cake.dailytodo.ui.login
 
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
-import okio.IOException
 
 class LoginPresenter(private val view: LoginView) {
     private val todoServiceImpl = TodoServiceImpl()
 
     fun loginUser(username: String, password: String) {
+        view.showLoadingState()
         todoServiceImpl.loginUser(
             username,
             password,
-            ::onLoginSuccess,
-            ::onLoginFailure
+            this::onSuccess,
+            this::onFailure
         )
     }
 
-    private fun onLoginSuccess(loginResponse: LoginResponse) {
-        view.onLoginSuccess(loginResponse)
+    private fun onSuccess(loginResponse: LoginResponse) {
+        view.hideLoadingState()
+        if (loginResponse.isSuccess){
+            navigateToHome()
+        } else {
+            view.showLoginFailedMessage(loginResponse.message.toString())
+        }
     }
 
-    private fun onLoginFailure(exception: IOException) {
-        view.onLoginFailure(exception)
+    private fun onFailure(exception: Exception) {
+        view.hideLoadingState()
+        view.showLoginFailedMessage(exception.message.toString())
+    }
+    private fun navigateToHome() {
+        view.navigateToHome()
+    }
+
+    fun validateInputFields(username: String, password: String): Boolean {
+        var isValid = true
+
+        if (username.isBlank()) {
+            view.showUsernameError(true)
+            isValid = false
+        } else {
+            view.showUsernameError(false)
+        }
+
+        if (password.isBlank()) {
+            view.showPasswordError(true)
+            isValid = false
+        } else {
+            view.showPasswordError(false)
+        }
+
+        return isValid
     }
 }

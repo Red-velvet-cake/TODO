@@ -30,11 +30,16 @@
     <string name="no_internet_connection">لا يوجد اتصال بالإنترنت</string>
     <string name="check_your_wifi">تحقق من الانترنت الخاص بك</string>
     <string name="try_again">حاول مره اخرى</string>
-    <string name="don_t_have_account_sign_up">ليس لديك حساب؟ سجل هنا.</string>
+    <string name="don_t_have_account_sign_up">ليس لديك حساب؟</string>
     <string name="register">انشاء حساب</string>
-    <string name="register_success">تم إنشاء حسابك بنجاح! يرجى تسجيل الدخول</string>
+    <string name="register_success">تم إنشاء حسابك بنجاح!</string>
     <string name="username_validation_error">الحد الأدنى لاسم المستخدم هو 4 مراتب</string>
     <string name="password_validation_error">الحد الأدنى لكلمة المرور هو 8 مراتب</string>
     <string name="confirm_password_validation_error">كلمة المرور غير متطابقة</string>
     <string name="loading">جار التحميل</string>
+    <string name="update_failed">Update failed</string>
+    <string name="update_succeeded">Update succeeded</string>
+    <string name="username_empty">Username cannot be empty</string>
+    <string name="password_empty">Password cannot be empty</string>
+    <string name="dont_have_account">Don’t have an account? sign up</string>
 </resources>

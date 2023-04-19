@@ -6,7 +6,6 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import com.red_velvet_cake.dailytodo.data.model.UpdatePersonalStatusResponse
 import okio.IOException
 
 interface TodoService {
@@ -36,7 +35,7 @@ interface TodoService {
     fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
+        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
     )
 
     fun updateTeamTodoStatus(
