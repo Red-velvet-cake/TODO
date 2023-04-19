@@ -18,12 +18,40 @@ class LoginPresenter(private val view: LoginView) {
     }
 
     private fun onSuccess(loginResponse: LoginResponse) {
-        view.showLoadingIndicator(false)
-        view.onSuccess(loginResponse)
+        if (loginResponse.isSuccess){
+            view.showLoadingIndicator(false)
+            view.onSuccess(loginResponse)
+            navigateToHome()
+        } else {
+            onFailure(loginResponse.message as Exception)
+        }
     }
 
-    private fun onFailure(exception: IOException) {
+    private fun onFailure(exception: Exception) {
         view.showLoadingIndicator(false)
         view.onFailure(exception)
+    }
+    private fun navigateToHome() {
+        view.navigateToHome()
+    }
+
+    fun validateInputFields(username: String, password: String): Boolean {
+        var isValid = true
+
+        if (username.isBlank()) {
+            view.showUsernameError(true)
+            isValid = false
+        } else {
+            view.showUsernameError(false)
+        }
+
+        if (password.isBlank()) {
+            view.showPasswordError(true)
+            isValid = false
+        } else {
+            view.showPasswordError(false)
+        }
+
+        return isValid
     }
 }

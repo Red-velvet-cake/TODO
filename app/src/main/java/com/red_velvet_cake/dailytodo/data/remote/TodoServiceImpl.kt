@@ -49,18 +49,11 @@ class TodoServiceImpl : TodoService {
             override fun onFailure(call: Call, e: IOException) {
                 onLoginUserFailure(e)
             }
-
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
-                    if (loginResponse.isSuccess) {
-                        Log.d("Token ", "onResponse: ${loginResponse.loginResponseBody.token}")
-                        SharedPrefs.token = loginResponse.loginResponseBody.token
-                        onLoginUserSuccess(loginResponse)
-                    } else {
-                        val message = loginResponse.message
-                        onLoginUserFailure(IOException(message))
-                    }
+                    SharedPrefs.token = loginResponse.loginResponseBody.token
+                    onLoginUserSuccess(loginResponse)
                 }
             }
         })

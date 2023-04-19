@@ -30,7 +30,7 @@
     <string name="no_internet_connection">No internet connection</string>
     <string name="check_your_wifi">Check your Wi-Fi</string>
     <string name="try_again">Try again</string>
-    <string name="don_t_have_account_sign_up">Don’t have account? sign up</string>
+    <string name="don_t_have_account_sign_up">Don’t have account?</string>
     <string name="register">Register</string>
     <string name="register_success">You have successfully registered!, Please login</string>
     <string name="username_validation_error">Username should be at least 4 digits</string>

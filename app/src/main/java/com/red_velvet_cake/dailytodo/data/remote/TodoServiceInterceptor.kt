@@ -1,21 +1,26 @@
 package com.red_velvet_cake.dailytodo.data.remote
 
+import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import okio.IOException
 
 class TodoServiceInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
-        val newRequest: Request = request.newBuilder()
-            .addHeader(
-                HEADER_AUTHORIZATION,
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6Ijk4YWRiZWJkLTg2YmQtNDg3Yy1hYjI1LWVlY2IzOGQxZjIxZSIsInRlYW1JZCI6IjAxYThhOTg4LTQ0NjItNDNhNi1hOThhLTE2MjY4NzNmYTc4NyIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxNjg3NDgwfQ.WM_FaP2AQ-20iQuq-FnlE-5cG15FCuOBMN_brmeRsk0"
-            )
-            .build()
+        val token = SharedPrefs.token
+        if (token != null) {
+            val authHeaderValue = "Bearer $token"
+            val newRequest: Request = request.newBuilder()
+                .addHeader(HEADER_AUTHORIZATION, authHeaderValue)
+                .build()
 
-        return chain.proceed(newRequest)
+            return chain.proceed(newRequest)
+        } else {
+            throw IOException("Token not found")
+        }
     }
 
     companion object {
