@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoBinding
-import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.utils.navigateBack
 
 class PersonalTodoViewFragment : BaseFragment<FragmentPersonalTodoBinding>(), PersonalTodoView {
 
@@ -60,7 +60,10 @@ class PersonalTodoViewFragment : BaseFragment<FragmentPersonalTodoBinding>(), Pe
             binding.chipDone.setChipBackgroundColorResource(R.color.white)
             binding.chipTodo.setChipBackgroundColorResource(R.color.white)
             binding.chipInProgress.setChipBackgroundColorResource(R.color.chip_background_color)
+        }
 
+        binding.appBar.setNavigationOnClickListener {
+            requireActivity().navigateBack()
         }
     }
 
@@ -122,6 +125,8 @@ class PersonalTodoViewFragment : BaseFragment<FragmentPersonalTodoBinding>(), Pe
         private const val CHIP_TODO_VALUE = 0
         private const val CHIP_IN_PROGRESS_VALUE = 1
         private const val CHIP_DONE_VALUE = 2
+
+        fun newInstance() = PersonalTodoViewFragment()
     }
 }
 
