@@ -3,14 +3,12 @@ package com.red_velvet_cake.dailytodo.data.remote
 import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
-import com.red_velvet_cake.dailytodo.data.model.ApiResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import com.orhanobut.hawk.Hawk
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
@@ -58,19 +56,10 @@ class TodoServiceImpl : TodoService {
             override fun onFailure(call: Call, e: IOException) {
                 onLoginUserFailure(e)
             }
-
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
-
-                    val apiResponse = Gson().fromJson(responseBody, ApiResponse::class.java)
-                    if (apiResponse.isSuccess) {
-                        val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
-                        Hawk.put(HEADER_AUTHORIZATION, loginResponse.loginResponseBody.token)
-                        onLoginUserSuccess(loginResponse)
-                    } else {
-                        val message = apiResponse.message
-                        onLoginUserFailure(IOException(message))
-                    }
+                    val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
+                    onLoginUserSuccess(loginResponse)
                 }
             }
         })
