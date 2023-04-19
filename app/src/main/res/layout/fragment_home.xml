@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,38 +7,33 @@
     android:background="@color/background"
     tools:context=".ui.home.HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/_80dp"
+        android:background="@color/background"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar_layout_home"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_80dp"
-            android:background="@color/background"
-            app:layout_constraintTop_toTopOf="parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_home"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_0dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout_home"
+        tools:listitem="@layout/item_personal_todo" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_home"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_0dp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/app_bar_layout_home"
-            tools:listitem="@layout/item_personal_todo" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button_add_team_todo"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="@dimen/_24dp"
-            android:layout_marginBottom="@dimen/_32dp"
-            android:background="@drawable/shape_add_team_todo_button"
-            android:src="@drawable/ic_add"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button_add_team_todo"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="@dimen/_24dp"
+        android:layout_marginBottom="@dimen/_32dp"
+        android:background="@drawable/shape_add_team_todo_button"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

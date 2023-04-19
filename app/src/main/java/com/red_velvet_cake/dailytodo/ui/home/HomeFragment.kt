@@ -4,11 +4,10 @@ package com.red_velvet_cake.dailytodo.ui.home
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
+import com.red_velvet_cake.dailytodo.data.model.Statistics
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentHomeBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
@@ -25,7 +24,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
 
     private var lists = mutableListOf<HomeItems<Any>>()
     private lateinit var adapter: HomeAdapter
-    val homePresenter = HomePresenter(this)
+    private val homePresenter = HomePresenter(this)
 
 
     override fun setUp() {
@@ -34,18 +33,10 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
         binding.recyclerViewHome.adapter = adapter
 
         binding.buttonAddTeamTodo.setOnClickListener {
-            val seetDialog =
-                BottomSheetDialog(requireContext().applicationContext, R.style.bottomSheetStyle)
+            val dialog = CreateTeamTodoDialogFragment()
 
-            val sheetView = LayoutInflater.from(requireContext().applicationContext)
-
+            dialog.show(parentFragmentManager, "create")
         }
-
-//        BottomSheetBehavior.from(binding.sheet).apply {
-//            maxHeight=0
-//            this.state=BottomSheetBehavior.STATE_HIDDEN
-//        }
-
     }
 
     private fun onClickTeamTodo(teamTodo: TeamTodo) {
@@ -106,8 +97,3 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
 
     }
 }
-
-data class Statistics(
-    val personal: GetAllPersonalTodosResponse = GetAllPersonalTodosResponse(emptyList(), "", true),
-    val team: GetAllTeamTodosResponse = GetAllTeamTodosResponse(emptyList(), "", true)
-)

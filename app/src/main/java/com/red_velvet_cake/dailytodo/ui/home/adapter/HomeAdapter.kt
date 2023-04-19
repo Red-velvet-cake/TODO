@@ -12,12 +12,12 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
+import com.red_velvet_cake.dailytodo.data.model.Statistics
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.ItemStatisticsTasksPersonHasDoneBinding
 import com.red_velvet_cake.dailytodo.databinding.ItemTodosSectionTitleBinding
 import com.red_velvet_cake.dailytodo.databinding.ListPersonalTodosBinding
 import com.red_velvet_cake.dailytodo.databinding.ListTeamTodosBinding
-import com.red_velvet_cake.dailytodo.ui.home.Statistics
 
 class HomeAdapter(
     private val list: List<HomeItems<Any>>,

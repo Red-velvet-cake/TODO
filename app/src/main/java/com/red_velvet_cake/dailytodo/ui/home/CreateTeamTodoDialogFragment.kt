@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.ui
+package com.red_velvet_cake.dailytodo.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.red_velvet_cake.dailytodo.R
 
-class CreateTeamTodoFragment : BottomSheetDialogFragment() {
+class CreateTeamTodoDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
