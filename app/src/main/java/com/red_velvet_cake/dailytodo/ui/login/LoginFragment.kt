@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.databinding.FragmentLoginBinding
-import com.red_velvet_cake.dailytodo.ui.activity.DashboardActivity
+import com.red_velvet_cake.dailytodo.ui.activity.HomeActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 import com.red_velvet_cake.dailytodo.ui.register.RegisterFragment
 import com.red_velvet_cake.dailytodo.utils.navigateTo
@@ -50,7 +50,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
 
     override fun navigateToHome() {
         runOnUiThread {
-            val intent = Intent(context, DashboardActivity::class.java)
+            val intent = Intent(context, HomeActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
         }
