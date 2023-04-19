@@ -13,12 +13,14 @@ import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoDetailsBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 import com.red_velvet_cake.dailytodo.utils.Constants
 import com.red_velvet_cake.dailytodo.utils.TodoStatus
+import com.red_velvet_cake.dailytodo.utils.navigateBack
 
 class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
     TeamTodoDetailsView {
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTeamTodoDetailsBinding
         get() = FragmentTeamTodoDetailsBinding::inflate
-    private lateinit var presenter: TeamTodoStatusPresenter
+
+    private val presenter by lazy { TeamTodoStatusPresenter(this) }
 
     override fun setUp() {
         initSpinner()
@@ -75,7 +77,9 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
     }
 
     override fun addCallBacks() {
-
+        binding.toolbar.setNavigationOnClickListener {
+            requireActivity().navigateBack()
+        }
     }
 
     private fun getTeamTodoFromArguments() {
@@ -103,12 +107,10 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
     companion object {
         private const val KEY_DETAILS_PARAM = "team todo details"
 
-        fun newInstance(teamTodo: TeamTodo): TeamTodoDetailsFragment {
-            val bundle = Bundle()
-            bundle.putParcelable(KEY_DETAILS_PARAM, teamTodo)
-            val fragment = TeamTodoDetailsFragment()
-            fragment.arguments = bundle
-            return fragment
+        fun newInstance(teamTodo: TeamTodo) = TeamTodoDetailsFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(KEY_DETAILS_PARAM, teamTodo)
+            }
         }
     }
 }
