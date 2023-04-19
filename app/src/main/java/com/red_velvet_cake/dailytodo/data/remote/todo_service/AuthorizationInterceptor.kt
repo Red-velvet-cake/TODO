@@ -1,11 +1,11 @@
-package com.red_velvet_cake.dailytodo.data.remote.api
+package com.red_velvet_cake.dailytodo.data.remote.todo_service
 
 import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
-class ApiServiceInterceptor : Interceptor {
+class AuthorizationInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 

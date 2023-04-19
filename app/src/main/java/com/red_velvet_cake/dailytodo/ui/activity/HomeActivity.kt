@@ -5,7 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.widget.Toast
 import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
-import com.red_velvet_cake.dailytodo.data.remote.api.ApiServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.databinding.ActivityHomeBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseActivity
 import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
@@ -39,7 +39,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     }
 
     private fun checkUserLoggedIn() {
-        ApiServiceImpl().checkUserLoggedIn(::lunchAuthActivity)
+        TodoServiceImpl().checkUserLoggedIn(::lunchAuthActivity)
     }
 
     private fun lunchAuthActivity() {

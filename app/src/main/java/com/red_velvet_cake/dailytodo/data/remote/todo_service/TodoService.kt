@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.data.remote.api
+package com.red_velvet_cake.dailytodo.data.remote.todo_service
 
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
@@ -6,7 +6,7 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import okio.IOException
 
-interface ApiService {
+interface TodoService {
 
     fun createPersonalTodo(
         title: String,

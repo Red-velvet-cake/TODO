@@ -1,13 +1,13 @@
 package com.red_velvet_cake.dailytodo.ui.personal_todo_details
 
-import com.red_velvet_cake.dailytodo.data.remote.api.ApiServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
 import java.io.IOException
 
 class PersonalTodoDetailsPresenter(
     private val view: PersonalTodoDetailsView,
 ) {
 
-    private val authService = ApiServiceImpl()
+    private val authService = TodoServiceImpl()
 
     fun updatePersonalTodoStatus(
         todoId: String,

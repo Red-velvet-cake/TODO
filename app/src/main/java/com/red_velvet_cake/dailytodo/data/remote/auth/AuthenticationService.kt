@@ -4,7 +4,7 @@ import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import java.io.IOException
 
-interface AuthService {
+interface AuthenticationService {
     fun loginAccount(
         username: String,
         password: String,

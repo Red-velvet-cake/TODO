@@ -2,12 +2,12 @@ package com.red_velvet_cake.dailytodo.ui.team_todo
 
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
-import com.red_velvet_cake.dailytodo.data.remote.api.ApiServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
 import java.io.IOException
 
 class TeamTodoPresenter(private val view: TeamTodoView) {
 
-    private val apiService = ApiServiceImpl()
+    private val apiService = TodoServiceImpl()
 
     fun updateTeamTodoStatus(
         todoId: String,

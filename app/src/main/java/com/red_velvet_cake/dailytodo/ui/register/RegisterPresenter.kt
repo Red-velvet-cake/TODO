@@ -3,14 +3,14 @@ package com.red_velvet_cake.dailytodo.ui.register
 import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import com.red_velvet_cake.dailytodo.data.remote.auth.AuthServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.auth.AuthenticationServiceImpl
 import java.io.IOException
 
 class RegisterPresenter(
     private val view: RegisterView,
 ) {
 
-    private val authService = AuthServiceImpl()
+    private val authService = AuthenticationServiceImpl()
     private var username: String = ""
     private var password: String = ""
 

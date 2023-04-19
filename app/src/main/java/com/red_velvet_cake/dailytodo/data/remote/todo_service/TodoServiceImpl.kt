@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.data.remote.api
+package com.red_velvet_cake.dailytodo.data.remote.todo_service
 
 import com.google.gson.Gson
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
@@ -17,7 +17,7 @@ import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.IOException
 
-class ApiServiceImpl : ApiService {
+class TodoServiceImpl : TodoService {
     private val gson = Gson()
 
     private val loggingInterceptor =
@@ -25,7 +25,7 @@ class ApiServiceImpl : ApiService {
 
     private val client = OkHttpClient()
         .newBuilder()
-        .addInterceptor(ApiServiceInterceptor())
+        .addInterceptor(AuthorizationInterceptor())
         .addInterceptor(loggingInterceptor)
         .build()
 

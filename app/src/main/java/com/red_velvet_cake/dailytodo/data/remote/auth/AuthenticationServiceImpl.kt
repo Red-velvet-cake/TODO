@@ -16,9 +16,8 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.IOException
-import java.util.concurrent.TimeUnit
 
-class AuthServiceImpl : AuthService {
+class AuthenticationServiceImpl : AuthenticationService {
     private val gson = Gson()
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -28,9 +27,6 @@ class AuthServiceImpl : AuthService {
     private val client = OkHttpClient()
         .newBuilder()
         .addInterceptor(loggingInterceptor)
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
     override fun loginAccount(
