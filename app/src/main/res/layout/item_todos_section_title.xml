@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/text_view_todo_type"
+        android:id="@+id/text_view_todo_section_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16dp"
@@ -28,9 +28,9 @@
         android:text="@string/view_all"
         android:textColor="@color/accent_text"
         android:textSize="@dimen/_12sp"
-        app:layout_constraintBottom_toBottomOf="@id/text_view_todo_type"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_todo_section_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text_view_todo_type" />
+        app:layout_constraintTop_toTopOf="@id/text_view_todo_section_title" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
