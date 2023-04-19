@@ -7,6 +7,7 @@ import com.red_velvet_cake.dailytodo.BuildConfig
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.databinding.FragmentRegisterBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.utils.navigateBack
 
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
     private val presenter = RegisterPresenter(this)
@@ -41,7 +42,10 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
 
     override fun navigateToHome() {}
 
-    override fun navigateToLogin() {}
+    override fun navigateToLogin() {
+        requireActivity().navigateBack(R.id.fragment_container_view_auth)
+    }
+
     override fun showUsernameValidationError() {
         binding.editTextUsername.error = getString(R.string.username_validation_error)
     }
