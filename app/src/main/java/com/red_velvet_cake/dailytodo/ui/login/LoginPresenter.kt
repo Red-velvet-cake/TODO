@@ -18,7 +18,7 @@ class LoginPresenter(private val view: LoginView) {
 
     private fun onSuccess(loginResponse: LoginResponse) {
         view.hideLoadingState()
-        if (loginResponse.isSuccess){
+        if (loginResponse.isSuccess) {
             navigateToHome()
         } else {
             view.showLoginFailedMessage(loginResponse.message.toString())
@@ -29,6 +29,7 @@ class LoginPresenter(private val view: LoginView) {
         view.hideLoadingState()
         view.showLoginFailedMessage(exception.message.toString())
     }
+
     private fun navigateToHome() {
         view.navigateToHome()
     }
@@ -51,5 +52,9 @@ class LoginPresenter(private val view: LoginView) {
         }
 
         return isValid
+    }
+
+    fun navigateToRegister() {
+        view.navigateToRegister()
     }
 }
