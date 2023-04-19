@@ -1,30 +1,25 @@
 package com.red_velvet_cake.dailytodo.ui.register
 
-import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
-import okio.IOException
-
 interface RegisterView {
-    fun handleRegisterAccountSuccess(registerAccountResponse: RegisterAccountResponse)
 
-    fun handleRegisterAccountFailure(exception: IOException)
+    fun navigateToHome()
 
-    fun handleRegisterButtonClick()
+    fun navigateToLogin()
 
-    fun handleLoginButtonClick()
+    fun showUsernameValidationError()
 
-    fun validateUsername(username: String): Boolean
+    fun showPasswordValidationError()
 
-    fun validatePassword(password: String): Boolean
+    fun showConfirmPasswordValidationError()
 
-    fun validateConfirmPassword(password: String, confirmPassword: String): Boolean
+    fun showRegisterSuccessMessage()
 
-    fun showUsernameValidationError(message: String)
+    fun showRegisterFailedMessage(message: String)
 
-    fun showPasswordValidationError(message: String)
+    fun showLoginFailedMessage(message: String)
 
-    fun showConfirmPasswordValidationError(message: String)
+    fun disableRegisterButtonWithLoading()
 
-    fun showLoading()
+    fun enableRegisterButton()
 
-    fun hideLoading()
 }

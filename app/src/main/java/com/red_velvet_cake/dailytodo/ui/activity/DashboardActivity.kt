@@ -7,10 +7,9 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import com.orhanobut.hawk.Hawk
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
-import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.databinding.ActivityDashboardBinding
-import com.red_velvet_cake.dailytodo.ui.login.LoginView
 import com.red_velvet_cake.dailytodo.ui.base.BaseActivity
+import com.red_velvet_cake.dailytodo.ui.login.LoginView
 import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
 import okio.IOException
 
@@ -20,9 +19,9 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), LoginView {
         get() = ActivityDashboardBinding::inflate
 
     override fun setUp() {
-//        lunchAuthActivity()
+        lunchAuthActivity()
         Hawk.init(this).build()
-        TodoServiceImpl().loginUser("test user2", "123456789", {}, {})
+//        TodoServiceImpl().loginUser("test user2", "123456789", {}, {})
     }
 
     override fun addCallbacks() {
