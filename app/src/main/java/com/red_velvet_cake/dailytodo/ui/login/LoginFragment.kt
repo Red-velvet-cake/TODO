@@ -1,22 +1,14 @@
 package com.red_velvet_cake.dailytodo.ui.login
 
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.TextPaint
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 import com.red_velvet_cake.dailytodo.R
-import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.databinding.FragmentLoginBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
 import com.red_velvet_cake.dailytodo.ui.home.HomeFragment
 import com.red_velvet_cake.dailytodo.utils.navigateTo
-import okio.IOException
 
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
@@ -37,17 +29,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
         }
     }
 
-    override fun onSuccess(loginResponse: LoginResponse) {
-        Log.d(LOG_TAG, "onLoginSuccess: ${loginResponse.loginResponseBody}")
+    override fun hideLoadingState() {
+        binding.loginProgressBar.visibility = View.GONE
     }
 
-    override fun onFailure(exception: Exception) {
-        Toast.makeText(requireContext(), exception.message, Toast.LENGTH_LONG).show()
+    override fun showLoginFailedMessage(errorMessage: String) {
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show()
     }
 
-
-    override fun showLoadingIndicator(show: Boolean) {
-        binding.loginProgressBar.visibility = if (show) View.VISIBLE else View.GONE
+    override fun showLoadingState() {
+        binding.loginProgressBar.visibility = View.VISIBLE
     }
 
     override fun showUsernameError(show: Boolean) {

@@ -2,13 +2,12 @@ package com.red_velvet_cake.dailytodo.ui.login
 
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
-import okio.IOException
 
 class LoginPresenter(private val view: LoginView) {
     private val todoServiceImpl = TodoServiceImpl()
 
     fun loginUser(username: String, password: String) {
-        view.showLoadingIndicator(true)
+        view.showLoadingState()
         todoServiceImpl.loginUser(
             username,
             password,
@@ -18,18 +17,17 @@ class LoginPresenter(private val view: LoginView) {
     }
 
     private fun onSuccess(loginResponse: LoginResponse) {
+        view.hideLoadingState()
         if (loginResponse.isSuccess){
-            view.showLoadingIndicator(false)
-            view.onSuccess(loginResponse)
             navigateToHome()
         } else {
-            onFailure(loginResponse.message as Exception)
+            view.showLoginFailedMessage(loginResponse.message.toString())
         }
     }
 
     private fun onFailure(exception: Exception) {
-        view.showLoadingIndicator(false)
-        view.onFailure(exception)
+        view.hideLoadingState()
+        view.showLoginFailedMessage(exception.message.toString())
     }
     private fun navigateToHome() {
         view.navigateToHome()

@@ -1,5 +1,6 @@
 package com.red_velvet_cake.dailytodo.ui.register
 
+import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
@@ -96,8 +97,9 @@ class RegisterPresenter(
         view.enableRegisterButton()
         if (loginResponse.isSuccess) {
             view.navigateToHome()
+            SharedPrefs.token = loginResponse.loginResponseBody.token
         } else {
-            view.showLoginFailedMessage(loginResponse.message)
+            view.showLoginFailedMessage(loginResponse.message.toString())
         }
     }
 
