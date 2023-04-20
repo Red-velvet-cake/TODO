@@ -76,6 +76,10 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
         }
     }
 
+    override fun navigateBack() {
+        requireActivity().navigateBack()
+    }
+
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (position) {
             Constants.TODO -> {

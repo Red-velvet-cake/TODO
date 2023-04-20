@@ -4,8 +4,9 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
-import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeView
 import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.util.CustomException
+import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeView
 
 class HomePresenter(val view: HomeView) {
     private val todoServiceImpl = TodoServiceImpl()
@@ -40,20 +41,41 @@ class HomePresenter(val view: HomeView) {
 
     private fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
         view.showPersonalTodos(getAllPersonalTodosResponse)
+        //view.showPendingPersonalTodos(getAllPersonalTodosResponse.value.count { it.status == 0 })
+        view.showPendingPersonalTodos(getAllPersonalTodosResponse.value.filter { it.status == 0 || it.status==1 }.count())
+        view.showCompletedPersonalTodos(getAllPersonalTodosResponse.value.count { it.status == 2 })
     }
 
-    private fun onGetAllPersonalTodosFailure(errorMessage: String) {
-        view.showErrorOnPersonalTodoFailure(errorMessage)
+    private fun onGetAllPersonalTodosFailure(exception: Exception) {
+        when (exception) {
+            is CustomException.UnauthorizedUserException -> {
+                view.navigateToLogin()
+            }
+
+            else -> {
+                view.showTryAgain()
+                view.showErrorOnPersonalTodoFailure(exception.message.toString())
+            }
+        }
     }
 
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
         view.showTeamTodos(getAllTeamTodosResponse)
+       // view.showPendingTeamTodos(getAllTeamTodosResponse.value.count { it.status == 0 })
+         view.showPendingTeamTodos(getAllTeamTodosResponse.value.filter { it.status == 0 || it.status==1 }.count())
+        view.showCompletedTeamTodos(getAllTeamTodosResponse.value.count { it.status == 2 })
     }
 
-    private fun onGetAllTeamTodosFailure(errorMessage: String) {
-        if (errorMessage == "401") {
-            view.navigateToLogin()
+    private fun onGetAllTeamTodosFailure(exception: Exception) {
+        when (exception) {
+            is CustomException.UnauthorizedUserException -> {
+                view.navigateToLogin()
+            }
+
+            else -> {
+                view.showTryAgain()
+                view.showErrorOnTeamTodoFailure(exception.message.toString())
+            }
         }
-        view.showErrorOnTeamTodoFailure(errorMessage)
     }
 }

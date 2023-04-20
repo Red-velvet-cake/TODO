@@ -17,6 +17,7 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
 
     private lateinit var personalToDoAdapter: PersonalTodoAdapter
     private lateinit var personalTodoPresenter: PersonalTodoPresenter
+    private lateinit var filteredList:List<PersonalTodo>
     private var selectedChip = -1
 
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentPersonalTodoBinding =
@@ -128,16 +129,21 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
         requireActivity().navigateTo(PersonalTodoDetailsFragment.newInstance(personalTodo))
     }
 
+    override fun navigateBack() {
+        requireActivity().navigateBack()
+    }
+
     override fun showTodoList(todoList: List<PersonalTodo>) {
         val itemTouchHelperCallback = ItemPersonalTodoTouchHelperCallback(personalToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        val filteredList =
+        filteredList =
             filterTodosList(selectedChip, todoList)
         requireActivity().runOnUiThread {
             personalToDoAdapter.submitList(filteredList)
             binding.personalTodoRecycler.adapter = personalToDoAdapter
             itemTouchHelper.attachToRecyclerView(binding.personalTodoRecycler)
         }
+        showEmptyTodoListState()
     }
 
     companion object {

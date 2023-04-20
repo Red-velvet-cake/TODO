@@ -63,6 +63,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
         )
     }
 
+    override fun showTryAgain() {
+
+    }
+
     private fun setupLoginButtonClickListener() {
         binding.buttonLogin.setOnClickListener {
             val username = binding.editTextUsername.text.toString()

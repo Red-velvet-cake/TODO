@@ -6,9 +6,14 @@ import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
-import com.red_velvet_cake.dailytodo.utils.Constants.HOST
-import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
-import okhttp3.*
+import com.red_velvet_cake.dailytodo.data.remote.util.CustomException
+import com.red_velvet_cake.dailytodo.data.remote.util.HttpMethod
+import com.red_velvet_cake.dailytodo.data.remote.util.buildRequest
+import com.red_velvet_cake.dailytodo.utils.Constants.HOST_NAME
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.IOException
 
@@ -28,36 +33,31 @@ class TodoServiceImpl : TodoService {
         title: String,
         description: String,
         assignee: String,
-        onCreateTeamTodoSuccess: (CreateTodoTeamResponse) -> Unit,
-        onCreateTeamTodoFailure: (errorMessage: String) -> Unit
+        onSuccess: (CreateTodoTeamResponse) -> Unit,
+        onFailure: (exception: Exception) -> Unit
     ) {
-        val requestBody = FormBody.Builder()
-            .add(TITLE, title)
-            .add(DESCRIPTION, description)
-            .add(ASSIGNEE, assignee)
-            .build()
+        val apiRequest = buildRequest(
+            HOST_NAME,
+            TEAM_TODO_PATH_SEGMENT,
+            HttpMethod.POST,
+            TITLE to title,
+            DESCRIPTION to description,
+            ASSIGNEE to assignee
+        )
 
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(TEAM_PATH_SEGMENT)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .post(requestBody)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onCreateTeamTodoFailure(e.message.toString())
+        client.newCall(apiRequest).enqueue(object : Callback {
+            override fun onFailure(call: Call, ioException: IOException) {
+                onFailure(ioException)
             }
 
             override fun onResponse(call: Call, response: Response) {
-                response.body?.string().let {
-                    val result = gson.fromJson(it, CreateTodoTeamResponse::class.java)
-                    onCreateTeamTodoSuccess(result)
+                try {
+                    response.body?.string().let {
+                        val result = gson.fromJson(it, CreateTodoTeamResponse::class.java)
+                        onSuccess(result)
+                    }
+                } catch (authorizationException: CustomException.UnauthorizedUserException) {
+                    onFailure(authorizationException)
                 }
             }
         })
@@ -66,70 +66,60 @@ class TodoServiceImpl : TodoService {
     override fun createPersonalTodo(
         title: String,
         description: String,
-        onCreatePersonalTodoSuccess: (CreateTodoPersonalResponse) -> Unit,
-        onCreatePersonalTodoFailure: (errorMessage: String) -> Unit
+        onSuccess: (CreateTodoPersonalResponse) -> Unit,
+        onFailure: (exception: Exception) -> Unit
     ) {
-        val requestBody = FormBody.Builder()
-            .add(TITLE, title)
-            .add(DESCRIPTION, description)
-            .build()
+        val apiRequest = buildRequest(
+            HOST_NAME,
+            PERSONAL_TODO_PATH_SEGMENT,
+            HttpMethod.POST,
+            TITLE to title,
+            DESCRIPTION to description
+        )
 
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(PATH_PERSONAL)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .post(requestBody)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onCreatePersonalTodoFailure(e.message.toString())
+        client.newCall(apiRequest).enqueue(object : Callback {
+            override fun onFailure(call: Call, ioException: IOException) {
+                onFailure(ioException)
             }
 
             override fun onResponse(call: Call, response: Response) {
-                response.body?.string().let {
-                    val result = gson.fromJson(it, CreateTodoPersonalResponse::class.java)
-                    onCreatePersonalTodoSuccess(result)
+                try {
+                    response.body?.string().let {
+                        val result = gson.fromJson(it, CreateTodoPersonalResponse::class.java)
+                        onSuccess(result)
+                    }
 
+                } catch (authorizationException: CustomException.UnauthorizedUserException) {
+                    onFailure(authorizationException)
                 }
             }
-
         })
     }
 
     override fun getAllPersonalTodos(
-        onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
-        onGetAllPersonalTodoFailure: (errorMessage: String) -> Unit
+        onSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
+        onFailure: (exception: Exception) -> Unit
     ) {
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(PATH_PERSONAL)
-            .build()
 
-        val request = Request.Builder()
-            .url(url)
-            .build()
+        val apiRequest = buildRequest(
+            HOST_NAME,
+            PERSONAL_TODO_PATH_SEGMENT,
+            HttpMethod.GET
+        )
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onGetAllPersonalTodoFailure(e.message.toString())
+        client.newCall(apiRequest).enqueue(object : Callback {
+            override fun onFailure(call: Call, ioException: IOException) {
+                onFailure(ioException)
             }
 
             override fun onResponse(call: Call, response: Response) {
-                if (response.code == 401) {
-                    onGetAllPersonalTodoFailure(response.message)
-                    return
-                }
-                response.body?.string().let {
-                    val result = gson.fromJson(it, GetAllPersonalTodosResponse::class.java)
-                    onGetAllPersonalTodosSuccess(result)
+                try {
+                    response.body?.string().let {
+                        val result = gson.fromJson(it, GetAllPersonalTodosResponse::class.java)
+                        onSuccess(result)
+                    }
+                } catch (authorizationException: CustomException.UnauthorizedUserException) {
+                    onFailure(authorizationException)
                 }
             }
         })
@@ -138,33 +128,29 @@ class TodoServiceImpl : TodoService {
     override fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdateTeamTodoStatusFailure: (errorMessage: String) -> Unit
+        onFailure: (exception: Exception) -> Unit
     ) {
 
-        val requestBody =
-            FormBody.Builder()
-                .add(PARAM_ID, todoId)
-                .add(PARAM_STATUS, newTodoStatus.toString())
-                .build()
+        val apiRequest = buildRequest(
+            HOST_NAME,
+            TEAM_TODO_PATH_SEGMENT,
+            HttpMethod.PUT,
+            PARAM_ID to todoId,
+            PARAM_STATUS to newTodoStatus.toString()
+        )
 
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(TEAM_PATH_SEGMENT)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .put(requestBody)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onUpdateTeamTodoStatusFailure(e.message.toString())
+        client.newCall(apiRequest).enqueue(object : Callback {
+            override fun onFailure(call: Call, ioException: IOException) {
+                onFailure(ioException)
             }
 
-            override fun onResponse(call: Call, response: Response) {}
+            override fun onResponse(call: Call, response: Response) {
+                try {
+                    response.body
+                } catch (authorizationException: CustomException.UnauthorizedUserException) {
+                    onFailure(authorizationException)
+                }
+            }
         })
 
     }
@@ -172,76 +158,65 @@ class TodoServiceImpl : TodoService {
     override fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusFailure: (errorMessage: String) -> Unit
+        onFailure: (exception: Exception) -> Unit
     ) {
-        val requestBody =
-            FormBody.Builder()
-                .add(PARAM_ID, todoId)
-                .add(PARAM_STATUS, newTodoStatus.toString())
-                .build()
+        val apiRequest = buildRequest(
+            HOST_NAME,
+            PERSONAL_TODO_PATH_SEGMENT,
+            HttpMethod.PUT,
+            PARAM_ID to todoId,
+            PARAM_STATUS to newTodoStatus.toString()
+        )
 
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(PERSONAL_PATH_SEGMENT)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .put(requestBody)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onUpdatePersonalTodoStatusFailure(e.message.toString())
+        client.newCall(apiRequest).enqueue(object : Callback {
+            override fun onFailure(call: Call, ioException: IOException) {
+                onFailure(ioException)
             }
 
-            override fun onResponse(call: Call, response: Response) {}
+            override fun onResponse(call: Call, response: Response) {
+                try {
+                    response.body
+                } catch (authorizationException: CustomException.UnauthorizedUserException) {
+                    onFailure(authorizationException)
+                }
+            }
         })
     }
 
     override fun getAllTeamTodos(
-        onGetAllTeamTodosSuccess: (GetAllTeamTodosResponse) -> Unit,
-        onGetAllTeamTodosFailure: (errorMessage: String) -> Unit,
+        onSuccess: (GetAllTeamTodosResponse) -> Unit,
+        onFailure: (exception: Exception) -> Unit,
     ) {
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(
-                TEAM_PATH_SEGMENT
-            ).build()
 
-        val request = Request.Builder()
-            .url(url)
-            .build()
+        val apiRequest = buildRequest(
+            HOST_NAME,
+            TEAM_TODO_PATH_SEGMENT,
+            HttpMethod.GET
+        )
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onGetAllTeamTodosFailure(e.message.toString())
+        client.newCall(apiRequest).enqueue(object : Callback {
+            override fun onFailure(call: Call, ioException: IOException) {
+                onFailure(ioException)
             }
 
             override fun onResponse(call: Call, response: Response) {
-                if (response.code == 401) {
-                    onGetAllTeamTodosFailure(response.message)
-                    return
+                try {
+                    val result = gson.fromJson(
+                        response.body?.string().toString(), GetAllTeamTodosResponse::class.java
+                    )
+                    onSuccess(result)
+                } catch (authorizationException: CustomException.UnauthorizedUserException) {
+                    onFailure(authorizationException)
                 }
-                val result = gson.fromJson(
-                    response.body?.string().toString(), GetAllTeamTodosResponse::class.java
-                )
-                onGetAllTeamTodosSuccess(result)
             }
         })
     }
 
     companion object {
+        private const val TEAM_TODO_PATH_SEGMENT = "todo/team"
+        private const val PERSONAL_TODO_PATH_SEGMENT = "todo/personal"
         private const val PARAM_ID = "id"
         private const val PARAM_STATUS = "status"
-        private const val PATH_PERSONAL = "personal"
-        private const val TO_DO_PATH_SEGMENT = "todo"
-        private const val TEAM_PATH_SEGMENT = "team"
-        private const val PERSONAL_PATH_SEGMENT = "personal"
         private const val TITLE = "title"
         private const val DESCRIPTION = "description"
         private const val ASSIGNEE = "assignee"

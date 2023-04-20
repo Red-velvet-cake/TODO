@@ -1,6 +1,5 @@
 package com.red_velvet_cake.dailytodo.ui.personal_todo_details
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoDetailsBinding
@@ -26,7 +24,6 @@ class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
     private val personalTodoDetailsPresenter = PersonalTodoDetailsPresenter(this)
     private lateinit var personalTodo: PersonalTodo
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun setUp() {
         setArgs()
         initSpinner()
@@ -65,6 +62,10 @@ class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         requireActivity().runOnUiThread {
             makeToast(errorMessage)
         }
+    }
+
+    override fun navigateBack() {
+        requireActivity().navigateBack()
     }
 
     private fun makeToast(errorMessage: String) {

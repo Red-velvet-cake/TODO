@@ -8,4 +8,5 @@ interface TeamTodoView {
     fun showTodoUpdateFailMessage(errorMessage: String)
     fun showEmptyTodoListState()
     fun navigateToTodoDetails(todo: TeamTodo)
+    fun navigateBack()
 }

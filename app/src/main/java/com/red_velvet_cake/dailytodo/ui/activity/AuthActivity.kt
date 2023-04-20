@@ -15,6 +15,5 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>() {
     override fun setUp() {
         SharedPrefs.initPrefUtil(this)
     }
-
     override fun addCallbacks() {}
 }
