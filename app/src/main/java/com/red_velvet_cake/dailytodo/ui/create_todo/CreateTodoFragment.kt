@@ -8,9 +8,10 @@ import com.google.android.material.chip.Chip
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.databinding.FragmentCreateTeamTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.utils.navigateBack
 
 class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), CreateTodoView {
-    private val presenter = CreateTodoPresenter(this)
+    private val createTodoPresenter = CreateTodoPresenter(this)
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCreateTeamTodoBinding
         get() = FragmentCreateTeamTodoBinding::inflate
 
@@ -18,12 +19,11 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
 
     override fun addCallBacks() {
         setupCreateButtonClickListener()
-        setupTypeTodoCreated()
+        setupTodoTypeChipsListener()
     }
 
-    private fun setupTypeTodoCreated() {
+    private fun setupTodoTypeChipsListener() {
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
-
             if (checkedIds.size != 0) {
                 val chip: Chip? = group.findViewById(checkedIds[0])
                 chip?.let {
@@ -39,7 +39,6 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
                     }
                 }
             }
-
         }
     }
 
@@ -50,24 +49,13 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
             val name = binding.textName.text.toString()
             when (binding.chipGroup.checkedChipId) {
                 R.id.buttonPersonal -> {
-                    presenter.clickCreateTodoPersonalButton(title, description)
+                    createTodoPresenter.clickCreateTodoPersonalButton(title, description)
                 }
                 R.id.buttonTeam -> {
-                    presenter.clickCreateTodoTeamButton(title, description, name)
+                    createTodoPresenter.clickCreateTodoTeamButton(title, description, name)
                 }
             }
-            binding.titleText.setText("")
-            binding.textDescription.setText("")
-            binding.textName.setText("")
         }
-    }
-
-    override fun onCreateTeamTodoFailure(errorMessage: String) {
-        showToast(errorMessage)
-    }
-
-    override fun onCreatePersonalTodoFailure(errorMessage: String) {
-        showToast(errorMessage)
     }
 
     override fun showCreateSuccessMessage() {
@@ -94,6 +82,18 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
                 progressBarLoad.visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun navigateBack() {
+        requireActivity().navigateBack()
+    }
+
+    override fun showTryAgain() {
+        showToast(getString(R.string.adding_todo_fails_try_again))
+    }
+
+    override fun showInvalidTodoDetailsError() {
+        showToast(getString(R.string.please_fill_in_all_fields))
     }
 
     private fun showToast(message: String) {

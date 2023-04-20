@@ -3,6 +3,7 @@ package com.red_velvet_cake.dailytodo.ui.team_todo
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.util.CustomException
 
 class TeamTodoPresenter(private val view: TeamTodoView) {
 
@@ -26,8 +27,16 @@ class TeamTodoPresenter(private val view: TeamTodoView) {
         )
     }
 
-    private fun onUpdateTeamTodoStatusFailure(errorMessage: String) {
-        view.showTodoUpdateFailMessage(errorMessage)
+    private fun onUpdateTeamTodoStatusFailure(exception: Exception) {
+        when (exception) {
+            is CustomException.UnauthorizedUserException -> {
+                view.navigateBack()
+            }
+
+            else -> {
+                view.showTodoUpdateFailMessage(exception.message.toString())
+            }
+        }
     }
 
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
@@ -37,8 +46,16 @@ class TeamTodoPresenter(private val view: TeamTodoView) {
         view.showTodoList(getAllTeamTodosResponse.value)
     }
 
-    private fun onGetAllTeamTodosFailure(errorMessage: String) {
-        view.showLoadTodosFailed()
+    private fun onGetAllTeamTodosFailure(exception: Exception) {
+        when (exception) {
+            is CustomException.UnauthorizedUserException -> {
+                view.navigateBack()
+            }
+
+            else -> {
+                view.showLoadTodosFailed()
+            }
+        }
     }
 
     fun navigateToTodoDetails(todo: TeamTodo) {

@@ -82,6 +82,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
         }
     }
 
+    override fun showPendingTeamTodos(pendingTodo: Int) {
+        requireActivity().runOnUiThread { adapter.setTeamPendingCount(pendingTodo) }
+    }
+
+    override fun showPendingPersonalTodos(pendingTodo: Int) {
+        requireActivity().runOnUiThread { adapter.setPersonalPendingCount(pendingTodo) }
+
+    }
+
+    override fun showCompletedTeamTodos(completedTodo: Int) {
+        requireActivity().runOnUiThread { adapter.setTeamCompleteCount(completedTodo) }
+    }
+
+    override fun showCompletedPersonalTodos(completedTodo: Int) {
+        requireActivity().runOnUiThread { adapter.setPersonalCompleteCount(completedTodo) }
+    }
+
+
     override fun showErrorOnPersonalTodoFailure(errorMessage: String) {
     }
 
@@ -126,5 +144,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
         val toLoginIntent = Intent(requireActivity(), AuthActivity::class.java)
         requireActivity().startActivity(toLoginIntent)
         requireActivity().finish()
+    }
+
+    override fun showTryAgain() {
+
     }
 }

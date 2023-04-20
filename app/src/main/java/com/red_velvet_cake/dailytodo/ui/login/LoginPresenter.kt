@@ -13,12 +13,12 @@ class LoginPresenter(private val view: LoginView) {
         authService.loginAccount(
             username,
             password,
-            this::onSuccess,
-            this::onFailure
+            this::onLoginSuccess,
+            this::onLoginFailure
         )
     }
 
-    private fun onSuccess(loginResponse: LoginResponse) {
+    private fun onLoginSuccess(loginResponse: LoginResponse) {
         view.hideLoadingState()
         if (loginResponse.isSuccess) {
             localDataImpl.setUserToken(loginResponse.loginResponseBody.token)
@@ -28,9 +28,9 @@ class LoginPresenter(private val view: LoginView) {
         }
     }
 
-    private fun onFailure(errorMessage: String) {
+    private fun onLoginFailure(exception: Exception) {
         view.hideLoadingState()
-        view.showLoginFailedMessage(errorMessage)
+        view.showLoginFailedMessage(exception.message.toString())
     }
 
     fun validateInputFields(username: String, password: String): Boolean {

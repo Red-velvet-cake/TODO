@@ -1,6 +1,6 @@
 package com.red_velvet_cake.dailytodo.data.local
 
-class LocalDataImpl : LocalData {
+class LocalDataImpl() : LocalData {
     override fun getUserToken(): String? {
         return SharedPrefs.token
     }

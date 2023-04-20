@@ -9,4 +9,5 @@ interface LoginView {
     fun showPasswordError(show: Boolean)
     fun navigateToHome()
     fun navigateToRegister()
+    fun showTryAgain()
 }
