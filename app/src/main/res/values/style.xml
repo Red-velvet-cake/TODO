@@ -53,5 +53,17 @@
         <item name="android:fontFamily">@font/poppins_medium</item>
     </style>
 
+    <style name="chips" parent="Widget.Material3.ChipGroup">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="chipCornerRadius">@dimen/_16dp</item>
+    </style>
+
+    <style name="chips.createTodo" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textColor">@drawable/chip_text</item>
+        <item name="chipBackgroundColor">@drawable/chip_background</item>
+    </style>
+
 
 </resources>
