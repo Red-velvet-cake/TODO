@@ -6,7 +6,7 @@ import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.remote.util.HttpMethod
 import com.red_velvet_cake.dailytodo.data.remote.util.buildRequest
-import com.red_velvet_cake.dailytodo.utils.Constants.HOST
+import com.red_velvet_cake.dailytodo.utils.Constants.HOST_NAME
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
 import okhttp3.Callback
@@ -38,15 +38,15 @@ class AuthenticationServiceImpl : AuthenticationService {
     ) {
         val url = HttpUrl.Builder()
             .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(PATH_LOGIN)
+            .host(HOST_NAME)
+            .addPathSegment(LOGIN_PATH)
             .build()
 
         val authHeaderValue = Credentials.basic(username, password)
 
         val request = Request.Builder()
             .url(url)
-            .header(HEADER_AUTHORIZATION, authHeaderValue)
+            .header(AUTHORIZATION_HEADER, authHeaderValue)
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -71,8 +71,8 @@ class AuthenticationServiceImpl : AuthenticationService {
         onFailure: (errorMessage: String) -> Unit,
     ) {
         val apiRequest = buildRequest(
-            HOST,
-            "signup",
+            HOST_NAME,
+            SIGNUP_PATH,
             HttpMethod.POST,
             USERNAME to username,
             PASSWORD to password,
@@ -98,7 +98,8 @@ class AuthenticationServiceImpl : AuthenticationService {
         private const val USERNAME = "username"
         private const val PASSWORD = "password"
         private const val TEAM_ID = "teamId"
-        private const val PATH_LOGIN = "login"
-        private const val HEADER_AUTHORIZATION = "Authorization"
+        private const val SIGNUP_PATH = "signup"
+        private const val LOGIN_PATH = "login"
+        private const val AUTHORIZATION_HEADER = "Authorization"
     }
 }
