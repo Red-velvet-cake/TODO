@@ -5,21 +5,13 @@ import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
 import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
 
 class CreateTodoPresenter(val view: CreateTodoView) {
-
     private val todoServiceImpl = TodoServiceImpl()
-    private var title: String = ""
-    private var description: String = ""
-    private var assignee: String = ""
 
     private fun createTeamTodoSuccess(
         title: String,
         description: String,
         assignee: String
     ) {
-        this.title = title
-        this.description = description
-        this.assignee = assignee
-
         todoServiceImpl.createTeamTodo(
             title,
             description,
@@ -33,10 +25,6 @@ class CreateTodoPresenter(val view: CreateTodoView) {
         title: String,
         description: String
     ) {
-
-        this.title = title
-        this.description = description
-
         todoServiceImpl.createPersonalTodo(
             title,
             description,
@@ -76,17 +64,34 @@ class CreateTodoPresenter(val view: CreateTodoView) {
         description: String,
         assignee: String
     ) {
-
-        view.disableCreateButtonWithLoading()
-        createTeamTodoSuccess(title, description, assignee)
+        if (isTitleDescriptionAndAssigneeEmpty(title, description, assignee)) {
+            view.disableCreateButtonWithLoading()
+            createTeamTodoSuccess(title, description, assignee)
+        } else {
+            view.showCreateFailedMessage("Please fill in all fields")
+        }
     }
 
     fun clickCreateTodoPersonalButton(
         title: String,
         description: String
     ) {
-
-        view.disableCreateButtonWithLoading()
-        createPersonalTodo(title, description)
+        if (isTitleAndDescriptionEmpty(title, description)) {
+            view.disableCreateButtonWithLoading()
+            createPersonalTodo(title, description)
+        } else {
+            view.showCreateFailedMessage("Please fill in all fields")
+        }
     }
+
+    private fun isTitleAndDescriptionEmpty(
+        title: String,
+        description: String
+    ) = title.isNotEmpty() && description.isNotEmpty()
+
+    private fun isTitleDescriptionAndAssigneeEmpty(
+        title: String,
+        description: String,
+        assignee: String
+    ) = title.isNotEmpty() && description.isNotEmpty() && assignee.isNotEmpty()
 }
