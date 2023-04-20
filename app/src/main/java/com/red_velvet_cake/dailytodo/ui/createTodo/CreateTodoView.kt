@@ -13,6 +13,5 @@ interface CreateTodoView {
     fun showCreateFailedMessage(errorMessage: String)
 
     fun disableCreateButtonWithLoading()
-
-
+    fun navigateBack()
 }

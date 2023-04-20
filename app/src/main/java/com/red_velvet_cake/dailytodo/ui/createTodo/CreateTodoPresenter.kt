@@ -7,7 +7,7 @@ import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
 class CreateTodoPresenter(val view: CreateTodoView) {
     private val todoServiceImpl = TodoServiceImpl()
 
-    private fun createTeamTodoSuccess(
+    private fun createTeamTodo(
         title: String,
         description: String,
         assignee: String
@@ -37,6 +37,7 @@ class CreateTodoPresenter(val view: CreateTodoView) {
         view.enableCreateButton()
         if (createTodoTeamResponse.isSuccess) {
             view.showCreateSuccessMessage()
+            view.navigateBack()
         } else {
             view.showCreateFailedMessage(createTodoTeamResponse.message)
         }
@@ -66,7 +67,7 @@ class CreateTodoPresenter(val view: CreateTodoView) {
     ) {
         if (isTitleDescriptionAndAssigneeEmpty(title, description, assignee)) {
             view.disableCreateButtonWithLoading()
-            createTeamTodoSuccess(title, description, assignee)
+            createTeamTodo(title, description, assignee)
         } else {
             view.showCreateFailedMessage("Please fill in all fields")
         }

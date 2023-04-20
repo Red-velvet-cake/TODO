@@ -8,6 +8,7 @@ import com.google.android.material.chip.Chip
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.databinding.FragmentCreateTeamTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.utils.navigateBack
 
 class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), CreateTodoView {
     private val presenter = CreateTodoPresenter(this)
@@ -94,6 +95,10 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
                 progressBarLoad.visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun navigateBack() {
+        requireActivity().navigateBack()
     }
 
     private fun showToast(message: String) {
