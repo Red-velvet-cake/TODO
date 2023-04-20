@@ -1,6 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.personal_todo
 
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
 
 class PersonalTodoPresenter(private val view: PersonalTodoView) {
@@ -39,5 +40,9 @@ class PersonalTodoPresenter(private val view: PersonalTodoView) {
 
     private fun onGetAllTeamTodosFailure(errorMessage: String) {
         view.showLoadTodosFailed()
+    }
+
+    fun navigateToTodoDetails(personalTodo: PersonalTodo) {
+        view.navigateToTodoDetails(personalTodo)
     }
 }

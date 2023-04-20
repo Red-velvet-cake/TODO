@@ -8,10 +8,10 @@ import android.graphics.drawable.GradientDrawable
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
+import java.util.Collections
 
 class ItemPersonalTodoTouchHelperCallback(
-    private val personalTodoAdapter: PersonalToDoAdapter,
+    private val personalTodoAdapter: PersonalTodoAdapter,
 ) : ItemTouchHelper.SimpleCallback(
     0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
 ) {

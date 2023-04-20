@@ -8,11 +8,13 @@ import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.ui.personal_todo_details.PersonalTodoDetailsFragment
 import com.red_velvet_cake.dailytodo.utils.navigateBack
+import com.red_velvet_cake.dailytodo.utils.navigateTo
 
-class PersonalTodoViewFragment : BaseFragment<FragmentPersonalTodoBinding>(), PersonalTodoView {
+class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), PersonalTodoView {
 
-    private lateinit var personalToDoAdapter: PersonalToDoAdapter
+    private lateinit var personalToDoAdapter: PersonalTodoAdapter
     private lateinit var personalTodoPresenter: PersonalTodoPresenter
     private var selectedChip = -1
 
@@ -74,7 +76,11 @@ class PersonalTodoViewFragment : BaseFragment<FragmentPersonalTodoBinding>(), Pe
 
 
     private fun initializeAdapter() {
-        personalToDoAdapter = PersonalToDoAdapter(::onUpdateStatus)
+        personalToDoAdapter = PersonalTodoAdapter(::onUpdateStatus, ::onTodoClick)
+    }
+
+    private fun onTodoClick(personalTodo: PersonalTodo) {
+        personalTodoPresenter.navigateToTodoDetails(personalTodo)
     }
 
     private fun onUpdateStatus(todoId: String, status: Int) {
@@ -109,6 +115,10 @@ class PersonalTodoViewFragment : BaseFragment<FragmentPersonalTodoBinding>(), Pe
 
     }
 
+    override fun navigateToTodoDetails(personalTodo: PersonalTodo) {
+        requireActivity().navigateTo(PersonalTodoDetailsFragment.newInstance(personalTodo))
+    }
+
     override fun showTodoList(todoList: List<PersonalTodo>) {
         val itemTouchHelperCallback = ItemPersonalTodoTouchHelperCallback(personalToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
@@ -126,7 +136,7 @@ class PersonalTodoViewFragment : BaseFragment<FragmentPersonalTodoBinding>(), Pe
         private const val CHIP_IN_PROGRESS_VALUE = 1
         private const val CHIP_DONE_VALUE = 2
 
-        fun newInstance() = PersonalTodoViewFragment()
+        fun newInstance() = PersonalTodoFragment()
     }
 }
 
