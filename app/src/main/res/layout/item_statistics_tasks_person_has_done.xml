@@ -41,7 +41,7 @@
         android:elevation="@dimen/_1dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/pending_tasks"
-        android:textColor="@color/background"
+        android:textColor="#DEFFFFFF"
         android:textSize="@dimen/_16sp"
         app:layout_constraintStart_toStartOf="@id/card_view_statistic_personal"
         app:layout_constraintTop_toTopOf="parent" />
