@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.ui.createTodo
+package com.red_velvet_cake.dailytodo.ui.create_todo
 
 interface CreateTodoView {
     fun showCreateSuccessMessage()

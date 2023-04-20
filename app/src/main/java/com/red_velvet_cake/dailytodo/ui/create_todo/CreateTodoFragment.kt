@@ -1,8 +1,10 @@
-package com.red_velvet_cake.dailytodo.ui.createTodo
+package com.red_velvet_cake.dailytodo.ui.create_todo
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.google.android.material.chip.Chip
 import com.red_velvet_cake.dailytodo.R
@@ -20,6 +22,7 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
     override fun addCallBacks() {
         setupCreateButtonClickListener()
         setupTodoTypeChipsListener()
+        setupOnBackButtonClickListener()
     }
 
     private fun setupTodoTypeChipsListener() {
@@ -51,6 +54,7 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
                 R.id.buttonPersonal -> {
                     createTodoPresenter.clickCreateTodoPersonalButton(title, description)
                 }
+
                 R.id.buttonTeam -> {
                     createTodoPresenter.clickCreateTodoTeamButton(title, description, name)
                 }
@@ -105,5 +109,18 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
         requireActivity().runOnUiThread {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setupOnBackButtonClickListener() {
+        binding.toolbar.setNavigationOnClickListener {
+            hideKeyboard()
+            requireActivity().navigateBack()
+        }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 }

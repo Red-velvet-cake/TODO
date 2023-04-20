@@ -13,7 +13,7 @@
         android:layout_marginStart="@dimen/_16dp"
         android:layout_marginTop="@dimen/_16dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="@string/team_task"
+        android:text="@string/team"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/_16sp"
         app:layout_constraintStart_toStartOf="parent"

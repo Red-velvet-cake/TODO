@@ -12,7 +12,7 @@ import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentHomeBinding
 import com.red_velvet_cake.dailytodo.ui.activity.AuthActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
-import com.red_velvet_cake.dailytodo.ui.createTodo.CreateTodoFragment
+import com.red_velvet_cake.dailytodo.ui.create_todo.CreateTodoFragment
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeAdapter
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItemType
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItems
@@ -34,6 +34,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
 
 
     override fun setUp() {
+        lists.add(
+            HomeItems(
+                Statistics(),
+                HomeItemType.ITEM_STATISTICS_TASKS_HAS_DONE
+            )
+        )
         adapter = HomeAdapter(
             lists,
             ::onClickTeamTodo,
@@ -71,12 +77,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     override fun showPersonalTodos(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
         requireActivity().runOnUiThread {
             adapter.setPersonalCount(getAllPersonalTodosResponse.value.size)
-            lists.add(
-                HomeItems(
-                    Statistics(personal = getAllPersonalTodosResponse),
-                    HomeItemType.ITEM_STATISTICS_TASKS_HAS_DONE
-                )
-            )
             lists.add(HomeItems(getAllPersonalTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
             adapter.notifyDataSetChanged()
         }
