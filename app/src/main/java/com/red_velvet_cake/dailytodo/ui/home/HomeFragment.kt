@@ -34,6 +34,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
 
 
     override fun setUp() {
+        lists.add(
+            HomeItems(
+                Statistics(),
+                HomeItemType.ITEM_STATISTICS_TASKS_HAS_DONE
+            )
+        )
         adapter = HomeAdapter(
             lists,
             ::onClickTeamTodo,
@@ -71,12 +77,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     override fun showPersonalTodos(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
         requireActivity().runOnUiThread {
             adapter.setPersonalCount(getAllPersonalTodosResponse.value.size)
-            lists.add(
-                HomeItems(
-                    Statistics(personal = getAllPersonalTodosResponse),
-                    HomeItemType.ITEM_STATISTICS_TASKS_HAS_DONE
-                )
-            )
             lists.add(HomeItems(getAllPersonalTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
             adapter.notifyDataSetChanged()
         }
