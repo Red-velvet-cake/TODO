@@ -2,14 +2,14 @@ package com.red_velvet_cake.dailytodo.ui.login
 
 import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
-import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.auth.AuthenticationServiceImpl
 
 class LoginPresenter(private val view: LoginView) {
-    private val todoServiceImpl = TodoServiceImpl()
+    private val authService = AuthenticationServiceImpl()
 
     fun loginUser(username: String, password: String) {
         view.showLoadingState()
-        todoServiceImpl.loginUser(
+        authService.loginAccount(
             username,
             password,
             this::onSuccess,
