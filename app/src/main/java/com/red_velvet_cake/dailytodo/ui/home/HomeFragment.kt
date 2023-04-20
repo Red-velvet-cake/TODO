@@ -1,29 +1,31 @@
 package com.red_velvet_cake.dailytodo.ui.home
 
 
-import android.util.Log
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.model.Statistics
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentHomeBinding
+import com.red_velvet_cake.dailytodo.ui.activity.AuthActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.ui.createTodo.CreateTodoFragment
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeAdapter
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItemType
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItems
-import com.red_velvet_cake.dailytodo.ui.home.adapter.IHomeView
+import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeView
 import com.red_velvet_cake.dailytodo.ui.personal_todo.PersonalTodoViewFragment
 import com.red_velvet_cake.dailytodo.ui.personal_todo_details.PersonalTodoDetailsFragment
 import com.red_velvet_cake.dailytodo.ui.team_todo.TeamTodoFragment
 import com.red_velvet_cake.dailytodo.ui.team_todo_details.TeamTodoDetailsFragment
 import com.red_velvet_cake.dailytodo.utils.navigateTo
-import java.io.IOException
 
 
-class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
         get() = FragmentHomeBinding::inflate
 
@@ -44,9 +46,10 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
         binding.recyclerViewHome.adapter = adapter
 
         binding.buttonAddTeamTodo.setOnClickListener {
-            val dialog = CreateTeamTodoDialogFragment()
-
-            dialog.show(parentFragmentManager, "create")
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container_view_home, CreateTodoFragment())
+                .commit()
         }
     }
 
@@ -78,18 +81,15 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
                     HomeItemType.ITEM_STATISTICS_TASKS_HAS_DONE
                 )
             )
-            lists.add(HomeItems("Personal Task", HomeItemType.ITEM_TODOS_SECTION_TITLE))
             lists.add(HomeItems(getAllPersonalTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
             adapter.notifyDataSetChanged()
         }
     }
 
-    override fun showErrorOnPersonalTodoFailure(exception: IOException) {
-        Log.i("mah", "personal ${exception.message}")
+    override fun showErrorOnPersonalTodoFailure(errorMessage: String) {
     }
 
     override fun showTeamTodos(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
-        lists.add(HomeItems("Team Task", HomeItemType.ITEM_TODOS_SECTION_TITLE))
         requireActivity().runOnUiThread {
             adapter.setTeamCount(getAllTeamTodosResponse.value.size)
             lists.add(
@@ -100,12 +100,10 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
             )
             adapter.notifyDataSetChanged()
         }
-
-
     }
 
-    override fun showErrorOnTeamTodoFailure(exception: IOException) {
-        Log.i("mah", "team ${exception.message}")
+    override fun showErrorOnTeamTodoFailure(errorMessage: String) {
+
     }
 
     override fun navigateToTeamTodoDetails(teamTodo: TeamTodo) {
@@ -126,5 +124,11 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(), IHomeView {
 
     override fun navigateToAllPersonalTodos() {
         requireActivity().navigateTo(PersonalTodoViewFragment.newInstance())
+    }
+
+    override fun navigateToLogin() {
+        val toLoginIntent = Intent(requireActivity(), AuthActivity::class.java)
+        requireActivity().startActivity(toLoginIntent)
+        requireActivity().finish()
     }
 }

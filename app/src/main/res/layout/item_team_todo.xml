@@ -12,7 +12,6 @@
         android:layout_height="@dimen/_148dp"
         android:layout_marginTop="@dimen/_8dp"
         android:layout_marginEnd="@dimen/_8dp"
-        android:layout_marginBottom="@dimen/_56dp"
         app:cardCornerRadius="@dimen/_16dp"
         app:cardElevation="@dimen/_0dp"
         app:layout_constraintBottom_toBottomOf="parent"

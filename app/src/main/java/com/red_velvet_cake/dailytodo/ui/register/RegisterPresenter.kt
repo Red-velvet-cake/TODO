@@ -36,8 +36,8 @@ class RegisterPresenter(
         }
     }
 
-    private fun onRegisterAccountFailure(exception: IOException) {
-        exception.message?.let { view.showRegisterFailedMessage(it) }
+    private fun onRegisterAccountFailure(errorMessage: String) {
+        view.showRegisterFailedMessage(errorMessage)
     }
 
     fun clickRegisterButton(
@@ -102,8 +102,8 @@ class RegisterPresenter(
         }
     }
 
-    private fun onLoginAccountFailure(exception: IOException) {
-        view.showLoginFailedMessage(exception.message.toString())
+    private fun onLoginAccountFailure(errorMessage: String) {
+        view.showLoginFailedMessage(errorMessage)
     }
 
     fun navigateToLogin() {

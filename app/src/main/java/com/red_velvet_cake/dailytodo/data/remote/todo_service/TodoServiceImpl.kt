@@ -34,7 +34,7 @@ class TodoServiceImpl : TodoService {
         description: String,
         assignee: String,
         onCreateTeamTodoSuccess: (CreateTodoTeamResponse) -> Unit,
-        onCreateTeamTodoFailure: (IOException) -> Unit
+        onCreateTeamTodoFailure: (errorMessage: String) -> Unit
     ) {
         val requestBody = FormBody.Builder()
             .add(TITLE, title)
@@ -56,7 +56,7 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onCreateTeamTodoFailure(e)
+                onCreateTeamTodoFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -72,7 +72,7 @@ class TodoServiceImpl : TodoService {
         title: String,
         description: String,
         onCreatePersonalTodoSuccess: (CreateTodoPersonalResponse) -> Unit,
-        onCreatePersonalTodoFailure: (e: IOException) -> Unit
+        onCreatePersonalTodoFailure: (errorMessage: String) -> Unit
     ) {
 
         val requestBody = FormBody.Builder()
@@ -109,7 +109,7 @@ class TodoServiceImpl : TodoService {
 
     override fun getAllPersonalTodos(
         onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
-        onGetAllPersonalTodoFailure: (e: IOException) -> Unit
+        onGetAllPersonalTodoFailure: (errorMessage: String) -> Unit
     ) {
         val url = HttpUrl.Builder()
             .scheme(SCHEME)
@@ -124,10 +124,14 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onGetAllPersonalTodoFailure(e)
+                onGetAllPersonalTodoFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
+                if (response.code == 401) {
+                    onGetAllPersonalTodoFailure(response.message)
+                    return
+                }
                 response.body?.string().let {
                     val result = gson.fromJson(it, GetAllPersonalTodosResponse::class.java)
                     onGetAllPersonalTodosSuccess(result)
@@ -139,7 +143,7 @@ class TodoServiceImpl : TodoService {
     override fun updateTeamTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdateTeamTodoStatusFailure: (e: IOException) -> Unit
+        onUpdateTeamTodoStatusFailure: (errorMessage: String) -> Unit
     ) {
 
         val requestBody =
@@ -162,17 +166,18 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onUpdateTeamTodoStatusFailure(e)
+                onUpdateTeamTodoStatusFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {}
         })
+
     }
 
     override fun updatePersonalTodoStatus(
         todoId: String,
         newTodoStatus: Int,
-        onUpdatePersonalTodoStatusFailure: (e: IOException) -> Unit
+        onUpdatePersonalTodoStatusFailure: (errorMessage: String) -> Unit
     ) {
         val requestBody =
             FormBody.Builder()
@@ -194,7 +199,7 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onUpdatePersonalTodoStatusFailure(e)
+                onUpdatePersonalTodoStatusFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {}
@@ -203,7 +208,7 @@ class TodoServiceImpl : TodoService {
 
     override fun getAllTeamTodos(
         onGetAllTeamTodosSuccess: (GetAllTeamTodosResponse) -> Unit,
-        onGetAllTeamTodosFailure: (IOException) -> Unit,
+        onGetAllTeamTodosFailure: (errorMessage: String) -> Unit,
     ) {
         val url = HttpUrl.Builder()
             .scheme(SCHEME)
@@ -219,39 +224,18 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onGetAllTeamTodosFailure(e)
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val result = gson.fromJson(
-                    response.body?.string().toString(), GetAllTeamTodosResponse::class.java
-                )
-                onGetAllTeamTodosSuccess(result)
-            }
-        })
-    }
-
-    override fun checkUserLoggedIn(onUserNotLoggedIn: () -> Unit) {
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(PATH_PERSONAL)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onUserNotLoggedIn()
+                onGetAllTeamTodosFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.code == 401) {
-                    onUserNotLoggedIn()
+                    onGetAllTeamTodosFailure(response.message)
+                    return
                 }
+                val result = gson.fromJson(
+                    response.body?.string().toString(), GetAllTeamTodosResponse::class.java
+                )
+                onGetAllTeamTodosSuccess(result)
             }
         })
     }
@@ -263,6 +247,11 @@ class TodoServiceImpl : TodoService {
         private const val TO_DO_PATH_SEGMENT = "todo"
         private const val TEAM_PATH_SEGMENT = "team"
         private const val PERSONAL_PATH_SEGMENT = "personal"
+        private const val REGISTER_PATH = "signup"
+        private const val USERNAME = "username"
+        private const val PASSWORD = "password"
+        private const val TEAM_ID = "teamId"
+        private const val PATH_LOGIN = "login"
         private const val TITLE = "title"
         private const val DESCRIPTION = "description"
         private const val ASSIGNEE = "assignee"

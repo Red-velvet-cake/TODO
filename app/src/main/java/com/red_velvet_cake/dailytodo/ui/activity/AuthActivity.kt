@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
 import com.red_velvet_cake.dailytodo.databinding.ActivityAuthBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseActivity
-import com.red_velvet_cake.dailytodo.utils.ConnectionStatus
 
 class AuthActivity : BaseActivity<ActivityAuthBinding>() {
     override val LOG_TAG: String
@@ -18,6 +17,4 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>() {
     }
 
     override fun addCallbacks() {}
-
-    override fun isInternetAvailable(connectionStatus: ConnectionStatus) {}
 }

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/radar_chart_statistic"
+        android:id="@+id/pie_chart_statistic"
         android:layout_width="@dimen/_126dp"
         android:layout_height="@dimen/_0dp"
         android:layout_margin="@dimen/_16dp"
