@@ -28,8 +28,10 @@ class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         setArgs()
         initSpinner()
         binding.apply {
+            val (date, time) = extractDateAndTime(personalTodo.creationTime)
             textViewTodoTitle.text = personalTodo.title
-            textViewCreationDate.text = personalTodo.creationTime
+            textViewCreationDate.text = date
+            textViewTodoCreationTime.text = time
             textViewTodoDescription.text = personalTodo.description
         }
     }
@@ -111,4 +113,10 @@ class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         Toast.makeText(requireContext(), "Nothing Selected ", Toast.LENGTH_SHORT)
             .show()
     }
+
+    private fun extractDateAndTime(dateTimeString: String): Pair<String, String> {
+        val parts = dateTimeString.split("T")
+        return Pair(parts[0], parts[1].substring(0, 5))
+    }
+
 }

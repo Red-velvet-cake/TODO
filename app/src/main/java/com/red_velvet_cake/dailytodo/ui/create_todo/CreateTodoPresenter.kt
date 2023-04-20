@@ -52,6 +52,7 @@ class CreateTodoPresenter(val view: CreateTodoView) {
 
             else -> {
                 view.showTryAgain()
+                view.stopLoadingButton()
                 view.showCreateFailedMessage(exception.message.toString())
             }
         }
