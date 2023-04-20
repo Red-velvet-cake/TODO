@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_56dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/text_view_todo_section_title"
@@ -26,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16dp"
         android:fontFamily="@font/poppins"
-        android:text="@string/view_all"
+        android:text="@string/show_all"
         android:textColor="@color/accent_text"
         android:textSize="@dimen/_12sp"
         app:layout_constraintBottom_toBottomOf="@id/text_view_todo_section_title"

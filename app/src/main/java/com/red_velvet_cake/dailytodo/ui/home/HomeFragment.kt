@@ -28,8 +28,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     private lateinit var adapter: HomeAdapter
     private val homePresenter = HomePresenter(this)
 
-
     override fun setUp() {
+        homePresenter.getAllTodos()
         lists.add(
             HomeItems(
                 Statistics(),
@@ -43,7 +43,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
             ::onClickAllTeamTodos,
             ::onClickAllPersonalTodos
         )
-        homePresenter.getAllTodos()
         binding.recyclerViewHome.adapter = adapter
 
         binding.buttonAddTeamTodo.setOnClickListener {
@@ -68,9 +67,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     }
 
     override fun addCallBacks() {
+        binding.buttonTryAgain.setOnClickListener {
+            homePresenter.getAllTodos()
+        }
     }
 
     override fun showPersonalTodos(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
+        showHiddenSections()
         requireActivity().runOnUiThread {
             adapter.setPersonalCount(getAllPersonalTodosResponse.value.size)
             lists.add(HomeItems(getAllPersonalTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
@@ -95,11 +98,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
         requireActivity().runOnUiThread { adapter.setPersonalCompleteCount(completedTodo) }
     }
 
-
     override fun showErrorOnPersonalTodoFailure(errorMessage: String) {
     }
 
     override fun showTeamTodos(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
+        showHiddenSections()
         requireActivity().runOnUiThread {
             adapter.setTeamCount(getAllTeamTodosResponse.value.size)
             lists.add(
@@ -143,7 +146,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     }
 
     override fun showTryAgain() {
+        requireActivity().runOnUiThread {
+            binding.recyclerViewHome.visibility = View.GONE
+            binding.buttonAddTeamTodo.visibility = View.GONE
+            binding.buttonTryAgain.visibility = View.VISIBLE
+            binding.imageViewHasNoInternet.visibility = View.VISIBLE
+        }
+    }
 
+    private fun showHiddenSections() {
+        requireActivity().runOnUiThread {
+            binding.recyclerViewHome.visibility = View.VISIBLE
+            binding.buttonAddTeamTodo.visibility = View.VISIBLE
+            binding.buttonTryAgain.visibility = View.GONE
+            binding.imageViewHasNoInternet.visibility = View.GONE
+        }
     }
 
     override fun showLoadStatus() {
