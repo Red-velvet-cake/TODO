@@ -23,7 +23,7 @@
             android:hint="@string/_name"
             android:padding="@dimen/_16dp"
             android:textColorHint="@color/accent_text"
-            android:textSize="@dimen/_12dp" />
+            android:textSize="@dimen/_16sp" />
 
         <EditText
             android:id="@+id/titleText"
@@ -34,7 +34,7 @@
             android:hint="@string/task_title"
             android:padding="@dimen/_16dp"
             android:textColorHint="@color/accent_text"
-            android:textSize="@dimen/_12dp" />
+            android:textSize="@dimen/_16sp" />
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
             android:hint="@string/task_description"
             android:padding="@dimen/_16dp"
             android:textColorHint="@color/accent_text"
-            android:textSize="@dimen/_12dp" />
+            android:textSize="@dimen/_16sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
