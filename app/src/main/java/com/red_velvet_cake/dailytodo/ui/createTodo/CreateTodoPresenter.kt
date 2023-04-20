@@ -2,7 +2,7 @@ package com.red_velvet_cake.dailytodo.ui.createTodo
 
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
-import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
 
 class CreateTodoPresenter(val view: CreateTodoView) {
 
