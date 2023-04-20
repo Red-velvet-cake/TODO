@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.ui.createTodo
+package com.red_velvet_cake.dailytodo.ui.create_todo
 
 import android.view.LayoutInflater
 import android.view.View
