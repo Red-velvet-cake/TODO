@@ -17,7 +17,7 @@ import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeAdapter
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItemType
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItems
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeView
-import com.red_velvet_cake.dailytodo.ui.personal_todo.PersonalTodoViewFragment
+import com.red_velvet_cake.dailytodo.ui.personal_todo.PersonalTodoFragment
 import com.red_velvet_cake.dailytodo.ui.personal_todo_details.PersonalTodoDetailsFragment
 import com.red_velvet_cake.dailytodo.ui.team_todo.TeamTodoFragment
 import com.red_velvet_cake.dailytodo.ui.team_todo_details.TeamTodoDetailsFragment
@@ -119,7 +119,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     }
 
     override fun navigateToAllPersonalTodos() {
-        requireActivity().navigateTo(PersonalTodoViewFragment.newInstance())
+        requireActivity().navigateTo(PersonalTodoFragment.newInstance())
     }
 
     override fun navigateToLogin() {

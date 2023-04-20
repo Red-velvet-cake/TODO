@@ -2,86 +2,64 @@ package com.red_velvet_cake.dailytodo.ui.personal_todo_details
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.PopupMenu
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoDetailsBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.utils.Constants
 import com.red_velvet_cake.dailytodo.utils.navigateBack
 
 
 class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBinding>(),
-    PersonalTodoDetailsView, PopupMenu.OnMenuItemClickListener {
+    PersonalTodoDetailsView, AdapterView.OnItemSelectedListener {
 
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentPersonalTodoDetailsBinding
         get() = FragmentPersonalTodoDetailsBinding::inflate
 
     private val personalTodoDetailsPresenter = PersonalTodoDetailsPresenter(this)
-    private lateinit var popupMenu: PopupMenu
     private lateinit var personalTodo: PersonalTodo
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun setUp() {
         setArgs()
+        initSpinner()
         binding.apply {
             textViewTodoTitle.text = personalTodo.title
             textViewCreationDate.text = personalTodo.creationTime
             textViewTodoDescription.text = personalTodo.description
         }
-        setupPopupMenu()
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun initSpinner() {
+        val status = listOf(
+            getString(R.string.todo_status),
+            getString(R.string.in_progress_status),
+            getString(R.string.done_status)
+        )
+        val spinnerAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, status)
+        spinnerAdapter.setDropDownViewResource(R.layout.item_todo_type)
+
+        binding.spinnerTodoStatus.apply {
+            adapter = spinnerAdapter
+            onItemSelectedListener = this@PersonalTodoDetailsFragment
+        }
+    }
+
     private fun setArgs() {
         personalTodo = arguments?.getParcelable(DETAILS_PARAM)!!
     }
 
-    private fun setupPopupMenu() {
-        popupMenu = PopupMenu(requireContext(), binding.imageButtonShowFilterOptions)
-        popupMenu.inflate(R.menu.popup_menu)
-    }
-
     override fun addCallBacks() {
-        popupMenu.setOnMenuItemClickListener(this)
-        binding.imageButtonShowFilterOptions.setOnClickListener {
-            popupMenu.show()
-        }
-
         binding.toolbar.setNavigationOnClickListener { requireActivity().navigateBack() }
     }
-
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        Log.d("alhamsssss", "onMenuItemClick: My glasses")
-        when (item?.itemId) {
-            R.id.todo -> {
-                personalTodoDetailsPresenter.updatePersonalTodoStatus(personalTodo.id, TODO_STATUS)
-                return true
-            }
-
-            R.id.in_progress -> {
-                Log.d("alhamsssss", "onMenuItemClick: My glassesesssssss harry potter")
-                personalTodoDetailsPresenter.updatePersonalTodoStatus(
-                    personalTodo.id,
-                    IN_PROGRESS_STATUS,
-                )
-                return true
-            }
-
-            R.id.done -> {
-                personalTodoDetailsPresenter.updatePersonalTodoStatus(personalTodo.id, DONE_STATUS)
-                return true
-            }
-
-            else -> return false
-        }
-    }
-
 
     override fun showTodoStatusUpdatedFailure(errorMessage: String) {
         requireActivity().runOnUiThread {
@@ -95,14 +73,41 @@ class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
 
     companion object {
         private const val DETAILS_PARAM = "personal todo details"
-        private const val TODO_STATUS = 0
-        private const val IN_PROGRESS_STATUS = 1
-        private const val DONE_STATUS = 2
         fun newInstance(details: PersonalTodo) =
             PersonalTodoDetailsFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(DETAILS_PARAM, details)
                 }
             }
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (position) {
+            Constants.TODO -> {
+                personalTodoDetailsPresenter.updatePersonalTodoStatus(
+                    personalTodo.id,
+                    Constants.TODO
+                )
+            }
+
+            Constants.IN_PROGRESS -> {
+                personalTodoDetailsPresenter.updatePersonalTodoStatus(
+                    personalTodo.id,
+                    Constants.IN_PROGRESS
+                )
+            }
+
+            Constants.DONE -> {
+                personalTodoDetailsPresenter.updatePersonalTodoStatus(
+                    personalTodo.id,
+                    Constants.DONE
+                )
+            }
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        Toast.makeText(requireContext(), "Nothing Selected ", Toast.LENGTH_SHORT)
+            .show()
     }
 }

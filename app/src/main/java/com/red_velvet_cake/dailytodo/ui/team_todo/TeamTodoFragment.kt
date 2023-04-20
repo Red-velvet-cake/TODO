@@ -15,7 +15,7 @@ import com.red_velvet_cake.dailytodo.utils.navigateTo
 
 class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
 
-    private lateinit var teamToDoAdapter: TeamToDoAdapter
+    private lateinit var teamToDoAdapter: TeamTodoAdapter
     private lateinit var teamTodoPresenter: TeamTodoPresenter
     private var selectedChip = -1
 
@@ -57,7 +57,7 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
 
 
     private fun initializeAdapter() {
-        teamToDoAdapter = TeamToDoAdapter(::onUpdateStatus, ::onTodoClicked)
+        teamToDoAdapter = TeamTodoAdapter(::onUpdateStatus, ::onTodoClicked)
     }
 
     private fun onUpdateStatus(todoId: String, status: Int) {
