@@ -19,7 +19,7 @@ class AuthorizationInterceptor : Interceptor {
             .build()
 
         return chain.proceed(newRequest).also { response ->
-            if (response.code == 401) {
+            if (response.code == UNAUTHORIZED_STATUS_CODE) {
                 throw CustomException.UnauthorizedUserException(response.message)
             }
         }
@@ -27,6 +27,7 @@ class AuthorizationInterceptor : Interceptor {
 
 
     companion object {
+        private const val UNAUTHORIZED_STATUS_CODE = 401
         private const val HEADER_AUTHORIZATION = "Authorization"
         private const val BEARER = "Bearer"
     }
