@@ -1,6 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.personal_todo
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -112,7 +113,15 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
     }
 
     override fun showEmptyTodoListState() {
-
+        requireActivity().runOnUiThread {
+            if (personalToDoAdapter.itemCount != 0) {
+                binding.personalTodoRecycler.visibility = View.VISIBLE
+                binding.emptyStateImageview.visibility = View.GONE
+            } else {
+                binding.personalTodoRecycler.visibility = View.GONE
+                binding.emptyStateImageview.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun navigateToTodoDetails(personalTodo: PersonalTodo) {
@@ -126,8 +135,8 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
             filterTodosList(selectedChip, todoList)
         requireActivity().runOnUiThread {
             personalToDoAdapter.submitList(filteredList)
-            binding.teamTodoRecycler.adapter = personalToDoAdapter
-            itemTouchHelper.attachToRecyclerView(binding.teamTodoRecycler)
+            binding.personalTodoRecycler.adapter = personalToDoAdapter
+            itemTouchHelper.attachToRecyclerView(binding.personalTodoRecycler)
         }
     }
 

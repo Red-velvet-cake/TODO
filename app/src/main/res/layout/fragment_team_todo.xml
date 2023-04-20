@@ -59,15 +59,28 @@
         android:id="@+id/team_todo_recycler"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_0dp"
-        android:paddingHorizontal="@dimen/_16dp"
         android:clipToPadding="false"
         android:orientation="vertical"
+        android:paddingHorizontal="@dimen/_16dp"
         android:paddingTop="@dimen/_16dp"
+        android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chip_group"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chip_group"
         tools:listitem="@layout/layout_team_todo_item" />
+
+
+    <ImageView
+        android:id="@+id/empty_state_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_empty_state"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
