@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_todo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_148dp"
+        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginEnd="@dimen/_8dp"
+        app:cardCornerRadius="@dimen/_16dp"
+        app:cardElevation="@dimen/_0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_todo_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_16dp"
+        android:background="@android:color/transparent"
+        android:elevation="@dimen/_1dp"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintStart_toStartOf="@id/card_view_todo"
+        app:layout_constraintTop_toTopOf="@id/card_view_todo"
+        tools:text="UXUI Studio Meeting" />
+
+    <TextView
+        android:id="@+id/text_view_description_todo"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_16dp"
+        android:background="@android:color/transparent"
+        android:elevation="@dimen/_1dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins"
+        android:lines="2"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_12sp"
+        app:layout_constraintEnd_toEndOf="@id/card_view_todo"
+        app:layout_constraintStart_toStartOf="@id/card_view_todo"
+        app:layout_constraintTop_toBottomOf="@id/text_view_todo_title"
+        tools:text="This is my description amet consecterur.Nec sed ut venentis.Nulla amet amet" />
+
+    <TextView
+        android:id="@+id/text_view_assignment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:layout_marginBottom="@dimen/_18dp"
+        android:background="@android:color/transparent"
+        android:elevation="@dimen/_1dp"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/accent_text"
+        android:textSize="@dimen/_12sp"
+        app:layout_constraintBottom_toBottomOf="@id/card_view_todo"
+        app:layout_constraintStart_toStartOf="@id/card_view_todo"
+        tools:text="Mahmoud Al Mallahi" />
+
+    <TextView
+        android:id="@+id/text_view_update_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:background="@android:color/transparent"
+        android:drawablePadding="@dimen/_6dp"
+        android:elevation="@dimen/_1dp"
+        android:fontFamily="@font/poppins_medium"
+        android:gravity="center_vertical"
+        android:textColor="@color/accent_text"
+        android:textSize="@dimen/_12sp"
+        app:drawableStartCompat="@drawable/ic_calnder"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_assignment"
+        app:layout_constraintEnd_toEndOf="@id/card_view_todo"
+        app:layout_constraintTop_toTopOf="@id/text_view_assignment"
+        tools:text="24-08-2023" />
+
+    <TextView
+        android:id="@+id/text_view_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_14dp"
+        android:background="@android:color/transparent"
+        android:drawablePadding="@dimen/_6dp"
+        android:elevation="@dimen/_1dp"
+        android:fontFamily="@font/poppins_medium"
+        android:gravity="center_vertical"
+        android:textColor="@color/accent_text"
+        android:textSize="@dimen/_12sp"
+        app:drawableStartCompat="@drawable/ic_time"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_assignment"
+        app:layout_constraintEnd_toStartOf="@id/text_view_update_date"
+        app:layout_constraintTop_toTopOf="@id/text_view_assignment"
+        tools:text="21:30" />
+</androidx.constraintlayout.widget.ConstraintLayout>

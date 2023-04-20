@@ -1,0 +1,125 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:padding="@dimen/_16dp"
+    android:scrollbars="none"
+    app:layout_constraintTop_toBottomOf="@id/appbar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/textName"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@drawable/bg_edit_text_default"
+            android:hint="@string/_name"
+            android:padding="@dimen/_16dp"
+            android:textColorHint="@color/accent_text"
+            android:textSize="@dimen/_12dp" />
+
+        <EditText
+            android:id="@+id/titleText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/_12dp"
+            android:background="@drawable/bg_edit_text_default"
+            android:hint="@string/task_title"
+            android:padding="@dimen/_16dp"
+            android:textColorHint="@color/accent_text"
+            android:textSize="@dimen/_12dp" />
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_16dp"
+                android:orientation="horizontal"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/buttonPersonal"
+                    style="@style/chips.createTodo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="68dp"
+                    android:layout_marginStart="@dimen/_4dp"
+                    android:text="@string/personalButton"
+                    app:chipEndPadding="@dimen/_56dp"
+                    app:chipStartPadding="@dimen/_56dp"
+                    app:chipStrokeColor="@color/primary"
+                    app:chipStrokeWidth="1.5dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/buttonTeam"
+                    style="@style/chips.createTodo"
+                    android:layout_width="match_parent"
+                    android:layout_height="68dp"
+                    android:layout_marginStart="@dimen/_4dp"
+                    android:checked="true"
+                    android:text="@string/teamButton"
+                    app:chipEndPadding="@dimen/_56dp"
+                    app:chipStartPadding="@dimen/_56dp"
+                    app:chipStrokeColor="@color/primary"
+                    app:chipStrokeWidth="1.5dp" />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <EditText
+            android:id="@+id/textDescription"
+            android:layout_width="match_parent"
+            android:layout_height="375dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@drawable/bg_edit_text_default"
+            android:gravity="top"
+            android:hint="@string/task_description"
+            android:padding="@dimen/_16dp"
+            android:textColorHint="@color/accent_text"
+            android:textSize="@dimen/_12dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/buttonCreate"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginStart="@dimen/_4dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button"
+                android:text="@string/_create"
+                android:textAllCaps="false"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar_load"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</ScrollView>
