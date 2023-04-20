@@ -4,12 +4,13 @@ package com.red_velvet_cake.dailytodo.data.remote.auth
 import com.google.gson.Gson
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
+import com.red_velvet_cake.dailytodo.data.remote.util.HttpMethod
+import com.red_velvet_cake.dailytodo.data.remote.util.buildRequest
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Credentials
-import okhttp3.FormBody
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -69,25 +70,16 @@ class AuthenticationServiceImpl : AuthenticationService {
         onSuccess: (response: RegisterAccountResponse) -> Unit,
         onFailure: (errorMessage: String) -> Unit,
     ) {
-        val formBody = FormBody.Builder()
-            .add(USERNAME, username)
-            .add(PASSWORD, password)
-            .add(TEAM_ID, teamId)
-            .build()
+        val apiRequest = buildRequest(
+            HOST,
+            "signup",
+            HttpMethod.POST,
+            USERNAME to username,
+            PASSWORD to password,
+            TEAM_ID to teamId
+        )
 
-        val url = HttpUrl
-            .Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(REGISTER_PATH)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .post(formBody)
-            .build()
-
-        client.newCall(request)
+        client.newCall(apiRequest)
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     onFailure(e.message.toString())
@@ -103,7 +95,6 @@ class AuthenticationServiceImpl : AuthenticationService {
 
 
     companion object {
-        private const val REGISTER_PATH = "signup"
         private const val USERNAME = "username"
         private const val PASSWORD = "password"
         private const val TEAM_ID = "teamId"

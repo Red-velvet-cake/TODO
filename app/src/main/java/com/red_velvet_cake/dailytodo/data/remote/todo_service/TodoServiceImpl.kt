@@ -6,14 +6,12 @@ import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
+import com.red_velvet_cake.dailytodo.data.remote.util.HttpMethod
+import com.red_velvet_cake.dailytodo.data.remote.util.buildRequest
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
-import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.FormBody
-import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.IOException
@@ -37,25 +35,16 @@ class TodoServiceImpl : TodoService {
         onCreateTeamTodoSuccess: (CreateTodoTeamResponse) -> Unit,
         onCreateTeamTodoFailure: (errorMessage: String) -> Unit
     ) {
-        val requestBody = FormBody.Builder()
-            .add(TITLE, title)
-            .add(DESCRIPTION, description)
-            .add(ASSIGNEE, assignee)
-            .build()
+        val apiRequest = buildRequest(
+            HOST,
+            "todo/team",
+            HttpMethod.POST,
+            TITLE to title,
+            DESCRIPTION to description,
+            ASSIGNEE to assignee
+        )
 
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(TEAM_PATH_SEGMENT)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .post(requestBody)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
+        client.newCall(apiRequest).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onCreateTeamTodoFailure(e.message.toString())
             }
@@ -76,24 +65,15 @@ class TodoServiceImpl : TodoService {
         onCreatePersonalTodoFailure: (errorMessage: String) -> Unit
     ) {
 
-        val requestBody = FormBody.Builder()
-            .add(TITLE, title)
-            .add(DESCRIPTION, description)
-            .build()
+        val apiResuest = buildRequest(
+            HOST,
+            "todo/personal",
+            HttpMethod.POST,
+            "title" to title,
+            "description" to description
+        )
 
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(PATH_PERSONAL)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .put(requestBody)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
+        client.newCall(apiResuest).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onCreatePersonalTodoFailure(e.message.toString())
             }
@@ -112,18 +92,14 @@ class TodoServiceImpl : TodoService {
         onGetAllPersonalTodosSuccess: (getAllPersonalTodosResponse: GetAllPersonalTodosResponse) -> Unit,
         onGetAllPersonalTodoFailure: (errorMessage: String) -> Unit
     ) {
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(PATH_PERSONAL)
-            .build()
 
-        val request = Request.Builder()
-            .url(url)
-            .build()
+        val apiRequest = buildRequest(
+            HOST,
+            "todo/personal",
+            HttpMethod.GET
+        )
 
-        client.newCall(request).enqueue(object : Callback {
+        client.newCall(apiRequest).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onGetAllPersonalTodoFailure(e.message.toString())
             }
@@ -147,25 +123,15 @@ class TodoServiceImpl : TodoService {
         onUpdateTeamTodoStatusFailure: (errorMessage: String) -> Unit
     ) {
 
-        val requestBody =
-            FormBody.Builder()
-                .add(PARAM_ID, todoId)
-                .add(PARAM_STATUS, newTodoStatus.toString())
-                .build()
+        val apiRequest = buildRequest(
+            HOST,
+            "todo/team",
+            HttpMethod.PUT,
+            PARAM_ID to todoId,
+            PARAM_STATUS to newTodoStatus.toString()
+        )
 
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(TEAM_PATH_SEGMENT)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .put(requestBody)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
+        client.newCall(apiRequest).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onUpdateTeamTodoStatusFailure(e.message.toString())
             }
@@ -180,25 +146,15 @@ class TodoServiceImpl : TodoService {
         newTodoStatus: Int,
         onUpdatePersonalTodoStatusFailure: (errorMessage: String) -> Unit
     ) {
-        val requestBody =
-            FormBody.Builder()
-                .add(PARAM_ID, todoId)
-                .add(PARAM_STATUS, newTodoStatus.toString())
-                .build()
+        val apiRequest = buildRequest(
+            HOST,
+            "todo/team",
+            HttpMethod.PUT,
+            PARAM_ID to todoId,
+            PARAM_STATUS to newTodoStatus.toString()
+        )
 
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(PERSONAL_PATH_SEGMENT)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .put(requestBody)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
+        client.newCall(apiRequest).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onUpdatePersonalTodoStatusFailure(e.message.toString())
             }
@@ -211,19 +167,14 @@ class TodoServiceImpl : TodoService {
         onGetAllTeamTodosSuccess: (GetAllTeamTodosResponse) -> Unit,
         onGetAllTeamTodosFailure: (errorMessage: String) -> Unit,
     ) {
-        val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(TO_DO_PATH_SEGMENT)
-            .addPathSegment(
-                TEAM_PATH_SEGMENT
-            ).build()
 
-        val request = Request.Builder()
-            .url(url)
-            .build()
+        val apiRequest = buildRequest(
+            HOST,
+            "todo/team",
+            HttpMethod.GET
+        )
 
-        client.newCall(request).enqueue(object : Callback {
+        client.newCall(apiRequest).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onGetAllTeamTodosFailure(e.message.toString())
             }
@@ -244,10 +195,6 @@ class TodoServiceImpl : TodoService {
     companion object {
         private const val PARAM_ID = "id"
         private const val PARAM_STATUS = "status"
-        private const val PATH_PERSONAL = "personal"
-        private const val TO_DO_PATH_SEGMENT = "todo"
-        private const val TEAM_PATH_SEGMENT = "team"
-        private const val PERSONAL_PATH_SEGMENT = "personal"
         private const val TITLE = "title"
         private const val DESCRIPTION = "description"
         private const val ASSIGNEE = "assignee"
