@@ -45,6 +45,7 @@ private fun changeNavigation(
 
         NavigationState.REMOVE -> {
             fragmentManager.popBackStack()
+            return
         }
 
         NavigationState.REPLACE -> {

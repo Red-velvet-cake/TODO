@@ -7,7 +7,7 @@
     <string name="sign_up">إنشاء حساب</string>
     <string name="have_account">لا يوجد لديك حساب؟</string>
     <string name="create_new_task">إنشاء مهمة جديدة</string>
-    <string name="view_all">عرض الكل</string>
+    <string name="show_all">عرض الكل</string>
     <string name="personal_task">مهام شخصية</string>
     <string name="team_task">مهام الفريق</string>
     <string name="pending_tasks">مهام غير منجزة</string>

@@ -7,7 +7,7 @@
     <string name="sign_up">Sign up</string>
     <string name="have_account">Don’t have account?</string>
     <string name="create_new_task">Create New Task</string>
-    <string name="view_all">View all</string>
+    <string name="show_all">Show all</string>
     <string name="personal_task">Personal Tasks</string>
     <string name="team_task">Team TaskS</string>
     <string name="pending_tasks">Pending Task</string>
