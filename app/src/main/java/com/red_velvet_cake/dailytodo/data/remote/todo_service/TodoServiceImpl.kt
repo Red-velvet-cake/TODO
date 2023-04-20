@@ -6,8 +6,9 @@ import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
+import com.red_velvet_cake.dailytodo.data.remote.util.HttpMethod
+import com.red_velvet_cake.dailytodo.data.remote.util.buildRequest
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
-import okhttp3.*
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
