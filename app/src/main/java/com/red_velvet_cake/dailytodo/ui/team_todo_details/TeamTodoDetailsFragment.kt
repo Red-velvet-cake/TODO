@@ -80,16 +80,6 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
         requireActivity().navigateBack()
     }
 
-    companion object {
-        private const val KEY_DETAILS_PARAM = "team todo details"
-
-        fun newInstance(teamTodo: TeamTodo) = TeamTodoDetailsFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(KEY_DETAILS_PARAM, teamTodo)
-            }
-        }
-    }
-
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (position) {
             Constants.TODO -> {
@@ -112,5 +102,15 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
     override fun onNothingSelected(parent: AdapterView<*>?) {
         Toast.makeText(requireContext(), "Nothing Selected ", Toast.LENGTH_SHORT)
             .show()
+    }
+
+    companion object {
+        private const val KEY_DETAILS_PARAM = "team todo details"
+
+        fun newInstance(teamTodo: TeamTodo) = TeamTodoDetailsFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(KEY_DETAILS_PARAM, teamTodo)
+            }
+        }
     }
 }

@@ -12,7 +12,7 @@ import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentHomeBinding
 import com.red_velvet_cake.dailytodo.ui.activity.AuthActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
-import com.red_velvet_cake.dailytodo.ui.createTodo.CreateTodoFragment
+import com.red_velvet_cake.dailytodo.ui.create_todo.CreateTodoFragment
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeAdapter
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItemType
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItems

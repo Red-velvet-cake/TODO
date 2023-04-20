@@ -52,7 +52,7 @@
         android:id="@+id/text_view_creation_date"
         style="@style/TextViewInTodoDetails"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/_12dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16dp"
         android:layout_marginTop="@dimen/_12dp"
         android:drawablePadding="@dimen/_6dp"
@@ -67,7 +67,7 @@
         android:id="@+id/text_view_todo_creation_time"
         style="@style/TextViewInTodoDetails"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/_12dp"
+        android:layout_height="wrap_content"
         android:drawablePadding="@dimen/_6dp"
         app:drawableStartCompat="@drawable/ic_time_small"
         app:layout_constraintStart_toEndOf="@id/text_view_creation_date"
@@ -82,6 +82,7 @@
         android:layout_marginVertical="@dimen/_18dp"
         android:fontFamily="@font/poppins"
         android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_12sp"
         app:layout_constraintTop_toBottomOf="@id/text_view_creation_date"
         tools:text="@string/details_todos" />
 
