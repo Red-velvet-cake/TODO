@@ -5,7 +5,11 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.red_velvet_cake.dailytodo.data.model.*
+import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
+import com.red_velvet_cake.dailytodo.data.model.Statistics
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentHomeBinding
 import com.red_velvet_cake.dailytodo.ui.activity.AuthActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
@@ -28,9 +32,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     private var lists = mutableListOf<HomeItems<Any>>()
     private lateinit var adapter: HomeAdapter
     private val homePresenter = HomePresenter(this)
-    private var isInternetAvailable = true
 
     override fun setUp() {
+        homePresenter.getAllTodos()
         lists.add(
             HomeItems(
                 Statistics(),
@@ -44,14 +48,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
             ::onClickAllTeamTodos,
             ::onClickAllPersonalTodos
         )
-        homePresenter.getAllTodos()
         binding.recyclerViewHome.adapter = adapter
 
         binding.buttonAddTeamTodo.setOnClickListener {
             requireActivity().navigateTo(CreateTodoFragment())
         }
-
-        handleInternetState()
     }
 
     private fun onClickTeamTodo(teamTodo: TeamTodo) {
@@ -71,12 +72,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     }
 
     override fun addCallBacks() {
-        binding.tryAgainButton.setOnClickListener {
-            showTryAgain()
+        binding.buttonTryAgain.setOnClickListener {
+            homePresenter.getAllTodos()
         }
     }
 
     override fun showPersonalTodos(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
+        showHiddenSections()
         requireActivity().runOnUiThread {
             adapter.setPersonalCount(getAllPersonalTodosResponse.value.size)
             lists.add(HomeItems(getAllPersonalTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
@@ -105,8 +107,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     }
 
     override fun showTeamTodos(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
+        showHiddenSections()
         requireActivity().runOnUiThread {
-            isInternetAvailable = true
             adapter.setTeamCount(getAllTeamTodosResponse.value.size)
             lists.add(
                 HomeItems(
@@ -149,19 +151,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     }
 
     override fun showTryAgain() {
-        isInternetAvailable = false
-        handleInternetState()
-    }
-
-    private fun handleInternetState() {
-        if (isInternetAvailable) {
-            binding.recyclerViewHome.visibility = View.VISIBLE
-            binding.buttonAddTeamTodo.visibility = View.VISIBLE
-            binding.tryAgainButton.visibility = View.GONE
-        } else {
+        requireActivity().runOnUiThread {
             binding.recyclerViewHome.visibility = View.GONE
             binding.buttonAddTeamTodo.visibility = View.GONE
-            binding.tryAgainButton.visibility = View.VISIBLE
+            binding.buttonTryAgain.visibility = View.VISIBLE
+            binding.imageViewHasNoInternet.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showHiddenSections() {
+        requireActivity().runOnUiThread {
+            binding.recyclerViewHome.visibility = View.VISIBLE
+            binding.buttonAddTeamTodo.visibility = View.VISIBLE
+            binding.buttonTryAgain.visibility = View.GONE
+            binding.imageViewHasNoInternet.visibility = View.GONE
         }
     }
 }
