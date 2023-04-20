@@ -7,6 +7,10 @@ import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 
 interface HomeView {
     fun showPersonalTodos(getAllPersonalTodosResponse: GetAllPersonalTodosResponse)
+    fun showPendingTeamTodos(pendingTodo: Int)
+    fun showPendingPersonalTodos(pendingTodo: Int)
+
+    fun showCompletedTodos(completedTodo: Int)
 
     fun showErrorOnPersonalTodoFailure(errorMessage: String)
 

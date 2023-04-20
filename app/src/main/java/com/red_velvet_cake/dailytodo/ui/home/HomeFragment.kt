@@ -82,6 +82,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
         }
     }
 
+    override fun showPendingTeamTodos(pendingTodo: Int) {
+       requireActivity().runOnUiThread { adapter.setTeamPendingCount(pendingTodo)}
+    }
+
+    override fun showPendingPersonalTodos(pendingTodo: Int) {
+        requireActivity().runOnUiThread {adapter.setPersonalPendingCount(pendingTodo)}
+
+    }
+
+    override fun showCompletedTodos(completedTodo: Int) {
+
+    }
+
     override fun showErrorOnPersonalTodoFailure(errorMessage: String) {
     }
 
