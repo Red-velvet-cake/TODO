@@ -8,6 +8,14 @@ import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 interface HomeView {
     fun showPersonalTodos(getAllPersonalTodosResponse: GetAllPersonalTodosResponse)
 
+    fun showPendingTeamTodos(pendingTodo: Int)
+
+    fun showPendingPersonalTodos(pendingTodo: Int)
+
+    fun showCompletedTeamTodos(completedTodo: Int)
+
+    fun showCompletedPersonalTodos(completedTodo: Int)
+
     fun showErrorOnPersonalTodoFailure(errorMessage: String)
 
     fun showTeamTodos(getAllTeamTodosResponse: GetAllTeamTodosResponse)
