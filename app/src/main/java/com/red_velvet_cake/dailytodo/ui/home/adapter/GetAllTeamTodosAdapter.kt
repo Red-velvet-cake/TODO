@@ -37,14 +37,19 @@ class GetAllTeamTodosAdapter(
         val binding = ItemTeamTodoBinding.bind(itemView)
 
         fun bind(teamTodo: TeamTodo) {
-            val creationTime = teamTodo.creationTime.split("T")
+            val (date, time) = extractDateAndTime(teamTodo.creationTime)
             binding.apply {
                 textViewTodoTitle.text = teamTodo.title
                 textViewDescriptionTodo.text = teamTodo.description
                 textViewAssignment.text = teamTodo.assignee
-                textViewUpdateDate.text = creationTime[0]
-                textViewTime.text = creationTime[1]
+                textViewUpdateDate.text = date
+                textViewTime.text = time
             }
         }
+    }
+
+    private fun extractDateAndTime(dateTimeString: String): Pair<String, String> {
+        val parts = dateTimeString.split("T")
+        return Pair(parts[0], parts[1].substring(0, 5))
     }
 }
