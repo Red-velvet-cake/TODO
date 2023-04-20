@@ -1,4 +1,4 @@
-package com.red_velvet_cake.dailytodo.ui.home.adapter
+package com.red_velvet_cake.dailytodo.ui.home
 
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
@@ -31,4 +31,6 @@ interface HomeView {
     fun navigateToAllPersonalTodos()
     fun navigateToLogin()
     fun showTryAgain()
+    fun showLoadStatus()
+    fun disableLoadStatus()
 }
