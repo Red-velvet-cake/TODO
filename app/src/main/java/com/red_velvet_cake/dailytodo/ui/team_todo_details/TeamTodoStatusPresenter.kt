@@ -1,13 +1,13 @@
 package com.red_velvet_cake.dailytodo.ui.team_todo_details
 
-import com.red_velvet_cake.dailytodo.data.remote.TodoServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.utils.Constants
 import com.red_velvet_cake.dailytodo.utils.TodoStatus
 
 class TeamTodoStatusPresenter(
     private val view: TeamTodoDetailsView,
 ) {
-    private val todoServiceImpl = TodoServiceImpl()
+    private val apiService = TodoServiceImpl()
 
     fun setTodoStatus(status: TodoStatus, todoId: String) {
         when (status) {
@@ -21,7 +21,7 @@ class TeamTodoStatusPresenter(
         newTodoStatus: Int,
         todoId: String,
     ) {
-        todoServiceImpl.updateTeamTodoStatus(
+        apiService.updateTeamTodoStatus(
             todoId,
             newTodoStatus,
             ::onUpdateTeamTodoStatusFailure

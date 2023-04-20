@@ -6,6 +6,7 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
+import okio.IOException
 
 interface TodoService {
 
@@ -22,13 +23,6 @@ interface TodoService {
         assignee: String,
         onCreateTeamTodoSuccess: (CreateTodoTeamResponse) -> Unit,
         onCreateTeamTodoFailure: (errorMessage: String) -> Unit
-    )
-
-    fun loginUser(
-        username: String,
-        password: String,
-        onLoginUserSuccess: (loginResponse: LoginResponse) -> Unit,
-        onLoginUserFailure: (errorMessage: String) -> Unit
     )
 
     fun updatePersonalTodoStatus(
@@ -51,13 +45,5 @@ interface TodoService {
     fun getAllTeamTodos(
         onGetAllTeamTodosSuccess: (getAllTeamTodosResponse: GetAllTeamTodosResponse) -> Unit,
         onGetAllTeamTodosFailure: (errorMessage: String) -> Unit,
-    )
-
-    fun registerAccount(
-        userName: String,
-        password: String,
-        teamId: String,
-        onRegisterAccountSuccess: (registerAccountResponse: RegisterAccountResponse) -> Unit,
-        onRegisterAccountFailure: (errorMessage: String) -> Unit
     )
 }
