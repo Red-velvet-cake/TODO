@@ -13,6 +13,7 @@ class CreateTodoPresenter(val view: CreateTodoView) {
         description: String,
         assignee: String
     ) {
+        view.enableCreateButton()
         todoServiceImpl.createTeamTodo(
             title,
             description,
