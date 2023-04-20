@@ -49,7 +49,6 @@ class CreateTodoPresenter(val view: CreateTodoView) {
         view.enableCreateButton()
         if (createTodoTeamResponse.isSuccess) {
             view.showCreateSuccessMessage()
-            createTeamTodoSuccess(title, description, assignee)
         } else {
             view.showCreateFailedMessage(createTodoTeamResponse.message)
         }
@@ -60,10 +59,34 @@ class CreateTodoPresenter(val view: CreateTodoView) {
     }
 
     private fun onCreatePersonalTodoSuccess(createTodoPersonalResponse: CreateTodoPersonalResponse) {
-        view.onCreatePersonalTodoSuccess(createTodoPersonalResponse)
+        view.enableCreateButton()
+        if (createTodoPersonalResponse.isSuccess) {
+            view.showCreateSuccessMessage()
+        } else {
+            view.showCreateFailedMessage(createTodoPersonalResponse.message)
+        }
     }
 
     private fun onCreatePersonalTodoFailure(errorMessage: String) {
         view.onCreateTeamTodoFailure(errorMessage)
+    }
+
+    fun clickCreateTodoTeamButton(
+        title: String,
+        description: String,
+        assignee: String
+    ) {
+
+        view.disableCreateButtonWithLoading()
+        createTeamTodoSuccess(title, description, assignee)
+    }
+
+    fun clickCreateTodoPersonalButton(
+        title: String,
+        description: String
+    ) {
+
+        view.disableCreateButtonWithLoading()
+        createPersonalTodo(title, description)
     }
 }
