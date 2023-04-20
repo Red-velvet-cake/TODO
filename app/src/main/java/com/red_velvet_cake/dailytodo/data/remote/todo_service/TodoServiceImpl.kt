@@ -5,6 +5,7 @@ import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.remote.TodoService
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
 import okhttp3.Call
@@ -94,7 +95,7 @@ class TodoServiceImpl : TodoService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onCreatePersonalTodoFailure(e)
+                onCreatePersonalTodoFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -247,11 +248,6 @@ class TodoServiceImpl : TodoService {
         private const val TO_DO_PATH_SEGMENT = "todo"
         private const val TEAM_PATH_SEGMENT = "team"
         private const val PERSONAL_PATH_SEGMENT = "personal"
-        private const val REGISTER_PATH = "signup"
-        private const val USERNAME = "username"
-        private const val PASSWORD = "password"
-        private const val TEAM_ID = "teamId"
-        private const val PATH_LOGIN = "login"
         private const val TITLE = "title"
         private const val DESCRIPTION = "description"
         private const val ASSIGNEE = "assignee"

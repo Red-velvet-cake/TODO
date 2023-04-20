@@ -33,7 +33,7 @@ class AuthenticationServiceImpl : AuthenticationService {
         username: String,
         password: String,
         onSuccess: (response: LoginResponse) -> Unit,
-        onFailure: (exception: IOException) -> Unit
+        onFailure: (errorMessage: String) -> Unit
     ) {
         val url = HttpUrl.Builder()
             .scheme(SCHEME)
@@ -50,7 +50,7 @@ class AuthenticationServiceImpl : AuthenticationService {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onFailure(e)
+                onFailure(e.message.toString())
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -67,7 +67,7 @@ class AuthenticationServiceImpl : AuthenticationService {
         password: String,
         teamId: String,
         onSuccess: (response: RegisterAccountResponse) -> Unit,
-        onFailure: (exception: IOException) -> Unit,
+        onFailure: (errorMessage: String) -> Unit,
     ) {
         val formBody = FormBody.Builder()
             .add(USERNAME, username)
@@ -90,7 +90,7 @@ class AuthenticationServiceImpl : AuthenticationService {
         client.newCall(request)
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    onFailure(e)
+                    onFailure(e.message.toString())
                 }
 
                 override fun onResponse(call: Call, response: Response) {
