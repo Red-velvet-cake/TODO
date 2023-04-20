@@ -38,13 +38,18 @@ class GetAllPersonalTodosAdapter(
         val binding = ItemPersonalTodoBinding.bind(itemView)
 
         fun bind(personalTodo: PersonalTodo) {
-            val creationTime = personalTodo.creationTime.split('T')
+            val (date, time) = extractDateAndTime(personalTodo.creationTime)
             binding.apply {
                 textViewTodoTitle.text = personalTodo.title
                 textViewDescriptionTodo.text = personalTodo.description
-                textViewUpdateDate.text = creationTime[0]
-                textViewTime.text = creationTime[1]
+                textViewUpdateDate.text = date
+                textViewTime.text = time
             }
         }
+    }
+
+    private fun extractDateAndTime(dateTimeString: String): Pair<String, String> {
+        val parts = dateTimeString.split("T")
+        return Pair(parts[0], parts[1].substring(0, 5))
     }
 }
