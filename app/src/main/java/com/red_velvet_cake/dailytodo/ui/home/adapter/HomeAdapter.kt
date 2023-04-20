@@ -24,7 +24,12 @@ class HomeAdapter(
     private val onClickAllTeamTodos: () -> Unit,
     private val onClickAllPersonalTodos: () -> Unit,
     private var teamPendingTodosCount: Int = 0,
-    private var personalPendingTodosCount: Int = 0
+    private var personalPendingTodosCount: Int = 0,
+    private var pendingTeamTodosCount: Int = 0,
+    private var pendingPersonalTodosCount: Int = 0,
+    private var completedTeamTodosCount: Int = 0,
+    private var completedPersonalTodosCount: Int = 0
+
 ) : RecyclerView.Adapter<HomeAdapter.BaseHomeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHomeHolder {
@@ -62,6 +67,22 @@ class HomeAdapter(
 
     fun setPersonalCount(newPersonalPendingTodosCount: Int) {
         personalPendingTodosCount = newPersonalPendingTodosCount
+        notifyDataSetChanged()
+    }
+    fun setTeamPendingCount(pendingTodo: Int) {
+        pendingTeamTodosCount = pendingTodo
+        notifyDataSetChanged()
+    }
+    fun setPersonalPendingCount(pendingTodo: Int) {
+        pendingPersonalTodosCount = pendingTodo
+        notifyDataSetChanged()
+    }
+    fun setTeamCompleteCount(pendingTodo: Int) {
+        completedPersonalTodosCount = pendingTodo
+        notifyDataSetChanged()
+    }
+    fun setPersonalCompleteCount(pendingTodo: Int) {
+        completedTeamTodosCount = pendingTodo
         notifyDataSetChanged()
     }
 
@@ -119,7 +140,9 @@ class HomeAdapter(
 //            binding.textViewCompletedTodoResult.text =
 //                (item.data as GetAllPersonalTodosResponse).value.size.toString()
             binding.textViewPendingTodoResult.text =
-                statistics.personal.value.size.toString()
+                pendingTeamTodosCount.plus(pendingPersonalTodosCount).toString()
+            binding.textViewCompletedTodoResult.text =
+                completedTeamTodosCount.plus(completedPersonalTodosCount).toString()
         }
 
     }
