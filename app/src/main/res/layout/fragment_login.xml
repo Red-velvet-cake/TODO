@@ -97,24 +97,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_32dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="@string/don_t_have_account_sign_up"
-        app:layout_constraintEnd_toEndOf="@+id/button_login"
-        app:layout_constraintStart_toStartOf="@+id/button_login"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_12sp"
+        app:layout_constraintEnd_toStartOf="@id/text_view_signup"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_login" />
+
 
     <TextView
         android:id="@+id/text_view_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginEnd="108dp"
+        android:layout_marginStart="@dimen/_4dp"
+        android:layout_marginTop="@dimen/_32dp"
         android:clickable="true"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/sign_up"
         android:textColor="@color/primary"
         android:textSize="@dimen/_12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_view_dont_have_account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_view_dont_have_account"
         app:layout_constraintTop_toBottomOf="@+id/button_login" />
@@ -123,10 +126,10 @@
         android:id="@+id/loginProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/parent_constraint"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/parent_constraint"
-        app:layout_constraintStart_toStartOf="@+id/parent_constraint"
         app:layout_constraintEnd_toEndOf="@+id/parent_constraint"
-        android:visibility="gone" />
+        app:layout_constraintStart_toStartOf="@+id/parent_constraint"
+        app:layout_constraintTop_toTopOf="@+id/parent_constraint" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,16 +1,16 @@
 package com.red_velvet_cake.dailytodo.ui.register
 
-import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
+import com.red_velvet_cake.dailytodo.data.local.LocalDataImpl
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.remote.auth.AuthenticationServiceImpl
-import java.io.IOException
 
 class RegisterPresenter(
     private val view: RegisterView,
 ) {
 
     private val authService = AuthenticationServiceImpl()
+    private val localDataImpl = LocalDataImpl()
     private var username: String = ""
     private var password: String = ""
 
@@ -96,7 +96,7 @@ class RegisterPresenter(
         view.enableRegisterButton()
         if (loginResponse.isSuccess) {
             view.navigateToHome()
-            SharedPrefs.token = loginResponse.loginResponseBody.token
+            localDataImpl.setUserToken(loginResponse.loginResponseBody.token)
         } else {
             view.showLoginFailedMessage(loginResponse.message.toString())
         }

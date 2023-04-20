@@ -8,13 +8,7 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.remote.TodoService
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.FormBody
-import okhttp3.HttpUrl
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.IOException
 
@@ -75,7 +69,6 @@ class TodoServiceImpl : TodoService {
         onCreatePersonalTodoSuccess: (CreateTodoPersonalResponse) -> Unit,
         onCreatePersonalTodoFailure: (errorMessage: String) -> Unit
     ) {
-
         val requestBody = FormBody.Builder()
             .add(TITLE, title)
             .add(DESCRIPTION, description)
@@ -90,7 +83,7 @@ class TodoServiceImpl : TodoService {
 
         val request = Request.Builder()
             .url(url)
-            .put(requestBody)
+            .post(requestBody)
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -102,6 +95,7 @@ class TodoServiceImpl : TodoService {
                 response.body?.string().let {
                     val result = gson.fromJson(it, CreateTodoPersonalResponse::class.java)
                     onCreatePersonalTodoSuccess(result)
+
                 }
             }
 
