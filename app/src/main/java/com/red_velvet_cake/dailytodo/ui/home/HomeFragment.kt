@@ -4,7 +4,6 @@ package com.red_velvet_cake.dailytodo.ui.home
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
@@ -46,10 +45,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
         binding.recyclerViewHome.adapter = adapter
 
         binding.buttonAddTeamTodo.setOnClickListener {
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container_view_home, CreateTodoFragment())
-                .commit()
+            requireActivity().navigateTo(CreateTodoFragment())
         }
     }
 

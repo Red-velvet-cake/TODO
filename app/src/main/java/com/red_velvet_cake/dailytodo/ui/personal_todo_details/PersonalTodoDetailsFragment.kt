@@ -39,12 +39,8 @@ class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun setArgs() {
-        val bundle = this.arguments
-        bundle?.getParcelable(DETAILS_PARAM, PersonalTodo::class.java)?.let {
-            personalTodo = it
-        }
+        personalTodo = arguments?.getParcelable(DETAILS_PARAM)!!
     }
-
 
     private fun setupPopupMenu() {
         popupMenu = PopupMenu(requireContext(), binding.imageButtonShowFilterOptions)
