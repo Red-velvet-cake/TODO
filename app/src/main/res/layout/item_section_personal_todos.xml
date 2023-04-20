@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16dp"
         android:fontFamily="@font/poppins"
-        android:text="@string/view_all"
+        android:text="@string/show_all"
         android:textColor="@color/accent_text"
         android:textSize="@dimen/_12sp"
         app:layout_constraintBottom_toBottomOf="@id/text_view_todo_section_title"
