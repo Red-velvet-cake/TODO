@@ -44,20 +44,21 @@ class CreateTodoPresenter(val view: CreateTodoView) {
     }
 
     private fun onCreateTeamTodoFailure(errorMessage: String) {
-        view.onCreateTeamTodoFailure(errorMessage)
+        view.showCreateFailedMessage(errorMessage)
     }
 
     private fun onCreatePersonalTodoSuccess(createTodoPersonalResponse: CreateTodoPersonalResponse) {
         view.enableCreateButton()
         if (createTodoPersonalResponse.isSuccess) {
             view.showCreateSuccessMessage()
+            view.navigateBack()
         } else {
             view.showCreateFailedMessage(createTodoPersonalResponse.message)
         }
     }
 
     private fun onCreatePersonalTodoFailure(errorMessage: String) {
-        view.onCreateTeamTodoFailure(errorMessage)
+        view.showCreateFailedMessage(errorMessage)
     }
 
     fun clickCreateTodoTeamButton(
