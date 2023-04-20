@@ -41,6 +41,7 @@ class HomePresenter(val view: HomeView) {
     private fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
         view.showPersonalTodos(getAllPersonalTodosResponse)
         view.showPendingPersonalTodos(getAllPersonalTodosResponse.value.count { it.status == 0 })
+        view.showCompletedPersonalTodos(getAllPersonalTodosResponse.value.count { it.status == 2 })
     }
 
     private fun onGetAllPersonalTodosFailure(errorMessage: String) {
@@ -50,7 +51,7 @@ class HomePresenter(val view: HomeView) {
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
         view.showTeamTodos(getAllTeamTodosResponse)
         view.showPendingTeamTodos(getAllTeamTodosResponse.value.count { it.status == 0 })
-        view.showCompletedTodos(getAllTeamTodosResponse.value.count { it.status == 2 })
+        view.showCompletedTeamTodos(getAllTeamTodosResponse.value.count { it.status == 2 })
     }
 
     private fun onGetAllTeamTodosFailure(errorMessage: String) {
