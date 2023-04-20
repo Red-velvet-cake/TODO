@@ -21,6 +21,7 @@ class TeamTodoPresenter(private val view: TeamTodoView) {
     }
 
     fun getAllTeamTodos() {
+        view.showLoadStatus()
         todoServiceImpl.getAllTeamTodos(
             ::onGetAllTeamTodosSuccess,
             ::onGetAllTeamTodosFailure
@@ -40,6 +41,7 @@ class TeamTodoPresenter(private val view: TeamTodoView) {
     }
 
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
+        view.disableLoadStatus()
         if (getAllTeamTodosResponse.value.isEmpty()) {
             view.showEmptyTodoListState()
         }

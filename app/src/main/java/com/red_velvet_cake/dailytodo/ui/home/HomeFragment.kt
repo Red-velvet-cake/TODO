@@ -5,11 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
-import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
-import com.red_velvet_cake.dailytodo.data.model.Statistics
-import com.red_velvet_cake.dailytodo.data.model.TeamTodo
+import com.red_velvet_cake.dailytodo.data.model.*
 import com.red_velvet_cake.dailytodo.databinding.FragmentHomeBinding
 import com.red_velvet_cake.dailytodo.ui.activity.AuthActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
@@ -17,7 +13,6 @@ import com.red_velvet_cake.dailytodo.ui.create_todo.CreateTodoFragment
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeAdapter
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItemType
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeItems
-import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeView
 import com.red_velvet_cake.dailytodo.ui.personal_todo.PersonalTodoFragment
 import com.red_velvet_cake.dailytodo.ui.personal_todo_details.PersonalTodoDetailsFragment
 import com.red_velvet_cake.dailytodo.ui.team_todo.TeamTodoFragment
@@ -165,6 +160,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
             binding.buttonAddTeamTodo.visibility = View.VISIBLE
             binding.buttonTryAgain.visibility = View.GONE
             binding.imageViewHasNoInternet.visibility = View.GONE
+        }
+    }
+
+    override fun showLoadStatus() {
+        binding.progressBarLoadState.visibility = View.VISIBLE
+    }
+
+    override fun disableLoadStatus() {
+        requireActivity().runOnUiThread {
+            binding.progressBarLoadState.visibility = View.GONE
         }
     }
 }

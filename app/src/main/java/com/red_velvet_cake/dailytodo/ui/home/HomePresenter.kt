@@ -6,12 +6,12 @@ import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
 import com.red_velvet_cake.dailytodo.data.remote.util.CustomException
-import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeView
 
 class HomePresenter(val view: HomeView) {
     private val todoServiceImpl = TodoServiceImpl()
 
     fun getAllTodos() {
+        view.showLoadStatus()
         todoServiceImpl.getAllPersonalTodos(
             ::onGetAllPersonalTodosSuccess,
             ::onGetAllPersonalTodosFailure
@@ -40,6 +40,7 @@ class HomePresenter(val view: HomeView) {
     }
 
     private fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
+        view.disableLoadStatus()
         view.showPersonalTodos(getAllPersonalTodosResponse)
         view.showPendingPersonalTodos(getAllPersonalTodosResponse.value.count { it.status == 0 || it.status == 1 })
         view.showCompletedPersonalTodos(getAllPersonalTodosResponse.value.count { it.status == 2 })

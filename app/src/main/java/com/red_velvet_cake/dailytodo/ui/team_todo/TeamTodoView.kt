@@ -9,4 +9,6 @@ interface TeamTodoView {
     fun showEmptyTodoListState()
     fun navigateToTodoDetails(todo: TeamTodo)
     fun navigateBack()
+    fun showLoadStatus()
+    fun disableLoadStatus()
 }
