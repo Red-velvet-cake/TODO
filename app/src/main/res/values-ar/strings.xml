@@ -62,4 +62,5 @@
     <string name="already_have_account">تملك حساب ؟</string>
     <string name="please_fill_in_all_fields">املىء جميع الحقول رجاءا ٌ</string>
     <string name="adding_todo_fails_try_again">فشل اضافة مهمة حاول,حاول مرة اخرى</string>
+    <string name="create_todo">إنشاء مهمة</string>
 </resources>
