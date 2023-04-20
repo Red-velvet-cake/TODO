@@ -33,6 +33,7 @@
     <string name="don_t_have_account_sign_up">Don’t have account?</string>
     <string name="register">Register</string>
     <string name="register_success">You have successfully registered!, Please login</string>
+    <string name="create_Todo_success">You have successfully add new todo!</string>
     <string name="details_todos">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
     <string name="username_validation_error">Username should be at least 4 digits</string>
     <string name="password_validation_error">Password should be at least 8 digits</string>

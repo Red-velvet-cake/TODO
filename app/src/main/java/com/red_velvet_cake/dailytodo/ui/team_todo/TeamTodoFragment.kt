@@ -1,6 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.team_todo
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -17,6 +18,7 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
 
     private lateinit var teamToDoAdapter: TeamTodoAdapter
     private lateinit var teamTodoPresenter: TeamTodoPresenter
+    private lateinit var filteredList: List<TeamTodo>
     private var selectedChip = -1
 
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTeamTodoBinding =
@@ -88,7 +90,13 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
     }
 
     override fun showEmptyTodoListState() {
-
+        if (teamToDoAdapter.itemCount != 0) {
+            binding.teamTodoRecycler.visibility = View.VISIBLE
+            binding.emptyStateImageview.visibility = View.GONE
+        } else {
+            binding.teamTodoRecycler.visibility = View.GONE
+            binding.emptyStateImageview.visibility = View.VISIBLE
+        }
     }
 
     override fun navigateToTodoDetails(todo: TeamTodo) {
@@ -98,12 +106,13 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
     override fun showTodoList(todoList: List<TeamTodo>) {
         val itemTouchHelperCallback = ItemTeamTodoTouchHelperCallback(teamToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        val filteredList =
+        filteredList =
             filterTodosList(selectedChip, todoList)
         requireActivity().runOnUiThread {
             teamToDoAdapter.submitList(filteredList)
             binding.teamTodoRecycler.adapter = teamToDoAdapter
             itemTouchHelper.attachToRecyclerView(binding.teamTodoRecycler)
+            showEmptyTodoListState()
         }
     }
 
@@ -132,6 +141,7 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
 
         fun newInstance() = TeamTodoFragment()
     }
+
 }
 
 
