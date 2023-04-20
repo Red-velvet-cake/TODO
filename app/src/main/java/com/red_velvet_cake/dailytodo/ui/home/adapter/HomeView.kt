@@ -30,4 +30,5 @@ interface HomeView {
 
     fun navigateToAllPersonalTodos()
     fun navigateToLogin()
+    fun showTryAgain()
 }

@@ -68,5 +68,7 @@
     <string name="task_description">Task description</string>
     <string name="_create">Create</string>
     <string name="already_have_account">Already have an account?</string>
+    <string name="please_fill_in_all_fields">Please fill in all fields</string>
+    <string name="adding_todo_fails_try_again">Adding todo fails, try again</string>
 
 </resources>

@@ -8,7 +8,7 @@ interface AuthenticationService {
         username: String,
         password: String,
         onSuccess: (response: LoginResponse) -> Unit,
-        onFailure: (errorMessage: String) -> Unit,
+        onFailure: (exception: Exception) -> Unit,
     )
 
     fun registerAccount(
@@ -16,6 +16,6 @@ interface AuthenticationService {
         password: String,
         teamId: String,
         onSuccess: (response: RegisterAccountResponse) -> Unit,
-        onFailure: (errorMessage: String) -> Unit,
+        onFailure: (exception: Exception) -> Unit,
     )
 }

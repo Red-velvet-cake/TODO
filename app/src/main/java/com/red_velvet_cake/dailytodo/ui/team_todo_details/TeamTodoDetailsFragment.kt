@@ -76,6 +76,10 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
         }
     }
 
+    override fun navigateBack() {
+        requireActivity().navigateBack()
+    }
+
     companion object {
         private const val KEY_DETAILS_PARAM = "team todo details"
 

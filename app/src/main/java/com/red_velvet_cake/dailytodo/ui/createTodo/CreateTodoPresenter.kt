@@ -3,11 +3,12 @@ package com.red_velvet_cake.dailytodo.ui.createTodo
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoPersonalResponse
 import com.red_velvet_cake.dailytodo.data.model.CreateTodoTeamResponse
 import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.util.CustomException
 
 class CreateTodoPresenter(val view: CreateTodoView) {
     private val todoServiceImpl = TodoServiceImpl()
 
-    private fun createTeamTodoSuccess(
+    private fun createTeamTodo(
         title: String,
         description: String,
         assignee: String
@@ -37,26 +38,46 @@ class CreateTodoPresenter(val view: CreateTodoView) {
         view.enableCreateButton()
         if (createTodoTeamResponse.isSuccess) {
             view.showCreateSuccessMessage()
+            view.navigateBack()
         } else {
             view.showCreateFailedMessage(createTodoTeamResponse.message)
         }
     }
 
-    private fun onCreateTeamTodoFailure(errorMessage: String) {
-        view.onCreateTeamTodoFailure(errorMessage)
+    private fun onCreateTeamTodoFailure(exception: Exception) {
+        when (exception) {
+            is CustomException.UnauthorizedUserException -> {
+                view.navigateBack()
+            }
+
+            else -> {
+                view.showTryAgain()
+                view.showCreateFailedMessage(exception.message.toString())
+            }
+        }
     }
 
     private fun onCreatePersonalTodoSuccess(createTodoPersonalResponse: CreateTodoPersonalResponse) {
         view.enableCreateButton()
         if (createTodoPersonalResponse.isSuccess) {
             view.showCreateSuccessMessage()
+            view.navigateBack()
         } else {
             view.showCreateFailedMessage(createTodoPersonalResponse.message)
         }
     }
 
-    private fun onCreatePersonalTodoFailure(errorMessage: String) {
-        view.onCreateTeamTodoFailure(errorMessage)
+    private fun onCreatePersonalTodoFailure(exception: Exception) {
+        when (exception) {
+            is CustomException.UnauthorizedUserException -> {
+                view.navigateBack()
+            }
+
+            else -> {
+                view.showTryAgain()
+                view.showCreateFailedMessage(exception.message.toString())
+            }
+        }
     }
 
     fun clickCreateTodoTeamButton(
@@ -66,9 +87,9 @@ class CreateTodoPresenter(val view: CreateTodoView) {
     ) {
         if (isTitleDescriptionAndAssigneeEmpty(title, description, assignee)) {
             view.disableCreateButtonWithLoading()
-            createTeamTodoSuccess(title, description, assignee)
+            createTeamTodo(title, description, assignee)
         } else {
-            view.showCreateFailedMessage("Please fill in all fields")
+            view.showInvalidTodoDetailsError()
         }
     }
 
@@ -80,7 +101,7 @@ class CreateTodoPresenter(val view: CreateTodoView) {
             view.disableCreateButtonWithLoading()
             createPersonalTodo(title, description)
         } else {
-            view.showCreateFailedMessage("Please fill in all fields")
+            view.showInvalidTodoDetailsError()
         }
     }
 
