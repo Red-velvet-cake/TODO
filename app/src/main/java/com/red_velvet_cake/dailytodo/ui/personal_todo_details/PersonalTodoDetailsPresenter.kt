@@ -1,6 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.personal_todo_details
 
 import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.util.CustomException
 
 class PersonalTodoDetailsPresenter(
     private val view: PersonalTodoDetailsView,
@@ -19,7 +20,15 @@ class PersonalTodoDetailsPresenter(
         )
     }
 
-    private fun onUpdatePersonalTodoStatusFailure(errorMessage: String) {
-        view.showTodoStatusUpdatedFailure(errorMessage)
+    private fun onUpdatePersonalTodoStatusFailure(exception: Exception) {
+        when (exception) {
+            is CustomException.UnauthorizedUserException -> {
+                view.navigateBack()
+            }
+
+            else -> {
+                view.showTodoStatusUpdatedFailure(exception.message.toString())
+            }
+        }
     }
 }

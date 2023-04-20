@@ -5,6 +5,7 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.data.remote.todo_service.TodoServiceImpl
+import com.red_velvet_cake.dailytodo.data.remote.util.CustomException
 import com.red_velvet_cake.dailytodo.ui.home.adapter.HomeView
 
 class HomePresenter(val view: HomeView) {
@@ -42,18 +43,33 @@ class HomePresenter(val view: HomeView) {
         view.showPersonalTodos(getAllPersonalTodosResponse)
     }
 
-    private fun onGetAllPersonalTodosFailure(errorMessage: String) {
-        view.showErrorOnPersonalTodoFailure(errorMessage)
+    private fun onGetAllPersonalTodosFailure(exception: Exception) {
+        when (exception) {
+            is CustomException.UnauthorizedUserException -> {
+                view.navigateToLogin()
+            }
+
+            else -> {
+                view.showTryAgain()
+                view.showErrorOnPersonalTodoFailure(exception.message.toString())
+            }
+        }
     }
 
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
         view.showTeamTodos(getAllTeamTodosResponse)
     }
 
-    private fun onGetAllTeamTodosFailure(errorMessage: String) {
-        if (errorMessage == "401") {
-            view.navigateToLogin()
+    private fun onGetAllTeamTodosFailure(exception: Exception) {
+        when (exception) {
+            is CustomException.UnauthorizedUserException -> {
+                view.navigateToLogin()
+            }
+
+            else -> {
+                view.showTryAgain()
+                view.showErrorOnTeamTodoFailure(exception.message.toString())
+            }
         }
-        view.showErrorOnTeamTodoFailure(errorMessage)
     }
 }

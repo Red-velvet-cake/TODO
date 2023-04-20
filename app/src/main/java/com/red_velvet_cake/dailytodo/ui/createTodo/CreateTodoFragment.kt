@@ -88,6 +88,14 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
         requireActivity().navigateBack()
     }
 
+    override fun showTryAgain() {
+        showToast(getString(R.string.adding_todo_fails_try_again))
+    }
+
+    override fun showInvalidTodoDetailsError() {
+        showToast(getString(R.string.please_fill_in_all_fields))
+    }
+
     private fun showToast(message: String) {
         requireActivity().runOnUiThread {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

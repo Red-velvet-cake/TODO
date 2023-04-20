@@ -127,4 +127,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
         requireActivity().startActivity(toLoginIntent)
         requireActivity().finish()
     }
+
+    override fun showTryAgain() {
+
+    }
 }

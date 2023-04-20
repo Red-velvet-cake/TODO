@@ -103,6 +103,10 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
         requireActivity().navigateTo(TeamTodoDetailsFragment.newInstance(todo))
     }
 
+    override fun navigateBack() {
+        requireActivity().navigateBack()
+    }
+
     override fun showTodoList(todoList: List<TeamTodo>) {
         val itemTouchHelperCallback = ItemTeamTodoTouchHelperCallback(teamToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)

@@ -8,4 +8,5 @@ interface PersonalTodoView {
     fun showTodoUpdateFailMessage(errorMessage: String)
     fun showEmptyTodoListState()
     fun navigateToTodoDetails(personalTodo: PersonalTodo)
+    fun navigateBack()
 }

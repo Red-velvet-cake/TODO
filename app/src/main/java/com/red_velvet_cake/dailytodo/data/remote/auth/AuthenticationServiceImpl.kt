@@ -34,7 +34,7 @@ class AuthenticationServiceImpl : AuthenticationService {
         username: String,
         password: String,
         onSuccess: (response: LoginResponse) -> Unit,
-        onFailure: (errorMessage: String) -> Unit
+        onFailure: (exception: Exception) -> Unit
     ) {
         val url = HttpUrl.Builder()
             .scheme(SCHEME)
@@ -50,14 +50,18 @@ class AuthenticationServiceImpl : AuthenticationService {
             .build()
 
         client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                onFailure(e.message.toString())
+            override fun onFailure(call: Call, ioException: IOException) {
+                onFailure(ioException)
             }
 
             override fun onResponse(call: Call, response: Response) {
-                response.body?.string()?.let { responseBody ->
-                    val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
-                    onSuccess(loginResponse)
+                try {
+                    response.body?.string()?.let { responseBody ->
+                        val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
+                        onSuccess(loginResponse)
+                    }
+                } catch (exception: Exception) {
+                    onFailure(exception)
                 }
             }
         })
@@ -68,7 +72,7 @@ class AuthenticationServiceImpl : AuthenticationService {
         password: String,
         teamId: String,
         onSuccess: (response: RegisterAccountResponse) -> Unit,
-        onFailure: (errorMessage: String) -> Unit,
+        onFailure: (exception: Exception) -> Unit,
     ) {
         val apiRequest = buildRequest(
             HOST_NAME,
@@ -81,14 +85,20 @@ class AuthenticationServiceImpl : AuthenticationService {
 
         client.newCall(apiRequest)
             .enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    onFailure(e.message.toString())
+                override fun onFailure(call: Call, ioException: IOException) {
+                    onFailure(ioException)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val body = response.body?.string()
-                    val result = gson.fromJson(body, RegisterAccountResponse::class.java)
-                    onSuccess(result)
+                    try {
+                        response.body?.string().let {
+                            val result = gson.fromJson(it, RegisterAccountResponse::class.java)
+                            onSuccess(result)
+                        }
+
+                    } catch (exception: Exception) {
+                        onFailure(exception)
+                    }
                 }
             })
     }

@@ -128,6 +128,10 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
         requireActivity().navigateTo(PersonalTodoDetailsFragment.newInstance(personalTodo))
     }
 
+    override fun navigateBack() {
+        requireActivity().navigateBack()
+    }
+
     override fun showTodoList(todoList: List<PersonalTodo>) {
         val itemTouchHelperCallback = ItemPersonalTodoTouchHelperCallback(personalToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
