@@ -18,7 +18,7 @@
             android:name=".ui.activity.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.DailyTODO.Splash"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize|stateVisible">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
