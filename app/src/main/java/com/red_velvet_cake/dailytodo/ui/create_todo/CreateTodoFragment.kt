@@ -22,7 +22,6 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
     override fun addCallBacks() {
         setupCreateButtonClickListener()
         setupTodoTypeChipsListener()
-        setupOnBackButtonClickListener()
     }
 
     private fun setupTodoTypeChipsListener() {
@@ -109,13 +108,6 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
     private fun showToast(message: String) {
         requireActivity().runOnUiThread {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun setupOnBackButtonClickListener() {
-        binding.toolbar.setNavigationOnClickListener {
-            hideKeyboard()
-            requireActivity().navigateBack()
         }
     }
 
