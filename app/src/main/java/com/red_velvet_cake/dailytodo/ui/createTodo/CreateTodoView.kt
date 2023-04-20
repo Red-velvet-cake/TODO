@@ -8,4 +8,5 @@ interface CreateTodoView {
     fun navigateBack()
     fun showTryAgain()
     fun showInvalidTodoDetailsError()
+    fun stopLoadingButton()
 }

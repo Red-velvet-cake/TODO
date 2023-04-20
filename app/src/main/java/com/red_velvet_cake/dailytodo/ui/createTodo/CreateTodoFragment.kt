@@ -73,6 +73,7 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
 
     override fun showCreateFailedMessage(errorMessage: String) {
         showToast(errorMessage)
+        stopLoadingButton()
     }
 
     override fun disableCreateButtonWithLoading() {
@@ -94,6 +95,10 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
 
     override fun showInvalidTodoDetailsError() {
         showToast(getString(R.string.please_fill_in_all_fields))
+    }
+
+    override fun stopLoadingButton() {
+        binding.progressBarLoad.visibility = View.GONE
     }
 
     private fun showToast(message: String) {
