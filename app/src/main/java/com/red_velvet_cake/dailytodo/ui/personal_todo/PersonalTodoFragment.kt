@@ -133,6 +133,17 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
         requireActivity().navigateBack()
     }
 
+    override fun showLoadStatus() {
+        binding.progressBarLoadState.visibility = View.VISIBLE
+
+    }
+
+    override fun disableLoadStatus() {
+        requireActivity().runOnUiThread {
+            binding.progressBarLoadState.visibility = View.GONE
+        }
+    }
+
     override fun showTodoList(todoList: List<PersonalTodo>) {
         val itemTouchHelperCallback = ItemPersonalTodoTouchHelperCallback(personalToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)

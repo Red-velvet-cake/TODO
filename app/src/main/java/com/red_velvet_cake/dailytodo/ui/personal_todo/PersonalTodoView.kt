@@ -9,4 +9,6 @@ interface PersonalTodoView {
     fun showEmptyTodoListState()
     fun navigateToTodoDetails(personalTodo: PersonalTodo)
     fun navigateBack()
+    fun showLoadStatus()
+    fun disableLoadStatus()
 }
