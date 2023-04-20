@@ -10,8 +10,10 @@ import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.ui.home.HomeFragment
 import com.red_velvet_cake.dailytodo.ui.team_todo_details.TeamTodoDetailsFragment
 import com.red_velvet_cake.dailytodo.utils.navigateBack
+import com.red_velvet_cake.dailytodo.utils.navigateExclusive
 import com.red_velvet_cake.dailytodo.utils.navigateTo
 
 class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
@@ -48,7 +50,7 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
         }
 
         binding.appBar.setNavigationOnClickListener {
-            requireActivity().navigateBack()
+            requireActivity().navigateExclusive(HomeFragment())
         }
     }
 
