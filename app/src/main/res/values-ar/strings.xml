@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Daily TODO</string>
+    <string name="app_name">المهام اليومية</string>
     <string name="hint_username">اسم المستخدم</string>
     <string name="hint_password">كلمة المرور</string>
     <string name="hint_confirm_password">تأكيد كلمة المرور</string>
@@ -37,9 +37,29 @@
     <string name="password_validation_error">الحد الأدنى لكلمة المرور هو 8 مراتب</string>
     <string name="confirm_password_validation_error">كلمة المرور غير متطابقة</string>
     <string name="loading">جار التحميل</string>
-    <string name="update_failed">Update failed</string>
-    <string name="update_succeeded">Update succeeded</string>
-    <string name="username_empty">Username cannot be empty</string>
-    <string name="password_empty">Password cannot be empty</string>
-    <string name="dont_have_account">Don’t have an account? sign up</string>
+    <string name="todo">مهمة جديدة </string>
+    <string name="create_Todo_success">تم اضافة مهمة جديدة بنجاح!</string>
+    <string name="update_todo_success">تم تحديث المهمة بنجاح</string>
+    <string name="todo_update_failed">فشل تحديث المهمة</string>
+    <string name="name">الاسم</string>
+    <string name="title">العنوان</string>
+    <string name="_name">الاسم</string>
+    <string name="todo_status">مهمة جديدة</string>
+    <string name="in_progress_status">قيد التنفيذ</string>
+    <string name="done_status">مكتملة</string>
+    <string name="update_failed">فشل التجديث</string>
+    <string name="update_succeeded">نجاح التحديث</string>
+    <string name="username_empty">اسم المستخدم فارغ</string>
+    <string name="password_empty">كلمة المرور فارغة</string>
+    <string name="dont_have_account">لا تملك حساب ؟ انشىءحساب </string>
+    <string name="_task_title">عنوان المهمة</string>
+    <string name="type">العنوان</string>
+    <string name="personalButton">شخصي</string>
+    <string name="teamButton">الفريق</string>
+    <string name="_description">الوصف</string>
+    <string name="task_description">وصف المهمة</string>
+    <string name="_create">اضافة</string>
+    <string name="already_have_account">تملك حساب ؟</string>
+    <string name="please_fill_in_all_fields">املىء جميع الحقول رجاءا ٌ</string>
+    <string name="adding_todo_fails_try_again">فشل اضافة مهمة حاول,حاول مرة اخرى</string>
 </resources>
