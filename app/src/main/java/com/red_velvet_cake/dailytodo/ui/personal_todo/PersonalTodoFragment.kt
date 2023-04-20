@@ -9,8 +9,10 @@ import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
+import com.red_velvet_cake.dailytodo.ui.home.HomeFragment
 import com.red_velvet_cake.dailytodo.ui.personal_todo_details.PersonalTodoDetailsFragment
 import com.red_velvet_cake.dailytodo.utils.navigateBack
+import com.red_velvet_cake.dailytodo.utils.navigateExclusive
 import com.red_velvet_cake.dailytodo.utils.navigateTo
 
 class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), PersonalTodoView {
@@ -67,7 +69,7 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
         }
 
         binding.appBar.setNavigationOnClickListener {
-            requireActivity().navigateBack()
+            requireActivity().navigateExclusive(HomeFragment())
         }
     }
 
