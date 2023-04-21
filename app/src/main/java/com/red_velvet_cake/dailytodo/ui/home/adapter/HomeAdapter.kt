@@ -23,15 +23,17 @@ class HomeAdapter(
     private val onClickTeamTodoItem: (TeamTodo) -> Unit,
     private val onClickPersonalTodoItem: (PersonalTodo) -> Unit,
     private val onClickAllTeamTodos: () -> Unit,
-    private val onClickAllPersonalTodos: () -> Unit,
-    private var teamPendingTodosCount: Int = 0,
-    private var personalPendingTodosCount: Int = 0,
-    private var pendingTeamTodosCount: Int = 0,
-    private var pendingPersonalTodosCount: Int = 0,
-    private var completedTeamTodosCount: Int = 0,
-    private var completedPersonalTodosCount: Int = 0
-
+    private val onClickAllPersonalTodos: () -> Unit
 ) : RecyclerView.Adapter<HomeAdapter.BaseHomeHolder>() {
+
+    private var isTeamTodoVisible = false
+    private var isPersonalTodoVisible = false
+    private var teamPendingTodosCount: Int = 0
+    private var personalPendingTodosCount: Int = 0
+    private var pendingTeamTodosCount: Int = 0
+    private var pendingPersonalTodosCount: Int = 0
+    private var completedTeamTodosCount: Int = 0
+    private var completedPersonalTodosCount: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHomeHolder {
         return when (viewType) {
@@ -59,6 +61,13 @@ class HomeAdapter(
                 )
             )
         }
+    }
+
+    fun setTodoListVisibilty(itemView: View, isVisible: Boolean) {
+        if (!isVisible) {
+            itemView.visibility = View.GONE
+        }
+        itemView.visibility = View.VISIBLE
     }
 
     fun setTeamCount(newTeamPendingTodosCount: Int) {
