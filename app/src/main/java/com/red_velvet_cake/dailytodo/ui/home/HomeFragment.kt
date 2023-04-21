@@ -113,10 +113,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     override fun showPersonalTodos(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
         showHiddenSections()
         requireActivity().runOnUiThread {
-            adapter.setTodoListVisibilty(
-                binding.recyclerViewHome,
-                getAllPersonalTodosResponse.value.isEmpty()
-            )
             adapter.setPersonalCount(getAllPersonalTodosResponse.value.size)
             personalTodos.data = getAllPersonalTodosResponse
             adapter.notifyDataSetChanged()
@@ -145,10 +141,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     override fun showTeamTodos(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
         showHiddenSections()
         requireActivity().runOnUiThread {
-            adapter.setTodoListVisibilty(
-                binding.recyclerViewHome,
-                getAllTeamTodosResponse.value.isEmpty()
-            )
             adapter.setTeamCount(getAllTeamTodosResponse.value.size)
             teamTodos.data = getAllTeamTodosResponse
             adapter.notifyDataSetChanged()

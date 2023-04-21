@@ -26,8 +26,6 @@ class HomeAdapter(
     private val onClickAllPersonalTodos: () -> Unit
 ) : RecyclerView.Adapter<HomeAdapter.BaseHomeHolder>() {
 
-    private var isTeamTodoVisible = false
-    private var isPersonalTodoVisible = false
     private var teamPendingTodosCount: Int = 0
     private var personalPendingTodosCount: Int = 0
     private var pendingTeamTodosCount: Int = 0
@@ -61,13 +59,6 @@ class HomeAdapter(
                 )
             )
         }
-    }
-
-    fun setTodoListVisibilty(itemView: View, isVisible: Boolean) {
-        if (!isVisible) {
-            itemView.visibility = View.GONE
-        }
-        itemView.visibility = View.VISIBLE
     }
 
     fun setTeamCount(newTeamPendingTodosCount: Int) {
@@ -161,13 +152,23 @@ class HomeAdapter(
 
     }
 
+    private fun setTodoListVisibilty(itemView: View, isEmpty: Boolean) {
+        if (isEmpty) {
+            itemView.visibility = View.GONE
+        } else {
+            itemView.visibility = View.VISIBLE
+        }
+    }
+
     inner class PersonalTodosHolder(viewItem: View) : BaseHomeHolder(viewItem) {
         private val binding = ItemSectionPersonalTodosBinding.bind(viewItem)
         override fun bind(item: HomeItems<Any>) {
-            val adapter = GetAllPersonalTodosAdapter(
-                item.data as GetAllPersonalTodosResponse,
-                onClickPersonalTodoItem
-            )
+            val response = item.data as GetAllPersonalTodosResponse
+
+            setTodoListVisibilty(binding.root, response.value.isEmpty())
+
+            val adapter = GetAllPersonalTodosAdapter(response, onClickPersonalTodoItem)
+
             binding.recyclerViewPersonalTodos.adapter = adapter
             binding.textViewShowShowAll.setOnClickListener {
                 onClickAllPersonalTodos()
@@ -178,11 +179,11 @@ class HomeAdapter(
     inner class TeamTodosHolder(viewItem: View) : BaseHomeHolder(viewItem) {
         private val binding = ItemSectionTeamTodosBinding.bind(viewItem)
         override fun bind(item: HomeItems<Any>) {
-            val adapter =
-                GetAllTeamTodosAdapter(
-                    item.data as GetAllTeamTodosResponse,
-                    onClickTeamTodoItem
-                )
+            val response = item.data as GetAllTeamTodosResponse
+
+            setTodoListVisibilty(binding.root, response.value.isEmpty())
+
+            val adapter = GetAllTeamTodosAdapter(response, onClickTeamTodoItem)
             binding.recyclerViewTeamTodos.adapter = adapter
             binding.textViewShowShowAll.setOnClickListener {
                 onClickAllTeamTodos()
