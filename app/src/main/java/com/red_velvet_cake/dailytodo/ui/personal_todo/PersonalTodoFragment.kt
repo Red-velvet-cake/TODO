@@ -130,8 +130,9 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
     }
 
     override fun showLoadStatus() {
+        binding.personalTodoRecycler.visibility = View.GONE
+        binding.emptyStateImageview.visibility = View.GONE
         binding.progressBarLoadState.visibility = View.VISIBLE
-
     }
 
     override fun disableLoadStatus() {

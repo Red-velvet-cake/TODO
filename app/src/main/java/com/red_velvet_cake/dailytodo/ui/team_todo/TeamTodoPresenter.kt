@@ -41,7 +41,6 @@ class TeamTodoPresenter(private val view: TeamTodoView) {
     }
 
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
-        view.disableLoadStatus()
         view.showTodoList(getAllTeamTodosResponse.value.reversed())
     }
 

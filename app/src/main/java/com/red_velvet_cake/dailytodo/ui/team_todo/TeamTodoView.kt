@@ -9,5 +9,4 @@ interface TeamTodoView {
     fun navigateToTodoDetails(todo: TeamTodo)
     fun navigateBack()
     fun showLoadStatus()
-    fun disableLoadStatus()
 }

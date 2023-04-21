@@ -106,13 +106,9 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
     }
 
     override fun showLoadStatus() {
+        binding.teamTodoRecycler.visibility = View.GONE
+        binding.emptyStateImageview.visibility = View.GONE
         binding.progressBarLoadState.visibility = View.VISIBLE
-    }
-
-    override fun disableLoadStatus() {
-        requireActivity().runOnUiThread {
-            binding.progressBarLoadState.visibility = View.GONE
-        }
     }
 
     override fun showTodoList(todoList: List<TeamTodo>) {
@@ -120,6 +116,7 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         filteredList = filterTodosList(selectedChip, todoList)
         requireActivity().runOnUiThread {
+            binding.progressBarLoadState.visibility = View.GONE
             binding.teamTodoRecycler.visibility = View.VISIBLE
             binding.emptyStateImageview.visibility = View.GONE
             binding.buttonTryAgain.visibility = View.GONE
