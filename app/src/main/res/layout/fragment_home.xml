@@ -7,6 +7,61 @@
     android:background="@color/background"
     tools:context=".ui.home.HomeFragment">
 
+    <View
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_56dp"
+        android:layout_marginTop="@dimen/_4dp"
+        android:background="@color/background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_avatar"
+        android:layout_width="@dimen/_36dp"
+        android:layout_height="@dimen/_36dp"
+        android:layout_margin="@dimen/_16dp"
+        android:background="@drawable/background_circular"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:text="A"
+        android:textColor="@color/background"
+        android:textSize="@dimen/_16dp"
+        app:layout_constraintBottom_toBottomOf="@id/app_bar"
+        app:layout_constraintEnd_toStartOf="@id/text_view_hello"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_hello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Hello,"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/_16dp"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_avatar"
+        app:layout_constraintStart_toEndOf="@id/text_view_avatar"
+        app:layout_constraintTop_toTopOf="@id/text_view_avatar" />
+
+    <TextView
+        android:id="@+id/text_view_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Ayaaaw"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/_16dp"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_hello"
+        app:layout_constraintStart_toEndOf="@id/text_view_hello"
+        app:layout_constraintTop_toTopOf="@id/text_view_hello" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_home"
         android:layout_width="match_parent"
@@ -14,7 +69,7 @@
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
         tools:listitem="@layout/item_personal_todo" />
 
     <androidx.appcompat.widget.AppCompatImageButton

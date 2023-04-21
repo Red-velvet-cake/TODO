@@ -10,6 +10,7 @@ import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.model.Statistics
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
+import com.red_velvet_cake.dailytodo.databinding.DialogBinding
 import com.red_velvet_cake.dailytodo.databinding.FragmentHomeBinding
 import com.red_velvet_cake.dailytodo.ui.activity.AuthActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
@@ -21,6 +22,7 @@ import com.red_velvet_cake.dailytodo.ui.personal_todo.PersonalTodoFragment
 import com.red_velvet_cake.dailytodo.ui.personal_todo_details.PersonalTodoDetailsFragment
 import com.red_velvet_cake.dailytodo.ui.team_todo.TeamTodoFragment
 import com.red_velvet_cake.dailytodo.ui.team_todo_details.TeamTodoDetailsFragment
+import com.red_velvet_cake.dailytodo.ui.utils.showDialog
 import com.red_velvet_cake.dailytodo.utils.navigateTo
 
 
@@ -71,6 +73,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
                 homePresenter.getAllTodos()
             }
         }
+
+        binding.textViewName.text = homePresenter.getUsername()
+        binding.textViewAvatar.text = homePresenter.getUsername()[0].toString()
+
+        binding.textViewAvatar.setOnClickListener {
+            showDialog<DialogBinding>(requireActivity()) {
+                it.buttonLogout.setOnClickListener {
+                    homePresenter.logout()
+                }
+                it.textViewName.text = homePresenter.getUsername()
+                it.textViewAvatar.text = homePresenter.getUsername()[0].toString()
+            }
+        }
     }
 
     private fun onClickTeamTodo(teamTodo: TeamTodo) {
@@ -110,7 +125,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
 
     override fun showPendingPersonalTodos(pendingTodo: Int) {
         requireActivity().runOnUiThread { adapter.setPersonalPendingCount(pendingTodo) }
-
     }
 
     override fun showCompletedTeamTodos(completedTodo: Int) {
