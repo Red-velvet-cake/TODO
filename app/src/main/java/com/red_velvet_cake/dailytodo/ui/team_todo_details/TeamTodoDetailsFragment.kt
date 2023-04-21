@@ -45,6 +45,7 @@ class TeamTodoDetailsFragment : BaseFragment<FragmentTeamTodoDetailsBinding>(),
         binding.spinnerTodoStatus.apply {
             adapter = spinnerAdapter
             onItemSelectedListener = this@TeamTodoDetailsFragment
+            setSelection(teamTodoDetails.status)
         }
     }
 

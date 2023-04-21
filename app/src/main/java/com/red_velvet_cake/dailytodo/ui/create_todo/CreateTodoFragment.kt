@@ -1,6 +1,7 @@
 package com.red_velvet_cake.dailytodo.ui.create_todo
 
 import android.app.Activity
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
 
     private fun setupTodoTypeChipsListener() {
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            TransitionManager.beginDelayedTransition(binding.root)
             if (checkedIds.size != 0) {
                 val chip: Chip? = group.findViewById(checkedIds[0])
                 chip?.let {
@@ -88,7 +90,7 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
     }
 
     override fun navigateBack() {
-        requireActivity().navigateBack()
+        requireActivity().runOnUiThread { requireActivity().navigateBack() }
     }
 
     override fun showTryAgain() {

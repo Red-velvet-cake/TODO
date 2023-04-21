@@ -5,7 +5,12 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.red_velvet_cake.dailytodo.data.model.*
+import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
+import com.red_velvet_cake.dailytodo.data.model.Statistics
+import com.red_velvet_cake.dailytodo.data.model.TeamTodo
+import com.red_velvet_cake.dailytodo.databinding.DialogBinding
 import com.red_velvet_cake.dailytodo.databinding.FragmentHomeBinding
 import com.red_velvet_cake.dailytodo.ui.activity.AuthActivity
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
@@ -17,6 +22,7 @@ import com.red_velvet_cake.dailytodo.ui.personal_todo.PersonalTodoFragment
 import com.red_velvet_cake.dailytodo.ui.personal_todo_details.PersonalTodoDetailsFragment
 import com.red_velvet_cake.dailytodo.ui.team_todo.TeamTodoFragment
 import com.red_velvet_cake.dailytodo.ui.team_todo_details.TeamTodoDetailsFragment
+import com.red_velvet_cake.dailytodo.ui.utils.showDialog
 import com.red_velvet_cake.dailytodo.utils.navigateTo
 
 
@@ -27,15 +33,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     private var lists = mutableListOf<HomeItems<Any>>()
     private lateinit var adapter: HomeAdapter
     private val homePresenter = HomePresenter(this)
+    private var personalTodos: HomeItems<Any> = HomeItems(
+        GetAllPersonalTodosResponse(emptyList(), "", true),
+        HomeItemType.LIST_PERSONAL_TASKS
+    )
+    private var teamTodos: HomeItems<Any> = HomeItems(
+        GetAllTeamTodosResponse(emptyList(), "", true),
+        HomeItemType.LIST_TEAM_TASKS
+    )
 
     override fun setUp() {
         homePresenter.getAllTodos()
-        lists.add(
-            HomeItems(
-                Statistics(),
-                HomeItemType.ITEM_STATISTICS_TASKS_HAS_DONE
-            )
+        val statistics: HomeItems<Any> = HomeItems(
+            Statistics(),
+            HomeItemType.ITEM_STATISTICS_TASKS_HAS_DONE
         )
+        lists.add(
+            statistics
+        )
+        lists.add(personalTodos)
+        lists.add(teamTodos)
+
         adapter = HomeAdapter(
             lists,
             ::onClickTeamTodo,
@@ -43,10 +61,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
             ::onClickAllTeamTodos,
             ::onClickAllPersonalTodos
         )
+
         binding.recyclerViewHome.adapter = adapter
 
         binding.buttonAddTeamTodo.setOnClickListener {
             requireActivity().navigateTo(CreateTodoFragment())
+        }
+
+        requireActivity().supportFragmentManager.addOnBackStackChangedListener {
+            if (parentFragmentManager.backStackEntryCount < 2) {
+                homePresenter.getAllTodos()
+            }
+        }
+
+        binding.textViewName.text = homePresenter.getUsername()
+        binding.textViewAvatar.text = homePresenter.getUsername()[0].toString()
+
+        binding.textViewAvatar.setOnClickListener {
+            showDialog<DialogBinding>(requireActivity()) {
+                it.buttonLogout.setOnClickListener {
+                    homePresenter.logout()
+                }
+                it.textViewName.text = homePresenter.getUsername()
+                it.textViewAvatar.text = homePresenter.getUsername()[0].toString()
+            }
         }
     }
 
@@ -75,8 +113,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     override fun showPersonalTodos(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
         showHiddenSections()
         requireActivity().runOnUiThread {
+            adapter.setTodoListVisibilty(
+                binding.recyclerViewHome,
+                getAllPersonalTodosResponse.value.isEmpty()
+            )
             adapter.setPersonalCount(getAllPersonalTodosResponse.value.size)
-            lists.add(HomeItems(getAllPersonalTodosResponse, HomeItemType.LIST_PERSONAL_TASKS))
+            personalTodos.data = getAllPersonalTodosResponse
             adapter.notifyDataSetChanged()
         }
     }
@@ -87,7 +129,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
 
     override fun showPendingPersonalTodos(pendingTodo: Int) {
         requireActivity().runOnUiThread { adapter.setPersonalPendingCount(pendingTodo) }
-
     }
 
     override fun showCompletedTeamTodos(completedTodo: Int) {
@@ -104,13 +145,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     override fun showTeamTodos(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
         showHiddenSections()
         requireActivity().runOnUiThread {
-            adapter.setTeamCount(getAllTeamTodosResponse.value.size)
-            lists.add(
-                HomeItems(
-                    Statistics(team = getAllTeamTodosResponse),
-                    HomeItemType.LIST_TEAM_TASKS
-                )
+            adapter.setTodoListVisibilty(
+                binding.recyclerViewHome,
+                getAllTeamTodosResponse.value.isEmpty()
             )
+            adapter.setTeamCount(getAllTeamTodosResponse.value.size)
+            teamTodos.data = getAllTeamTodosResponse
             adapter.notifyDataSetChanged()
         }
     }
@@ -147,6 +187,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
 
     override fun showTryAgain() {
         requireActivity().runOnUiThread {
+            binding.progressBarLoadState.visibility = View.GONE
             binding.recyclerViewHome.visibility = View.GONE
             binding.buttonAddTeamTodo.visibility = View.GONE
             binding.buttonTryAgain.visibility = View.VISIBLE
@@ -164,6 +205,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeView {
     }
 
     override fun showLoadStatus() {
+        binding.recyclerViewHome.visibility = View.GONE
         binding.progressBarLoadState.visibility = View.VISIBLE
     }
 

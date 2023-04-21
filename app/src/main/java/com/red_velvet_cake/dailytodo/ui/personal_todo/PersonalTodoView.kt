@@ -6,7 +6,6 @@ interface PersonalTodoView {
     fun showTodoList(todoList: List<PersonalTodo>)
     fun showLoadTodosFailed()
     fun showTodoUpdateFailMessage(errorMessage: String)
-    fun showEmptyTodoListState()
     fun navigateToTodoDetails(personalTodo: PersonalTodo)
     fun navigateBack()
     fun showLoadStatus()

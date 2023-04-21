@@ -10,10 +10,8 @@ import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentTeamTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
-import com.red_velvet_cake.dailytodo.ui.home.HomeFragment
 import com.red_velvet_cake.dailytodo.ui.team_todo_details.TeamTodoDetailsFragment
 import com.red_velvet_cake.dailytodo.utils.navigateBack
-import com.red_velvet_cake.dailytodo.utils.navigateExclusive
 import com.red_velvet_cake.dailytodo.utils.navigateTo
 
 class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
@@ -50,7 +48,11 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
         }
 
         binding.appBar.setNavigationOnClickListener {
-            requireActivity().navigateExclusive(HomeFragment())
+            requireActivity().navigateBack()
+        }
+
+        binding.buttonTryAgain.setOnClickListener {
+            teamTodoPresenter.getAllTeamTodos()
         }
     }
 
@@ -79,7 +81,11 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
         teamTodoList.filter { it.status == selectedChip }
 
     override fun showLoadTodosFailed() {
-
+        requireActivity().runOnUiThread {
+            binding.progressBarLoadState.visibility = View.GONE
+            binding.buttonTryAgain.visibility = View.VISIBLE
+            binding.imageViewHasNoInternet.visibility = View.VISIBLE
+        }
     }
 
     override fun showTodoUpdateFailMessage(errorMessage: String) {
@@ -88,16 +94,6 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
                 requireActivity(),
                 errorMessage, Toast.LENGTH_SHORT
             ).show()
-        }
-    }
-
-    override fun showEmptyTodoListState() {
-        if (teamToDoAdapter.itemCount != 0) {
-            binding.teamTodoRecycler.visibility = View.VISIBLE
-            binding.emptyStateImageview.visibility = View.GONE
-        } else {
-            binding.teamTodoRecycler.visibility = View.GONE
-            binding.emptyStateImageview.visibility = View.VISIBLE
         }
     }
 
@@ -110,25 +106,28 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
     }
 
     override fun showLoadStatus() {
+        binding.teamTodoRecycler.visibility = View.GONE
+        binding.emptyStateImageview.visibility = View.GONE
         binding.progressBarLoadState.visibility = View.VISIBLE
-    }
-
-    override fun disableLoadStatus() {
-        requireActivity().runOnUiThread {
-            binding.progressBarLoadState.visibility = View.GONE
-        }
     }
 
     override fun showTodoList(todoList: List<TeamTodo>) {
         val itemTouchHelperCallback = ItemTeamTodoTouchHelperCallback(teamToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        filteredList =
-            filterTodosList(selectedChip, todoList)
+        filteredList = filterTodosList(selectedChip, todoList)
         requireActivity().runOnUiThread {
+            binding.progressBarLoadState.visibility = View.GONE
+            binding.teamTodoRecycler.visibility = View.VISIBLE
+            binding.emptyStateImageview.visibility = View.GONE
+            binding.buttonTryAgain.visibility = View.GONE
+            binding.imageViewHasNoInternet.visibility = View.GONE
             teamToDoAdapter.submitList(filteredList)
             binding.teamTodoRecycler.adapter = teamToDoAdapter
             itemTouchHelper.attachToRecyclerView(binding.teamTodoRecycler)
-            showEmptyTodoListState()
+            if (filteredList.isEmpty()) {
+                binding.teamTodoRecycler.visibility = View.GONE
+                binding.emptyStateImageview.visibility = View.VISIBLE
+            }
         }
     }
 

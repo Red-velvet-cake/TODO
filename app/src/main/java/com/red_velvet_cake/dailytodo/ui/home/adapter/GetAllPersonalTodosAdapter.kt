@@ -9,6 +9,7 @@ import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.databinding.ItemPersonalTodoBinding
+import com.red_velvet_cake.dailytodo.utils.Constants.HOME_TODO_COUNT
 
 class GetAllPersonalTodosAdapter(
     private val todos: GetAllPersonalTodosResponse,
@@ -25,14 +26,14 @@ class GetAllPersonalTodosAdapter(
 
 
     override fun onBindViewHolder(holder: GetAllPersonalTodosHolder, position: Int) {
-        val todo = todos.value[position]
+        val todo = todos.value.reversed().take(HOME_TODO_COUNT)[position]
         holder.bind(todo)
         holder.binding.root.setOnClickListener {
             onClickPersonalTodo(todo)
         }
     }
 
-    override fun getItemCount() = todos.value.size
+    override fun getItemCount() = todos.value.take(HOME_TODO_COUNT).size
 
     inner class GetAllPersonalTodosHolder(itemView: View) : ViewHolder(itemView) {
         val binding = ItemPersonalTodoBinding.bind(itemView)

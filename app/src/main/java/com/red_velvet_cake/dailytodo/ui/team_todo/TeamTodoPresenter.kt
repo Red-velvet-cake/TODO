@@ -41,11 +41,7 @@ class TeamTodoPresenter(private val view: TeamTodoView) {
     }
 
     private fun onGetAllTeamTodosSuccess(getAllTeamTodosResponse: GetAllTeamTodosResponse) {
-        view.disableLoadStatus()
-        if (getAllTeamTodosResponse.value.isEmpty()) {
-            view.showEmptyTodoListState()
-        }
-        view.showTodoList(getAllTeamTodosResponse.value)
+        view.showTodoList(getAllTeamTodosResponse.value.reversed())
     }
 
     private fun onGetAllTeamTodosFailure(exception: Exception) {

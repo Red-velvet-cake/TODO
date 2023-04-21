@@ -1,5 +1,6 @@
 package com.red_velvet_cake.dailytodo.ui.home
 
+import com.red_velvet_cake.dailytodo.data.local.LocalDataImpl
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
@@ -9,6 +10,7 @@ import com.red_velvet_cake.dailytodo.data.remote.util.CustomException
 
 class HomePresenter(val view: HomeView) {
     private val todoServiceImpl = TodoServiceImpl()
+    private val localDataImpl = LocalDataImpl()
 
     fun getAllTodos() {
         view.showLoadStatus()
@@ -76,5 +78,14 @@ class HomePresenter(val view: HomeView) {
                 view.showErrorOnTeamTodoFailure(exception.message.toString())
             }
         }
+    }
+
+    fun getUsername(): String {
+        return localDataImpl.getUserName()
+    }
+
+    fun logout() {
+        localDataImpl.clearUserToken()
+        view.navigateToLogin()
     }
 }

@@ -6,4 +6,5 @@ object Constants {
     const val TODO = 0
     const val IN_PROGRESS = 1
     const val DONE = 2
+    const val HOME_TODO_COUNT = 10
 }

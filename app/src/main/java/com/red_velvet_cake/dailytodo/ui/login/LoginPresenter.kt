@@ -10,6 +10,7 @@ class LoginPresenter(private val view: LoginView) {
 
     fun loginUser(username: String, password: String) {
         view.showLoadingState()
+        localDataImpl.saveUserName(username)
         authService.loginAccount(
             username,
             password,

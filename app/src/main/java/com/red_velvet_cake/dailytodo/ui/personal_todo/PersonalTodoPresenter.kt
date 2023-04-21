@@ -42,10 +42,7 @@ class PersonalTodoPresenter(private val view: PersonalTodoView) {
 
     private fun onGetAllPersonalTodosSuccess(getAllPersonalTodosResponse: GetAllPersonalTodosResponse) {
         view.disableLoadStatus()
-        if (getAllPersonalTodosResponse.value.isEmpty()) {
-            view.showEmptyTodoListState()
-        }
-        view.showTodoList(getAllPersonalTodosResponse.value)
+        view.showTodoList(getAllPersonalTodosResponse.value.reversed())
     }
 
     private fun onGetAllTeamTodosFailure(exception: Exception) {
