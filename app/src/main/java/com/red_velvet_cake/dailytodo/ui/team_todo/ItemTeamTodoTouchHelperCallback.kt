@@ -31,8 +31,8 @@ class ItemTeamTodoTouchHelperCallback(
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.layoutPosition
         when (direction) {
-            ItemTouchHelper.LEFT -> teamTodoAdapter.swipedLeft(position)
-            ItemTouchHelper.RIGHT -> teamTodoAdapter.swipedRight(position)
+            ItemTouchHelper.LEFT -> teamTodoAdapter.swipedRight(position)
+            ItemTouchHelper.RIGHT -> teamTodoAdapter.swipedLeft(position)
         }
     }
 
@@ -52,14 +52,17 @@ class ItemTeamTodoTouchHelperCallback(
         if (dX > 0) {
             val text = when (teamTodoAdapter.selectedChipAdapter) {
                 1 -> {
-                    "To Do"
-                }
-                0 -> {
                     "Done"
                 }
-                2 -> {
+
+                0 -> {
                     "In progress"
                 }
+
+                2 -> {
+                    "To Do"
+                }
+
                 else -> {
                     ""
                 }
@@ -69,13 +72,13 @@ class ItemTeamTodoTouchHelperCallback(
         } else if (dX < 0) {
             val text = when (teamTodoAdapter.selectedChipAdapter) {
                 1 -> {
-                    "Done"
+                    "Todo"
                 }
                 0 -> {
-                    "In progress"
+                    "Done"
                 }
                 2 -> {
-                    "To do"
+                    "In progress"
                 }
                 else -> {
                     ""

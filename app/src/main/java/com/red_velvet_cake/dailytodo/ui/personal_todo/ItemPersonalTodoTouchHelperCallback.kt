@@ -31,8 +31,8 @@ class ItemPersonalTodoTouchHelperCallback(
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.layoutPosition
         when (direction) {
-            ItemTouchHelper.LEFT -> personalTodoAdapter.swipedLeft(position)
-            ItemTouchHelper.RIGHT -> personalTodoAdapter.swipedRight(position)
+            ItemTouchHelper.LEFT -> personalTodoAdapter.swipedRight(position)
+            ItemTouchHelper.RIGHT -> personalTodoAdapter.swipedLeft(position)
         }
     }
 
@@ -52,13 +52,13 @@ class ItemPersonalTodoTouchHelperCallback(
         if (dX > 0) {
             val text = when (personalTodoAdapter.selectedChipAdapter) {
                 1 -> {
-                    "To Do"
-                }
-                0 -> {
                     "Done"
                 }
-                2 -> {
+                0 -> {
                     "In progress"
+                }
+                2 -> {
+                    "To Do"
                 }
                 else -> {
                     ""
@@ -69,13 +69,13 @@ class ItemPersonalTodoTouchHelperCallback(
         } else if (dX < 0) {
             val text = when (personalTodoAdapter.selectedChipAdapter) {
                 1 -> {
-                    "Done"
+                    "Todo"
                 }
                 0 -> {
-                    "In progress"
+                    "Done"
                 }
                 2 -> {
-                    "To do"
+                    "In progress"
                 }
                 else -> {
                     ""
