@@ -10,6 +10,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
+import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.model.Statistics
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
@@ -69,18 +70,22 @@ class HomeAdapter(
         personalPendingTodosCount = newPersonalPendingTodosCount
         notifyDataSetChanged()
     }
+
     fun setTeamPendingCount(pendingTodo: Int) {
         pendingTeamTodosCount = pendingTodo
         notifyDataSetChanged()
     }
+
     fun setPersonalPendingCount(pendingTodo: Int) {
         pendingPersonalTodosCount = pendingTodo
         notifyDataSetChanged()
     }
+
     fun setTeamCompleteCount(pendingTodo: Int) {
         completedPersonalTodosCount = pendingTodo
         notifyDataSetChanged()
     }
+
     fun setPersonalCompleteCount(pendingTodo: Int) {
         completedTeamTodosCount = pendingTodo
         notifyDataSetChanged()
@@ -117,8 +122,8 @@ class HomeAdapter(
             val colors = ArrayList<Int>()
             colors.add(Color.rgb(248, 247, 255))
             colors.add(Color.rgb(176, 160, 255))
-            statisticsList.add(PieEntry(personalPendingTodosCount.toFloat(), ""))
-            statisticsList.add(PieEntry(teamPendingTodosCount.toFloat(), ""))
+            statisticsList.add(PieEntry(pendingPersonalTodosCount.toFloat(), ""))
+            statisticsList.add(PieEntry(pendingTeamTodosCount.toFloat(), ""))
             val pieDataSet = PieDataSet(statisticsList, "")
             pieDataSet.colors = colors
             val pieData = PieData(pieDataSet)
@@ -134,9 +139,9 @@ class HomeAdapter(
 
 
             binding.textViewPersonalResult.text =
-                personalPendingTodosCount.toString()
+                pendingPersonalTodosCount.toString()
             binding.textViewTeamResult.text =
-                teamPendingTodosCount.toString()
+                pendingTeamTodosCount.toString()
 //            binding.textViewCompletedTodoResult.text =
 //                (item.data as GetAllPersonalTodosResponse).value.size.toString()
             binding.textViewPendingTodoResult.text =
@@ -164,8 +169,11 @@ class HomeAdapter(
     inner class TeamTodosHolder(viewItem: View) : BaseHomeHolder(viewItem) {
         private val binding = ItemSectionTeamTodosBinding.bind(viewItem)
         override fun bind(item: HomeItems<Any>) {
-            val statistics = item.data as Statistics
-            val adapter = GetAllTeamTodosAdapter(statistics.team, onClickTeamTodoItem)
+            val adapter =
+                GetAllTeamTodosAdapter(
+                    item.data as GetAllTeamTodosResponse,
+                    onClickTeamTodoItem
+                )
             binding.recyclerViewTeamTodos.adapter = adapter
             binding.textViewShowShowAll.setOnClickListener {
                 onClickAllTeamTodos()

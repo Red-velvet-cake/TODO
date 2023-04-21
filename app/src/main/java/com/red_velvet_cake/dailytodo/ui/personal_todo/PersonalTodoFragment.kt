@@ -9,17 +9,15 @@ import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.databinding.FragmentPersonalTodoBinding
 import com.red_velvet_cake.dailytodo.ui.base.BaseFragment
-import com.red_velvet_cake.dailytodo.ui.home.HomeFragment
 import com.red_velvet_cake.dailytodo.ui.personal_todo_details.PersonalTodoDetailsFragment
 import com.red_velvet_cake.dailytodo.utils.navigateBack
-import com.red_velvet_cake.dailytodo.utils.navigateExclusive
 import com.red_velvet_cake.dailytodo.utils.navigateTo
 
 class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), PersonalTodoView {
 
     private lateinit var personalToDoAdapter: PersonalTodoAdapter
     private lateinit var personalTodoPresenter: PersonalTodoPresenter
-    private lateinit var filteredList:List<PersonalTodo>
+    private lateinit var filteredList: List<PersonalTodo>
     private var selectedChip = -1
 
     override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentPersonalTodoBinding =
@@ -69,7 +67,11 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
         }
 
         binding.appBar.setNavigationOnClickListener {
-            requireActivity().navigateExclusive(HomeFragment())
+            requireActivity().navigateBack()
+        }
+
+        binding.buttonTryAgain.setOnClickListener {
+            personalTodoPresenter.getAllTeamTodos()
         }
     }
 
@@ -103,7 +105,11 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
 
 
     override fun showLoadTodosFailed() {
-
+        requireActivity().runOnUiThread {
+            binding.progressBarLoadState.visibility = View.GONE
+            binding.buttonTryAgain.visibility = View.VISIBLE
+            binding.imageViewHasNoInternet.visibility = View.VISIBLE
+        }
     }
 
     override fun showTodoUpdateFailMessage(errorMessage: String) {
@@ -117,13 +123,8 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
 
     override fun showEmptyTodoListState() {
         requireActivity().runOnUiThread {
-            if (personalToDoAdapter.itemCount != 0) {
-                binding.personalTodoRecycler.visibility = View.VISIBLE
-                binding.emptyStateImageview.visibility = View.GONE
-            } else {
-                binding.personalTodoRecycler.visibility = View.GONE
-                binding.emptyStateImageview.visibility = View.VISIBLE
-            }
+            binding.personalTodoRecycler.visibility = View.GONE
+            binding.emptyStateImageview.visibility = View.VISIBLE
         }
     }
 
@@ -152,11 +153,17 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
         filteredList =
             filterTodosList(selectedChip, todoList)
         requireActivity().runOnUiThread {
+            binding.personalTodoRecycler.visibility = View.VISIBLE
+            binding.emptyStateImageview.visibility = View.GONE
+            binding.buttonTryAgain.visibility = View.GONE
+            binding.imageViewHasNoInternet.visibility = View.GONE
             personalToDoAdapter.submitList(filteredList)
             binding.personalTodoRecycler.adapter = personalToDoAdapter
             itemTouchHelper.attachToRecyclerView(binding.personalTodoRecycler)
+            if (filteredList.isEmpty()) {
+                showEmptyTodoListState()
+            }
         }
-        showEmptyTodoListState()
     }
 
     companion object {
@@ -167,9 +174,3 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
         fun newInstance() = PersonalTodoFragment()
     }
 }
-
-
-
-
-
-

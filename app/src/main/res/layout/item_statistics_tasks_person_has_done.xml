@@ -101,7 +101,7 @@
         android:background="@android:color/transparent"
         android:elevation="@dimen/_1dp"
         android:fontFamily="@font/poppins_medium"
-        android:textColor="@color/secondary"
+        android:textColor="@color/purple_5_text"
         android:textSize="@dimen/_12sp"
         app:layout_constraintBottom_toBottomOf="@id/text_view_team_text_static"
         app:layout_constraintStart_toEndOf="@id/text_view_team_text_static"
