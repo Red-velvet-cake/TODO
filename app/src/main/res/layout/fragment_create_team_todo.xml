@@ -14,28 +14,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/textName"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="@dimen/_16dp"
-            android:background="@drawable/bg_edit_text_default"
-            android:hint="@string/_name"
-            android:padding="@dimen/_16dp"
-            android:textColorHint="@color/accent_text"
-            android:textSize="@dimen/_16sp" />
-
-        <EditText
-            android:id="@+id/titleText"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="@dimen/_12dp"
-            android:background="@drawable/bg_edit_text_default"
-            android:hint="@string/task_title"
-            android:padding="@dimen/_16dp"
-            android:textColorHint="@color/accent_text"
-            android:textSize="@dimen/_16sp" />
-
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +24,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_16dp"
                 android:orientation="horizontal"
                 app:selectionRequired="true"
                 app:singleSelection="true">
@@ -77,6 +54,29 @@
                     app:chipStrokeWidth="1.5dp" />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
+
+
+        <EditText
+            android:id="@+id/textName"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@drawable/bg_edit_text_default"
+            android:hint="@string/_name"
+            android:padding="@dimen/_16dp"
+            android:textColorHint="@color/accent_text"
+            android:textSize="@dimen/_16sp" />
+
+        <EditText
+            android:id="@+id/titleText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/_12dp"
+            android:background="@drawable/bg_edit_text_default"
+            android:hint="@string/task_title"
+            android:padding="@dimen/_16dp"
+            android:textColorHint="@color/accent_text"
+            android:textSize="@dimen/_16sp" />
 
         <EditText
             android:id="@+id/textDescription"

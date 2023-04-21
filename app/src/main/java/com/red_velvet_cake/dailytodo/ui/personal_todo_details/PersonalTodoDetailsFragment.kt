@@ -49,6 +49,7 @@ class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
         binding.spinnerTodoStatus.apply {
             adapter = spinnerAdapter
             onItemSelectedListener = this@PersonalTodoDetailsFragment
+            setSelection(personalTodo.status)
         }
     }
 
@@ -112,6 +113,7 @@ class PersonalTodoDetailsFragment : BaseFragment<FragmentPersonalTodoDetailsBind
     override fun onNothingSelected(parent: AdapterView<*>?) {
         Toast.makeText(requireContext(), "Nothing Selected ", Toast.LENGTH_SHORT)
             .show()
+
     }
 
     private fun extractDateAndTime(dateTimeString: String): Pair<String, String> {
