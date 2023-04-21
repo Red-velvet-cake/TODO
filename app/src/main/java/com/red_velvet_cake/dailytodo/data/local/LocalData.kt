@@ -5,4 +5,5 @@ interface LocalData {
     fun setUserToken(userToken: String)
     fun clearUserToken()
     fun saveUserName(userName: String)
+    fun getUserName(): String
 }

@@ -8,6 +8,7 @@ import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 import com.red_velvet_cake.dailytodo.databinding.ItemTeamTodoBinding
+import com.red_velvet_cake.dailytodo.utils.Constants.HOME_TODO_COUNT
 
 class GetAllTeamTodosAdapter(
     private val todos: GetAllTeamTodosResponse,
@@ -25,13 +26,13 @@ class GetAllTeamTodosAdapter(
 
 
     override fun onBindViewHolder(holder: GetAllTeamTodosHolder, position: Int) {
-        val todo = todos.value[position]
+        val todo = todos.value.reversed().take(HOME_TODO_COUNT)[position]
         holder.bind(todo)
         holder.binding.root.setOnClickListener { onClickTeamTodo(todo) }
 
     }
 
-    override fun getItemCount() = todos.value.size
+    override fun getItemCount() = todos.value.take(HOME_TODO_COUNT).size
 
     inner class GetAllTeamTodosHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ItemTeamTodoBinding.bind(itemView)

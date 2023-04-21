@@ -16,4 +16,8 @@ class LocalDataImpl : LocalData {
     override fun saveUserName(userName: String) {
         SharedPrefs.userName = userName
     }
+
+    override fun getUserName(): String {
+        return SharedPrefs.userName!!
+    }
 }

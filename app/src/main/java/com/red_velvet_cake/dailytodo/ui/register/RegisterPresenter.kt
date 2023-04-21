@@ -84,6 +84,7 @@ class RegisterPresenter(
     }
 
     private fun loginUsingCredentials(username: String, password: String) {
+        localDataImpl.saveUserName(username)
         authService.loginAccount(
             username,
             password,

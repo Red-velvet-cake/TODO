@@ -1,7 +1,6 @@
 package com.red_velvet_cake.dailytodo.ui.home
 
 import com.red_velvet_cake.dailytodo.data.local.LocalDataImpl
-import com.red_velvet_cake.dailytodo.data.local.SharedPrefs
 import com.red_velvet_cake.dailytodo.data.model.GetAllPersonalTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.GetAllTeamTodosResponse
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
@@ -82,7 +81,7 @@ class HomePresenter(val view: HomeView) {
     }
 
     fun getUsername(): String {
-        return SharedPrefs.userName!!
+        return localDataImpl.getUserName()
     }
 
     fun logout() {

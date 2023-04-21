@@ -88,7 +88,7 @@ class CreateTodoFragment() : BaseFragment<FragmentCreateTeamTodoBinding>(), Crea
     }
 
     override fun navigateBack() {
-        requireActivity().navigateBack()
+        requireActivity().runOnUiThread { requireActivity().navigateBack() }
     }
 
     override fun showTryAgain() {
