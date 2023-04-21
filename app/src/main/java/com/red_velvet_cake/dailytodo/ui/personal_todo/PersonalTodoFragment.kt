@@ -121,13 +121,6 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
         }
     }
 
-    override fun showEmptyTodoListState() {
-        requireActivity().runOnUiThread {
-            binding.personalTodoRecycler.visibility = View.GONE
-            binding.emptyStateImageview.visibility = View.VISIBLE
-        }
-    }
-
     override fun navigateToTodoDetails(personalTodo: PersonalTodo) {
         requireActivity().navigateTo(PersonalTodoDetailsFragment.newInstance(personalTodo))
     }
@@ -161,7 +154,8 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
             binding.personalTodoRecycler.adapter = personalToDoAdapter
             itemTouchHelper.attachToRecyclerView(binding.personalTodoRecycler)
             if (filteredList.isEmpty()) {
-                showEmptyTodoListState()
+                binding.personalTodoRecycler.visibility = View.GONE
+                binding.emptyStateImageview.visibility = View.VISIBLE
             }
         }
     }

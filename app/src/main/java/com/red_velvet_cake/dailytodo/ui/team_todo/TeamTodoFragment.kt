@@ -97,13 +97,6 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
         }
     }
 
-    override fun showEmptyTodoListState() {
-        requireActivity().runOnUiThread {
-            binding.teamTodoRecycler.visibility = View.GONE
-            binding.emptyStateImageview.visibility = View.VISIBLE
-        }
-    }
-
     override fun navigateToTodoDetails(todo: TeamTodo) {
         requireActivity().navigateTo(TeamTodoDetailsFragment.newInstance(todo))
     }
@@ -127,9 +120,6 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         filteredList = filterTodosList(selectedChip, todoList)
         requireActivity().runOnUiThread {
-            if (filteredList.isEmpty()) {
-                showEmptyTodoListState()
-            }
             binding.teamTodoRecycler.visibility = View.VISIBLE
             binding.emptyStateImageview.visibility = View.GONE
             binding.buttonTryAgain.visibility = View.GONE
@@ -137,6 +127,10 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
             teamToDoAdapter.submitList(filteredList)
             binding.teamTodoRecycler.adapter = teamToDoAdapter
             itemTouchHelper.attachToRecyclerView(binding.teamTodoRecycler)
+            if (filteredList.isEmpty()) {
+                binding.teamTodoRecycler.visibility = View.GONE
+                binding.emptyStateImageview.visibility = View.VISIBLE
+            }
         }
     }
 
