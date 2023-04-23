@@ -1,5 +1,6 @@
 package com.red_velvet_cake.dailytodo.ui.team_todo
 
+import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
 import com.red_velvet_cake.dailytodo.data.model.TeamTodo
 
 interface TeamTodoView {
@@ -9,4 +10,5 @@ interface TeamTodoView {
     fun navigateToTodoDetails(todo: TeamTodo)
     fun navigateBack()
     fun showLoadStatus()
+    fun getDisplayedTodoList(): List<TeamTodo>
 }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.red_velvet_cake.dailytodo.R
 import com.red_velvet_cake.dailytodo.data.model.PersonalTodo
@@ -31,6 +32,25 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
         binding.chipTodo.isChecked = true
         binding.chipDone.setChipBackgroundColorResource(R.color.white)
         binding.chipInProgress.setChipBackgroundColorResource(R.color.white)
+
+        searchView()
+    }
+
+    private fun searchView() {
+        val toolbar = binding.appBar
+        toolbar.inflateMenu(R.menu.menu_search)
+        val searchItem = toolbar.menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as? SearchView
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { personalTodoPresenter.searchTodos(it) }
+                return true
+            }
+        })
     }
 
     override fun addCallBacks() {
@@ -141,6 +161,10 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
         }
     }
 
+    override fun getDisplayedTodoList(): List<PersonalTodo> {
+        return filteredList
+    }
+
     override fun showTodoList(todoList: List<PersonalTodo>) {
         val itemTouchHelperCallback = ItemPersonalTodoTouchHelperCallback(personalToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
@@ -159,6 +183,11 @@ class PersonalTodoFragment : BaseFragment<FragmentPersonalTodoBinding>(), Person
                 binding.emptyStateImageview.visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        personalTodoPresenter.onDestroy()
     }
 
     companion object {

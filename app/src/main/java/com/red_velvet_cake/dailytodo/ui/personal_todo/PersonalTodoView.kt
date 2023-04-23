@@ -10,4 +10,5 @@ interface PersonalTodoView {
     fun navigateBack()
     fun showLoadStatus()
     fun disableLoadStatus()
+    fun getDisplayedTodoList(): List<PersonalTodo>
 }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.chip.Chip
 import com.red_velvet_cake.dailytodo.R
@@ -32,6 +33,24 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
         binding.chipTodo.isChecked = true
         binding.chipDone.setChipBackgroundColorResource(R.color.white)
         binding.chipInProgress.setChipBackgroundColorResource(R.color.white)
+        searchView()
+    }
+
+    private fun searchView(){
+        val toolbar = binding.appBar
+        toolbar.inflateMenu(R.menu.menu_search)
+        val searchItem = toolbar.menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as? SearchView
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { teamTodoPresenter.searchTodos(it) }
+                return true
+            }
+        })
     }
 
     override fun addCallBacks() {
@@ -111,6 +130,10 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
         binding.progressBarLoadState.visibility = View.VISIBLE
     }
 
+    override fun getDisplayedTodoList(): List<TeamTodo> {
+        return filteredList
+    }
+
     override fun showTodoList(todoList: List<TeamTodo>) {
         val itemTouchHelperCallback = ItemTeamTodoTouchHelperCallback(teamToDoAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
@@ -147,6 +170,10 @@ class TeamTodoFragment : BaseFragment<FragmentTeamTodoBinding>(), TeamTodoView {
 
     private fun onTodoClicked(todo: TeamTodo) {
         teamTodoPresenter.navigateToTodoDetails(todo)
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        teamTodoPresenter.onDestroy()
     }
 
     companion object {
