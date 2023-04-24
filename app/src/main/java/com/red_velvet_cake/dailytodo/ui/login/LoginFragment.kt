@@ -86,4 +86,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), LoginView {
     private fun runOnUiThread(runnable: Runnable) {
         requireActivity().runOnUiThread(runnable)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        loginPresenter.onDestroy()
+    }
 }

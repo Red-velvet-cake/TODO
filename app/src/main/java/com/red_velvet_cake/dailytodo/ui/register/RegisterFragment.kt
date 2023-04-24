@@ -106,6 +106,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), RegisterView {
         activity?.runOnUiThread(runnable)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
     companion object {
         fun newInstance(): RegisterFragment = RegisterFragment()
     }

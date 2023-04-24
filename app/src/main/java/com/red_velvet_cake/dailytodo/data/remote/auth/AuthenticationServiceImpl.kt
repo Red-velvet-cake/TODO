@@ -8,6 +8,7 @@ import com.red_velvet_cake.dailytodo.data.remote.util.HttpMethod
 import com.red_velvet_cake.dailytodo.data.remote.util.buildRequest
 import com.red_velvet_cake.dailytodo.utils.Constants.HOST_NAME
 import com.red_velvet_cake.dailytodo.utils.Constants.SCHEME
+import io.reactivex.rxjava3.core.Single
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Credentials
@@ -30,12 +31,7 @@ class AuthenticationServiceImpl : AuthenticationService {
         .addInterceptor(loggingInterceptor)
         .build()
 
-    override fun loginAccount(
-        username: String,
-        password: String,
-        onSuccess: (response: LoginResponse) -> Unit,
-        onFailure: (exception: Exception) -> Unit
-    ) {
+    override fun loginAccount(username: String, password: String): Single<LoginResponse> {
         val url = HttpUrl.Builder()
             .scheme(SCHEME)
             .host(HOST_NAME)
@@ -49,22 +45,14 @@ class AuthenticationServiceImpl : AuthenticationService {
             .header(AUTHORIZATION_HEADER, authHeaderValue)
             .build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, ioException: IOException) {
-                onFailure(ioException)
+        return Single.fromCallable {
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful){
+                gson.fromJson(response.body?.string(), LoginResponse::class.java)
+            } else {
+                throw IOException("Request failed with code: ${response.code}")
             }
-
-            override fun onResponse(call: Call, response: Response) {
-                try {
-                    response.body?.string()?.let { responseBody ->
-                        val loginResponse = Gson().fromJson(responseBody, LoginResponse::class.java)
-                        onSuccess(loginResponse)
-                    }
-                } catch (exception: Exception) {
-                    onFailure(exception)
-                }
-            }
-        })
+        }
     }
 
     override fun registerAccount(

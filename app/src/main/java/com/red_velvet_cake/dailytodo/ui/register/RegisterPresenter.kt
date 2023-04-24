@@ -4,6 +4,9 @@ import com.red_velvet_cake.dailytodo.data.local.LocalDataImpl
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
 import com.red_velvet_cake.dailytodo.data.remote.auth.AuthenticationServiceImpl
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class RegisterPresenter(
     private val view: RegisterView,
@@ -13,7 +16,7 @@ class RegisterPresenter(
     private val localDataImpl = LocalDataImpl()
     private var username: String = ""
     private var password: String = ""
-
+    private val compositeDisposable = CompositeDisposable()
     private fun registerAccount(username: String, password: String, teamId: String) {
         this.username = username
         this.password = password
@@ -85,12 +88,18 @@ class RegisterPresenter(
 
     private fun loginUsingCredentials(username: String, password: String) {
         localDataImpl.saveUserName(username)
-        authService.loginAccount(
-            username,
-            password,
-            ::onLoginAccountSuccess,
-            ::onLoginAccountFailure
-        )
+        val disposable = authService.loginAccount(username, password)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { loginResponse ->
+                    onLoginAccountSuccess(loginResponse)
+                },
+                { error ->
+                    onLoginAccountFailure(error as Exception)
+                }
+            )
+        compositeDisposable.add(disposable)
     }
 
     private fun onLoginAccountSuccess(loginResponse: LoginResponse) {
@@ -111,4 +120,7 @@ class RegisterPresenter(
         view.navigateToLogin()
     }
 
+    fun onDestroy() {
+        compositeDisposable.dispose()
+    }
 }

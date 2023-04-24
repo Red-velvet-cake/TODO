@@ -2,14 +2,13 @@ package com.red_velvet_cake.dailytodo.data.remote.auth
 
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.model.RegisterAccountResponse
+import io.reactivex.rxjava3.core.Single
 
 interface AuthenticationService {
     fun loginAccount(
         username: String,
-        password: String,
-        onSuccess: (response: LoginResponse) -> Unit,
-        onFailure: (exception: Exception) -> Unit,
-    )
+        password: String
+    ): Single<LoginResponse>
 
     fun registerAccount(
         username: String,
