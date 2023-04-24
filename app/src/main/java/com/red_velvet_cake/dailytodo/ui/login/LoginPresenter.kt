@@ -3,22 +3,29 @@ package com.red_velvet_cake.dailytodo.ui.login
 import com.red_velvet_cake.dailytodo.data.local.LocalDataImpl
 import com.red_velvet_cake.dailytodo.data.model.LoginResponse
 import com.red_velvet_cake.dailytodo.data.remote.auth.AuthenticationServiceImpl
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class LoginPresenter(private val view: LoginView) {
     private val authService = AuthenticationServiceImpl()
     private val localDataImpl = LocalDataImpl()
 
+    private val compositeDisposable = CompositeDisposable()
+
     fun loginUser(username: String, password: String) {
         view.showLoadingState()
-        localDataImpl.saveUserName(username)
-        authService.loginAccount(
-            username,
-            password,
-            this::onLoginSuccess,
-            this::onLoginFailure
-        )
-    }
 
+        val disposable = authService.loginAccount(username, password)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { loginResponse -> onLoginSuccess(loginResponse) },
+                { exception -> onLoginFailure(exception as Exception) }
+            )
+
+        compositeDisposable.add(disposable)
+    }
     private fun onLoginSuccess(loginResponse: LoginResponse) {
         view.hideLoadingState()
         if (loginResponse.isSuccess) {
@@ -56,5 +63,8 @@ class LoginPresenter(private val view: LoginView) {
 
     fun navigateToRegister() {
         view.navigateToRegister()
+    }
+    fun onDestroy() {
+        compositeDisposable.clear()
     }
 }
